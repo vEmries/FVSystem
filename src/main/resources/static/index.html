@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Page title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+        
+        <script src="js/myApp.js"></script>
+        <script src="js/controllers/myCtrl.js"></script>
+        
+        <link rel="stylesheet" href="css/bootstrap.css">
+    </head>
+    
+    <body ng-app="myApp">
+        <div class="panel-body" ng-controller="myCtrl">
+            <div class="btn btn-primary" ng-click="loadFV()">Load FVs from database</div>
+            {{fv}}
+        </div>
+    </body>
+</html>
