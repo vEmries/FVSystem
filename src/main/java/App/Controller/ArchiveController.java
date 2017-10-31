@@ -34,12 +34,12 @@ public class ArchiveController {
         return archiveService.getArchivePaymentByFV(fvID);
     }
 
-    @RequestMapping(value = "archive", method = RequestMethod.POST)
+    @RequestMapping(value = "/archive", method = RequestMethod.POST)
     public void archiveFV(@RequestParam Integer ID) {
         archiveService.archiveFV(ID);
     }
 
-    @RequestMapping(value = "archive/{ID}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/archive/{ID}", method = RequestMethod.DELETE)
     public void deleteArchiveFV(@PathVariable(name = "ID") Integer ID) {
         archiveService.deleteFV(ID);
     }
