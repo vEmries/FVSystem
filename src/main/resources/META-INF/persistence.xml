@@ -16,9 +16,9 @@
         <class>App.Model.Address</class>
 
         <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://ec2-54-247-64-64.eu-west-1.compute.amazonaws.com:5432/dei4g4h97tp5uj?sslmode=require" />
-            <property name="javax.persistence.jdbc.user" value="izelvbcxhgpprh" />
-            <property name="javax.persistence.jdbc.password" value="e7d7f2554439b43e78504ecb0ea215f7dabb67824f8f9acb116a2d7b37dc0e22" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://192.168.1.12:5432/fvservice" />
+            <property name="javax.persistence.jdbc.user" value="Admin" />
+            <property name="javax.persistence.jdbc.password" value="admin" />
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
             <property name="hibernate.default_schema" value="public"/>
             <property name="hibernate.show_sql" value="false" />
