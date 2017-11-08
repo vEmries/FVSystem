@@ -15,7 +15,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
     
     <script src="js/mainApp.js"></script>
-    <script src="js/controllers/mainCtrl.js"></script>
+    <script src="js/controllers/archiveCtrl.js"></script>
     <script src="js/assets/bootstrap-notify.js"></script>
 </head>
 
@@ -30,7 +30,7 @@
             </div>
             <div class="sidebar-wrapper">
                 <ul class="nav">
-                    <li class="active">
+                    <li>
                         <a href="./index.html">
                             <i class="material-icons">dashboard</i>
                             <p>Main</p>
@@ -54,7 +54,7 @@
                             <p>Kontrahenci</p>
                         </a>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="./archivePage.html">
                             <i class="material-icons">archive</i>
                             <p>Archiwum</p>
@@ -64,7 +64,7 @@
             </div>
         </div>
         
-        <div class="main-panel" ng-controller="mainCtrl">
+        <div class="main-panel" ng-controller="archiveCtrl">
             <nav class="navbar navbar-transparent navbar-absolute">
                 <div class="container-fluid">
                     <div class="navbar-header">
@@ -74,7 +74,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand"> Main </a>
+                        <a class="navbar-brand"> Archiwum </a>
                     </div>
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
@@ -91,7 +91,7 @@
             <div class="content">
                 <div class="container-fluid">
                     
-                    <a>Main page content -----------</a>
+                    <a>Archive page content -----------</a>
                     
                 </div>
             </div>
