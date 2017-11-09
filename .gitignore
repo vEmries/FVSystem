@@ -2,3 +2,5 @@
 target/*
 *.iml
 /src/main/resources/static/nbproject/private
+/src/main/resources/templates/nbproject/private/
+/src/main/resources/static/HTML5Application1/nbproject/private/

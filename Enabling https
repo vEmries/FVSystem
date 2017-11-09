@@ -1,0 +1,4 @@
+1. Odkomentować 'https config' w application.properties i cały RedirectConfig.java
+2. Aplikacja uruchamia się jako https://::8443, wejście na http://::8080 i tak przekieruje do strony logowania w https
+3. Po wyłączeniu https (zakomentowaniu plików z 1) należy zrobić hard reset, bo logowanie nadal próbuje przekierować na https:// który nie istnieje.
+    Po resecie, apka działa z powrotem na http://::8080

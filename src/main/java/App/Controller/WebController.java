@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class WebController {
 
     @GetMapping(value = "/")
-    public String showIndex() {
-        return "index.html";
-    }
+    public String showIndex() { return "welcome"; }
+
+    @GetMapping(value = "/login")
+    public String showLogin() { return "login"; }
+
 }
