@@ -392,7 +392,7 @@ Copyright (c) 2015 Daniel Eden
 
 /* perfect-scrollbar v0.6.13 */
 
-.ps-container {
+/*.ps-container {
     -ms-touch-action: auto;
     touch-action: auto;
     overflow: hidden !important;
@@ -403,7 +403,7 @@ Copyright (c) 2015 Daniel Eden
     .ps-container {
         overflow: auto !important;
     }
-}
+}*/
 
 @media screen and (-ms-high-contrast: active),
 (-ms-high-contrast: none) {
@@ -921,7 +921,7 @@ h2.title {
 .sidebar .sidebar-wrapper,
 .perfect-scrollbar-on .main-panel,
 .main-panel {
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 
 .perfect-scrollbar-off .sidebar .sidebar-wrapper,
@@ -3923,7 +3923,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
     z-index: 1;
     width: 100%;
     height: 100%;
-    overflow: hidden;
+    /*overflow: hidden;*/
     border-radius: inherit;
     pointer-events: none;
 }
@@ -5114,7 +5114,7 @@ footer .btn {
 .card .card-image {
     height: 60%;
     position: relative;
-    overflow: hidden;
+/*    overflow: hidden;*/
     margin-left: 15px;
     margin-right: 15px;
     margin-top: -30px;
@@ -5268,7 +5268,7 @@ footer .btn {
 .card .author .avatar {
     width: 30px;
     height: 30px;
-    overflow: hidden;
+/*    overflow: hidden;*/
     border-radius: 50%;
     margin-right: 5px;
 }

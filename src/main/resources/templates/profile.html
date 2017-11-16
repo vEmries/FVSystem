@@ -1,5 +1,5 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8" />
     <title>FV System</title>
@@ -13,10 +13,12 @@
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css' />
     
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" />
     
     <script src="js/mainApp.js" />
-    <script src="js/controllers/mainCtrl.js" />
-    <script src="js/assets/bootstrap-notify.js" />
+    <script src="js/controllers/profileCtrl.js" />
+    <script src="js/assets/bootstrap.min.js" />
+    <script src="js/assets/material.min.js" />
 </head>
 
 <body ng-app="mainApp">
@@ -64,7 +66,7 @@
             </div>
         </div>
         
-        <div class="main-panel" ng-controller="mainCtrl">
+        <div class="main-panel" ng-controller="profileCtrl">
             <nav class="navbar navbar-transparent navbar-absolute">
                 <div class="container-fluid">
                     <div class="navbar-header">
@@ -83,6 +85,14 @@
                                     <i class="material-icons">person</i>
                                     <p class="hidden-lg hidden-md">Profile</p>
                                 </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="./">Profil</a>
+                                    </li>
+                                    <li>
+                                        <a href="./logout">Wyloguj</a>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                     </div>

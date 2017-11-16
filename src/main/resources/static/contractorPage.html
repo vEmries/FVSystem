@@ -13,10 +13,12 @@
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     
     <script src="js/mainApp.js"></script>
     <script src="js/controllers/contractorCtrl.js"></script>
-    <script src="js/assets/bootstrap-notify.js"></script>
+    <script src="js/assets/bootstrap.min.js"></script>
+    <script src="js/assets/material.min.js"></script>
 </head>
 
 <body ng-app="mainApp">
@@ -83,6 +85,14 @@
                                     <i class="material-icons">person</i>
                                     <p class="hidden-lg hidden-md">Profile</p>
                                 </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="./">Profil</a>
+                                    </li>
+                                    <li>
+                                        <a href="./logout">Wyloguj</a>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                     </div>

@@ -14,7 +14,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
         httpSecurity.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/**").hasAnyRole("user").anyRequest().authenticated()
+//                .antMatchers("/**").permitAll()
+                .antMatchers("/**").hasAnyRole("user")
+//                .antMatchers("/**").hasAnyRole("usert2") // jak jest podobny matcher to działa ostatni wywołany (t2, t1 nie ma dostępu)
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login").permitAll()
@@ -26,6 +29,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configureGlobal(AuthenticationManagerBuilder authManagerBuilder) throws Exception {
 
         authManagerBuilder.inMemoryAuthentication()
-                .withUser("user1").password("pw").roles("user");
+                .withUser("user1").password("pw").roles("user")
+                .and()
+                .withUser("t2").password("pw2").roles("usert2");
     }
 }

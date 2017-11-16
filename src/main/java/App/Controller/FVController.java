@@ -5,6 +5,7 @@ import App.Model.FVRepo;
 import App.Service.FVService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.annotation.RequestScope;
 
 import java.sql.Date;
 
@@ -24,14 +25,19 @@ public class FVController {
         return fvService.getFV(fvID);
     }
 
+//    @RequestMapping(value = "/fv", method = RequestMethod.POST)
+//    public void createFV(@RequestParam String fvNumber,
+//                         @RequestParam Integer contractor,
+//                         @RequestParam Date issueDate,
+//                         @RequestParam Date dueDate,
+//                         @RequestParam Double sum,
+//                         @RequestParam String note) {
+//        fvService.createNewFV(fvNumber, contractor, issueDate, dueDate, sum, note);
+//    }
+
     @RequestMapping(value = "/fv", method = RequestMethod.POST)
-    public void createFV(@RequestParam String fvNumber,
-                         @RequestParam Integer contractor,
-                         @RequestParam Date issueDate,
-                         @RequestParam Date dueDate,
-                         @RequestParam Double sum,
-                         @RequestParam String note) {
-        fvService.createNewFV(fvNumber, contractor, issueDate, dueDate, sum, note);
+    public void createFV(@RequestBody FV fv) {
+        fvService.createNewFV(fv.getFvnumber(), fv.getContractor(), fv.getIssuedate(), fv.getDuedate(), fv.getSum(), fv.getNote());
     }
 
     @RequestMapping(value = "/fv", method = RequestMethod.PUT)
