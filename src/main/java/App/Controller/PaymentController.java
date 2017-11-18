@@ -24,12 +24,17 @@ public class PaymentController {
         return paymentService.getPaymentByFV(fvID);
     }
 
+//    @RequestMapping(value = "/payment", method = RequestMethod.POST)
+//    public void createPayment(@RequestParam Integer fvID,
+//                              @RequestParam Date issueDate,
+//                              @RequestParam Double quota,
+//                              @RequestParam String note) {
+//        paymentService.createNewPayment(fvID, issueDate, quota, note);
+//    }
+
     @RequestMapping(value = "/payment", method = RequestMethod.POST)
-    public void createPayment(@RequestParam Integer fvID,
-                              @RequestParam Date issueDate,
-                              @RequestParam Double quota,
-                              @RequestParam String note) {
-        paymentService.createNewPayment(fvID, issueDate, quota, note);
+    public void createPayment(@RequestBody Payment tmpPayment) {
+        paymentService.createNewPayment(tmpPayment.getFv(), tmpPayment.getIssuedate(), tmpPayment.getQuota(), tmpPayment.getNote());
     }
 
     @RequestMapping(value = "/payment", method = RequestMethod.PUT)

@@ -24,6 +24,9 @@
 /* Shadows (from mdl http://www.getmdl.io/) */
 
 
+.click-icon {
+   cursor: pointer; 
+}
 
 .noUi-target,
 .noUi-target * {

@@ -45,6 +45,8 @@ public class ContractorController {
         contractorService.createNewContractor(company, NIP, bank, account, contactnr, mail, note, country, province, city, zip, street);
     }
 
+    // @RequestBody -> potrzeba 2 obiektów, address i contractor, sprawdzić czy zrobi 2 lub jakąś nową klasę
+
     @RequestMapping(value = "/contractor", method = RequestMethod.PUT)
     public void updateContractor(@RequestParam Integer ID,
                                  @RequestParam String company,

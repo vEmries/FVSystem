@@ -1,0 +1,2 @@
+1) Poprawić @RequestParam w kontrolerach w metodach POST/PUT
+2) Dodać skrót nazwy kontrahenta, żeby go wyświetlać

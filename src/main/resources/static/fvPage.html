@@ -127,8 +127,8 @@
                                             <td class="text-center">{{fv.paid | currency : 'zł'}} / {{fv.sum | currency : 'zł'}}</td>
                                             <td>{{fv.note}}</td>
                                             <td> 
-                                                <i class="material-icons">edit</i>
-                                                <i class="material-icons">delete</i>
+                                                <i class="material-icons click-icon">edit</i>
+                                                <i class="material-icons click-icon" ng-click="deleteFV(fv.id)">delete</i>
                                             </td>
                                         </tr>
                                     </tbody>

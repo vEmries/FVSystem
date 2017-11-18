@@ -39,6 +39,8 @@ public class ArchiveController {
         archiveService.archiveFV(ID);
     }
 
+    //Param nie zadziała, dać RBody / FV / getID
+
     @RequestMapping(value = "/archive/{ID}", method = RequestMethod.DELETE)
     public void deleteArchiveFV(@PathVariable(name = "ID") Integer ID) {
         archiveService.deleteFV(ID);

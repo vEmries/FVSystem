@@ -36,18 +36,23 @@ public class FVController {
 //    }
 
     @RequestMapping(value = "/fv", method = RequestMethod.POST)
-    public void createFV(@RequestBody FV fv) {
-        fvService.createNewFV(fv.getFvnumber(), fv.getContractor(), fv.getIssuedate(), fv.getDuedate(), fv.getSum(), fv.getNote());
+    public void createFV(@RequestBody FV tmpFV) {
+        fvService.createNewFV(tmpFV.getFvnumber(), tmpFV.getContractor(), tmpFV.getIssuedate(), tmpFV.getDuedate(), tmpFV.getSum(), tmpFV.getNote());
     }
 
+//    @RequestMapping(value = "/fv", method = RequestMethod.PUT)
+//    public void updateFV(@RequestParam Integer fvID,
+//                         @RequestParam String fvNumber,
+//                         @RequestParam Integer contractor,
+//                         @RequestParam Date dueDate,
+//                         @RequestParam Double sum,
+//                         @RequestParam String note) {
+//        fvService.updateFV(fvID, fvNumber, contractor, dueDate, sum, note);
+//    }
+
     @RequestMapping(value = "/fv", method = RequestMethod.PUT)
-    public void updateFV(@RequestParam Integer fvID,
-                         @RequestParam String fvNumber,
-                         @RequestParam Integer contractor,
-                         @RequestParam Date dueDate,
-                         @RequestParam Double sum,
-                         @RequestParam String note) {
-        fvService.updateFV(fvID, fvNumber, contractor, dueDate, sum, note);
+    public void updateFV(@RequestBody FV tmpFV) {
+        fvService.updateFV(tmpFV.getId(), tmpFV.getFvnumber(), tmpFV.getContractor(), tmpFV.getDuedate(), tmpFV.getSum(), tmpFV.getNote());
     }
 
     @RequestMapping(value = "/fv/{ID}", method = RequestMethod.DELETE)
