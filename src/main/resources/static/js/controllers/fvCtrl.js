@@ -1,5 +1,7 @@
 app.controller('fvCtrl', function($scope, $http) {
     
+    $scope.showAddPanel = false;
+    
     $scope.loadFV = function() {
         $http.get('./fv')
                 .success(function(data) {
@@ -8,12 +10,6 @@ app.controller('fvCtrl', function($scope, $http) {
     };
 
     $scope.addFV = function() {
-        
-        var config = {
-                headers : {
-                    'Content-Type': 'application/json;charset=utf-8;'
-                }
-        };
         
         var data = ({
             fvnumber: $scope.addFVNumber,
@@ -53,7 +49,7 @@ app.controller('fvCtrl', function($scope, $http) {
     };
     
     $scope.deleteFV = function(ID) {
-        if( confirm('Czy na pewno chcesz skasować tę pozycję?') ){
+        if(confirm('Czy na pewno chcesz usunąć fakturę?')){
             $http.delete('./fv/' + ID).then(function(response) {
                 $scope.postResult = "Deleted";
                 $scope.loadFV();
@@ -61,6 +57,13 @@ app.controller('fvCtrl', function($scope, $http) {
                 $scope.postResult = "Delete Error";
             });
         }
+    };
+    
+    $scope.loadPayments = function() {
+        $http.get('./payment')
+                .success(function(data) {
+                    $scope.allPayments = data;
+        });
     };
     
 });

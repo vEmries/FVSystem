@@ -96,61 +96,81 @@
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-header" data-background-color="purple">
-                                <h4 class="title">Faktury</h4>
-                                <p class="category">Subtitle?</p>
-                            </div>
-                            <div class="card-content table-responsive">
-                                <table class="table">
-                                    <thead class="text-primary">
-                                        <th class="text-center">Status</th>
-                                        <th class="text-center">Numer faktury</th>
-                                        <th class="text-center">Kontrahent</th>
-                                        <th class="text-center">Data wystawienia</th>
-                                        <th class="text-center">Termin płatności</th>
-                                        <th class="text-center">Stan płatności</th>
-                                        <th>Dodatkowy opis</th>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="fv in allFVs | orderBy:issuedate">
-                                            <td class="text-center">
-                                                <i class="material-icons" ng-if="fv.status < 0">assignment_late</i>
-                                                <i class="material-icons" ng-if="fv.status == 0">assignment</i>
-                                                <i class="material-icons" ng-if="fv.status > 0">assignment_turned_in</i>
-                                            </td>
-                                            <td class="text-center">{{fv.fvnumber}}</td>
-                                            <td class="text-center">{{fv.contractor}}</td>
-                                            <td class="text-center">{{fv.issuedate}}</td>
-                                            <td class="text-center">{{fv.duedate}}</td>
-                                            <td class="text-center">{{fv.paid | currency : 'zł'}} / {{fv.sum | currency : 'zł'}}</td>
-                                            <td>{{fv.note}}</td>
-                                            <td> 
-                                                <i class="material-icons click-icon">edit</i>
-                                                <i class="material-icons click-icon" ng-click="deleteFV(fv.id)">delete</i>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header" data-background-color="purple">
+                                    <h4 class="title">Faktury</h4>
+                                    <p class="category">Wszystkie aktywne faktury</p>
+                                </div>
+                                <div class="card-content table-responsive">
+                                    <table class="table" ng-init="loadPayments()">
+                                        <thead class="text-primary">
+                                            <th class="text-center">Status</th>
+                                            <th class="text-center">Numer faktury</th>
+                                            <th class="text-center">Kontrahent</th>
+                                            <th class="text-center">Data wystawienia</th>
+                                            <th class="text-center">Termin płatności</th>
+                                            <th class="text-center">Stan płatności</th>
+                                            <th>Dodatkowy opis</th>
+                                            <th>
+                                                <i class="material-icons click-icon" ng-click="showAddPanel = !showAddPanel">note_add</i>
+                                            </th>
+                                        </thead>
+                                            <tr ng-show="showAddPanel">
+                                                <td></td>
+                                                <td class="text-center">
+                                                    <input type="text" class="form-control" ng-model="addFVNumber" placeholder="Numer faktury"/>
+                                                </td>
+                                                <td class="text-center">
+                                                    <input type="text" class="form-control" ng-model="addContractor" placeholder="Kontrahent"/>
+                                                </td>
+                                                <td class="text-center">
+                                                    <input type="text" class="form-control" ng-model="addIssueDate" placeholder="Data wystawienia"/>
+                                                </td>
+                                                <td class="text-center">
+                                                    <input type="text" class="form-control" ng-model="addDueDate" placeholder="Termin płatności"/>
+                                                </td>
+                                                <td class="text-center">
+                                                    <input type="text" class="form-control" ng-model="addSum" placeholder="Suma"/>
+                                                </td>
+                                                <td class="text-center">
+                                                    <input type="text" class="form-control" ng-model="addNote" placeholder="Dodatkowy opis"/>
+                                                </td>
+                                                <td class="text-center">
+                                                    <i class="material-icons click-icon" ng-click="addFV()">done</i>
+                                                </td>
+                                            </tr>
+                                        <tbody ng-repeat="fv in allFVs | orderBy:issuedate">
+                                            <tr>
+                                                <td class="text-center">
+                                                    <i class="material-icons" ng-if="fv.status < 0">assignment_late</i>
+                                                    <i class="material-icons" ng-if="fv.status == 0">assignment</i>
+                                                    <i class="material-icons" ng-if="fv.status > 0">assignment_turned_in</i>
+                                                </td>
+                                                <td class="text-center">{{fv.fvnumber}}</td>
+                                                <td class="text-center">{{fv.contractor}}</td>
+                                                <td class="text-center">{{fv.issuedate}}</td>
+                                                <td class="text-center">{{fv.duedate}}</td>
+                                                <td class="text-center">{{fv.paid | currency : 'zł'}} / {{fv.sum | currency : 'zł'}}</td>
+                                                <td>{{fv.note}}</td>
+                                                <td> 
+                                                    <i class="material-icons click-icon">edit</i>
+                                                    <i class="material-icons click-icon" ng-click="deleteFV(fv.id)">delete</i>
+                                                </td>
+                                            </tr>
+                                            <tr ng-repeat="payment in allPayments" ng-if="fv.status >= 0 && payment.fv == fv.id">
+                                                <td></td>
+                                                <td colspan="6">Płatność w wysokości: {{payment.quota | currency : 'zł'}}, dokonana: {{payment.issuedate}}</td>
+                                            </tr>
+                                            <tr ng-if="fv.status <0">
+                                                <td></td>
+                                                <td colspan="6">Brak płatności dla faktury</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="col-md-12">
-                        <div class="card">
-                            <form name="newFV" ng-submit="addFV()">
-                                <input type="text" class="form-control" ng-model="addFVNumber" placeholder="fvNumber"/>
-                                <input type="text" class="form-control" ng-model="addContractor" placeholder="contractor"/>
-                                <input type="text" class="form-control" ng-model="addIssueDate" placeholder="issueDate"/>
-                                <input type="text" class="form-control" ng-model="addDueDate" placeholder="dueDate"/>
-                                <input type="text" class="form-control" ng-model="addSum" placeholder="sum"/>
-                                <input type="text" class="form-control" ng-model="addNote" placeholder="note"/>
-                            
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </form>
-                        </div>
-                    </div>
                     </div>
                 </div>
             </div>

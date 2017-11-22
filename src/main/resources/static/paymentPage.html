@@ -66,16 +66,10 @@
             </div>
         </div>
         
-        <div class="main-panel" ng-controller="paymentCtrl">
+        <div class="main-panel" ng-controller="paymentCtrl" data-ng-init="loadFV()">
             <nav class="navbar navbar-transparent navbar-absolute">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
                         <a class="navbar-brand"> Płatności </a>
                     </div>
                     <div class="collapse navbar-collapse">
@@ -98,11 +92,74 @@
                     </div>
                 </div>
             </nav>
+            
             <div class="content">
                 <div class="container-fluid">
-                    
-                    <a>Payments page content -----------</a>
-                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header" data-background-color="purple">
+                                    <h4 class="title">Płatności</h4>
+                                    <p class="category">Faktury oczekujące na płatność</p>
+                                </div>
+                                <div class="card-content table-responsive">
+                                    <table class="table" ng-init="loadPayments()">
+                                        <thead class="text-primary">
+                                            <th class="text-center">Status</th>
+                                            <th class="text-center">Numer faktury</th>
+                                            <th class="text-center">Kontrahent</th>
+                                            <th class="text-center">Data wystawienia</th>
+                                            <th class="text-center">Termin płatności</th>
+                                            <th class="text-center">Stan płatności</th>
+                                            <th>Dodatkowy opis</th>
+                                        </thead>
+                                        <tbody ng-repeat="fv in allFVs" ng-if="fv.status <= 0">
+                                            <tr>
+                                                <td class="text-center">
+                                                    <i class="material-icons" ng-if="fv.status < 0">assignment_late</i>
+                                                    <i class="material-icons" ng-if="fv.status == 0">assignment</i>
+                                                </td>
+                                                <td class="text-center">{{fv.fvnumber}}</td>
+                                                <td class="text-center">{{fv.contractor}}</td>
+                                                <td class="text-center">{{fv.issuedate}}</td>
+                                                <td class="text-center">{{fv.duedate}}</td>
+                                                <td class="text-center">{{fv.paid | currency : 'zł'}} / {{fv.sum | currency : 'zł'}}</td>
+                                                <td>{{fv.note}}</td>
+                                            </tr>
+                                            <tr ng-repeat="payment in allPayments" ng-if="fv.status >= 0 && payment.fv == fv.id">
+                                                <td></td>
+                                                <td colspan="6">Płatność w wysokości: {{payment.quota | currency : 'zł'}}, dokonana: {{payment.issuedate}}</td>
+                                                <td>
+                                                    <i class="material-icons click-icon" ng-click="deletePayment(payment.id)">delete</i>
+                                                </td>
+                                            </tr>
+                                            <tr ng-if="fv.status < 0">
+                                                <td></td>
+                                                <td colspan="6">Brak płatności dla faktury</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3"></td>
+                                                <td colspan="5">Pozostało do zapłaty: {{fv.sum - fv.paid | currency : 'zł'}}.</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3"></td>
+                                                <td colspan="2">Wprowadź wysokość i datę wykonanej płatnośći</td>
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="addQuota" placeholder="Kwota PLN"/>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="addIssueDate" placeholder="Data płatności"/>
+                                                </td>
+                                                <td>
+                                                    <i class="material-icons click-icon" ng-click="addPayment(fv.id, addQuota, addIssueDate)">done</i>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

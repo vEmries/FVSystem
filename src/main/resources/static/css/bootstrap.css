@@ -28,6 +28,10 @@
    cursor: pointer; 
 }
 
+.right {
+    float: right;
+}
+
 .noUi-target,
 .noUi-target * {
     -webkit-touch-callout: none;

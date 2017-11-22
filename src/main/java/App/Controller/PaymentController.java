@@ -24,25 +24,14 @@ public class PaymentController {
         return paymentService.getPaymentByFV(fvID);
     }
 
-//    @RequestMapping(value = "/payment", method = RequestMethod.POST)
-//    public void createPayment(@RequestParam Integer fvID,
-//                              @RequestParam Date issueDate,
-//                              @RequestParam Double quota,
-//                              @RequestParam String note) {
-//        paymentService.createNewPayment(fvID, issueDate, quota, note);
-//    }
-
     @RequestMapping(value = "/payment", method = RequestMethod.POST)
     public void createPayment(@RequestBody Payment tmpPayment) {
         paymentService.createNewPayment(tmpPayment.getFv(), tmpPayment.getIssuedate(), tmpPayment.getQuota(), tmpPayment.getNote());
     }
 
     @RequestMapping(value = "/payment", method = RequestMethod.PUT)
-    public void updatePayment(@RequestParam Integer ID,
-                              @RequestParam Integer fvID,
-                              @RequestParam Double quota,
-                              @RequestParam String note) {
-        paymentService.updatePayment(ID, fvID, quota, note);
+    public void updatePayment(@RequestBody Payment tmpPayment) {
+        paymentService.updatePayment(tmpPayment.getId(), tmpPayment.getFv(), tmpPayment.getQuota(), tmpPayment.getNote());
     }
 
     @RequestMapping(value = "/payment/{ID}", method = RequestMethod.DELETE)
