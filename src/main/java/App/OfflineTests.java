@@ -49,7 +49,7 @@ public class OfflineTests {
 //        paymentService.updatePayment(4, 21, 3, "Wpłata nr zz");
 //        paymentService.deletePayment(4);
 
-//        archiveService.archiveFV(8);
+        archiveService.archiveFV(86);
 
         ctx.close();
 

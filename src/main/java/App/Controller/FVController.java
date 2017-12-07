@@ -23,12 +23,12 @@ public class FVController {
 
     @RequestMapping(value = "/fv", method = RequestMethod.POST)
     public void createFV(@RequestBody FV tmpFV) {
-        fvService.createNewFV(tmpFV.getFvnumber(), tmpFV.getContractor(), tmpFV.getIssuedate(), tmpFV.getDuedate(), tmpFV.getSum(), tmpFV.getNote());
+        fvService.createNewFV(tmpFV.getFvnumber(), tmpFV.getContractor(), tmpFV.getIssuedate(), tmpFV.getDuedate(), tmpFV.getValue(), tmpFV.getNote());
     }
 
     @RequestMapping(value = "/fv", method = RequestMethod.PUT)
     public void updateFV(@RequestBody FV tmpFV) {
-        fvService.updateFV(tmpFV.getId(), tmpFV.getFvnumber(), tmpFV.getContractor(), tmpFV.getDuedate(), tmpFV.getSum(), tmpFV.getNote());
+        fvService.updateFV(tmpFV.getId(), tmpFV.getFvnumber(), tmpFV.getContractor(), tmpFV.getDuedate(), tmpFV.getValue(), tmpFV.getNote());
     }
 
     @RequestMapping(value = "/fv/{ID}", method = RequestMethod.DELETE)

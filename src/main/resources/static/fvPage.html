@@ -110,6 +110,7 @@
                                             <th class="text-center">Kontrahent</th>
                                             <th class="text-center">Data wystawienia</th>
                                             <th class="text-center">Termin płatności</th>
+                                            <th class="text-center">Kwota</th>
                                             <th class="text-center">Stan płatności</th>
                                             <th>Dodatkowy opis</th>
                                             <th>
@@ -131,7 +132,7 @@
                                                     <input type="text" class="form-control" ng-model="addDueDate" placeholder="Termin płatności"/>
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="text" class="form-control" ng-model="addSum" placeholder="Suma"/>
+                                                    <input type="text" class="form-control" ng-model="addValue" placeholder="Kwota"/>
                                                 </td>
                                                 <td class="text-center">
                                                     <input type="text" class="form-control" ng-model="addNote" placeholder="Dodatkowy opis"/>
@@ -151,6 +152,7 @@
                                                 <td class="text-center">{{fv.contractor}}</td>
                                                 <td class="text-center">{{fv.issuedate}}</td>
                                                 <td class="text-center">{{fv.duedate}}</td>
+                                                <td class="text-center">{{fv.value | currency : 'zł'}}</td>
                                                 <td class="text-center">{{fv.paid | currency : 'zł'}} / {{fv.sum | currency : 'zł'}}</td>
                                                 <td>{{fv.note}}</td>
                                                 <td> 

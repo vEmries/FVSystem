@@ -45,20 +45,22 @@ public class FVService {
 
     @Transactional
     @Modifying
-    public void createNewFV(String fvNumber, Integer contractorID, Date issueDate, Date dueDate, Double sum, String note) {
-        FV newFV = new FV(fvNumber, contractorID, issueDate, dueDate, sum, note);
+    public void createNewFV(String fvNumber, Integer contractorID, Date issueDate, Date dueDate, Double value, String note) {
+        FV newFV = new FV(fvNumber, contractorID, issueDate, dueDate, value, note);
         fvRepo.save(newFV);
     }
 
     @Transactional
     @Modifying
-    public void updateFV(Integer fvID, String fvNumber, Integer contractorID, Date dueDate, Double sum, String note) {
+    public void updateFV(Integer fvID, String fvNumber, Integer contractorID, Date dueDate, Double value, String note) {
         FV updatedFV = fvRepo.findById(fvID);
         updatedFV.setFvnumber(fvNumber);
         updatedFV.setContractor(contractorID);
         updatedFV.setDuedate(dueDate);
-        updatedFV.setSum(sum);
+        updatedFV.setValue(value);
         updatedFV.setNote(note);
+
+        //dodać metodę checkSum i wykonanie po updacie FV
 
         updatePaidStatus(fvID);
     }

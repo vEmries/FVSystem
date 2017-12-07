@@ -16,7 +16,7 @@ app.controller('fvCtrl', function($scope, $http) {
             contractor: $scope.addContractor,
             issuedate: $scope.addIssueDate,
             duedate: $scope.addDueDate,
-            sum: $scope.addSum,
+            value: $scope.addValue,
             note: $scope.addNote
         });
         
@@ -28,25 +28,25 @@ app.controller('fvCtrl', function($scope, $http) {
         });
     };
     
-    $scope.updateFV = function() {
-      
-        var data = ({
-            id: $scope.upID,
-            fvnumber: $scope.upFVNumber,
-            contractor: $scope.upContractor,
-            duedate: $scope.upDueDate,
-            sum: $scope.upSum,
-            note: $scope.upNote
-        });
-        
-        $http.post('./fv', data).then(function(response) {
-            $scope.updateResult = "Updated";
-            $scope.loadFV();
-        }, function(response) {
-            $scope.updateResult = "Update error";
-        });
-        
-    };
+//    $scope.updateFV = function() {
+//      
+//        var data = ({
+//            id: $scope.upID,
+//            fvnumber: $scope.upFVNumber,
+//            contractor: $scope.upContractor,
+//            duedate: $scope.upDueDate,
+//            sum: $scope.upSum,
+//            note: $scope.upNote
+//        });
+//        
+//        $http.post('./fv', data).then(function(response) {
+//            $scope.updateResult = "Updated";
+//            $scope.loadFV();
+//        }, function(response) {
+//            $scope.updateResult = "Update error";
+//        });
+//        
+//    };
     
     $scope.deleteFV = function(ID) {
         if(confirm('Czy na pewno chcesz usunąć fakturę?')){
