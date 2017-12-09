@@ -15,7 +15,7 @@ public class PaymentController {
     PaymentService paymentService;
 
     @RequestMapping(value = "/payment", method = RequestMethod.GET)
-    public Iterable<Payment> getAllPayments() {
+    public List<Payment> getAllPayments() {
         return paymentService.getAllPayments();
     }
 

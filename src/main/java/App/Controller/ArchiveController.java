@@ -1,6 +1,7 @@
 package App.Controller;
 
 import App.Model.ArchiveFV;
+import App.Model.ArchiveFVRevision;
 import App.Model.ArchivePayment;
 import App.Service.ArchiveService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,14 @@ public class ArchiveController {
         return archiveService.getArchiveFV(ID);
     }
 
+    @RequestMapping(value = "/archive/fvr", method = RequestMethod.GET)
+    public List<ArchiveFVRevision> getArchiveRevisions() { return archiveService.getAllArchiveRevisions(); }
+
+    @RequestMapping(value = "/archive/fvr/{fvID}", method = RequestMethod.GET)
+    public List<ArchiveFVRevision> getArchiveRevisionByFV(@PathVariable(name = "fvID") Integer fvID) {
+        return archiveService.getArchiveRevisionByFV(fvID);
+    }
+
     @RequestMapping(value = "/archive/payment", method = RequestMethod.GET)
     public List<ArchivePayment> getArchivePayments() {
         return archiveService.getAllArchivePayments();
@@ -43,6 +52,6 @@ public class ArchiveController {
 
     @RequestMapping(value = "/archive/{ID}", method = RequestMethod.DELETE)
     public void deleteArchiveFV(@PathVariable(name = "ID") Integer ID) {
-        archiveService.deleteFV(ID);
+        archiveService.deleteArchiveFV(ID);
     }
 }

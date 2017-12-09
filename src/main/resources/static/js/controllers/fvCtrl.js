@@ -7,6 +7,10 @@ app.controller('fvCtrl', function($scope, $http) {
                 .success(function(data) {
                     $scope.allFVs = data;
         });
+        $http.get('./fvr')
+                .success(function(data) {
+                    $scope.allRevisions = data;
+        });
     };
 
     $scope.addFV = function() {
@@ -59,7 +63,35 @@ app.controller('fvCtrl', function($scope, $http) {
         }
     };
     
-    $scope.loadPayments = function() {
+    $scope.addRevision = function(fvID, addFVNumber, addIssueDate, addQuota, addNote) {
+        var data = ({
+            fvnumber : addFVNumber,
+            fv : fvID,
+            issuedate : addIssueDate,
+            quota : addQuota,
+            note : addNote
+        });
+        
+        $http.post('./fvr', data).then(function(response) {
+            $scope.postResult = "Posted";
+            $scope.loadFV();
+        }, function(response) {
+            $scope.postResult = "Post Error";
+        });
+    };
+    
+    $scope.deleteRevision = function(ID) {
+        if(confirm('Czy na pewno chcesz usunąć korektę?')) {
+            $http.delete('./fvr/' + ID).then(function(response) {
+                $scope.postResult = "Deleted";
+                $scope.loadFV();
+            }, function(response) {
+                $scope.postResult = "Delete Error";
+            });
+        }
+    };
+    
+    $scope.loadPayment = function() {
         $http.get('./payment')
                 .success(function(data) {
                     $scope.allPayments = data;

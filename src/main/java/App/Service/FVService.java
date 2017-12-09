@@ -1,8 +1,6 @@
 package App.Service;
 
-import App.Model.FV;
-import App.Model.FVRepo;
-import App.Model.Payment;
+import App.Model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Component;
@@ -16,6 +14,9 @@ public class FVService {
 
     @Autowired
     FVRepo fvRepo;
+
+    @Autowired
+    FVRevisionRepo fvRevisionRepo;
 
     @Autowired
     PaymentService paymentService;
@@ -45,6 +46,19 @@ public class FVService {
 
     @Transactional
     @Modifying
+    public void updateFVSum(Integer fvID) {
+        FV checkedFV = fvRepo.findById(fvID);
+        Double sum = checkedFV.getValue();
+
+        for (FVRevision fvR : fvRevisionRepo.findAllByFv(fvID)) {
+            sum = sum + fvR.getQuota();
+        }
+
+        checkedFV.setSum(sum);
+    }
+
+    @Transactional
+    @Modifying
     public void createNewFV(String fvNumber, Integer contractorID, Date issueDate, Date dueDate, Double value, String note) {
         FV newFV = new FV(fvNumber, contractorID, issueDate, dueDate, value, note);
         fvRepo.save(newFV);
@@ -60,8 +74,7 @@ public class FVService {
         updatedFV.setValue(value);
         updatedFV.setNote(note);
 
-        //dodać metodę checkSum i wykonanie po updacie FV
-
+        updateFVSum(fvID);
         updatePaidStatus(fvID);
     }
 
@@ -79,6 +92,34 @@ public class FVService {
     @Modifying
     public void deleteFV(Integer ID) {
         fvRepo.delete(ID);
+    }
+
+    @Transactional
+    @Modifying
+    public void createNewRevision(String fvNumber, Integer fvID, Date issueDate, Double quota, String note) {
+        FVRevision newRevision = new FVRevision(fvNumber, fvID, issueDate, quota, note);
+        fvRevisionRepo.save(newRevision);
+
+        updateFVSum(fvID);
+        updatePaidStatus(fvID);
+    }
+
+    @Transactional
+    public List<FVRevision> getAllRevisions() { return fvRevisionRepo.findAll(); }
+
+    @Transactional
+    public FVRevision getRevision(Integer ID) { return fvRevisionRepo.findById(ID); }
+
+    @Transactional
+    public List<FVRevision> getRevisionByFV(Integer fvID) { return fvRevisionRepo.findAllByFv(fvID); }
+
+    @Transactional
+    @Modifying
+    public void deleteRevision(Integer ID) {
+        Integer fvID = fvRevisionRepo.findById(ID).getFv();
+        fvRevisionRepo.delete(ID);
+        updateFVSum(fvID);
+        updatePaidStatus(fvID);
     }
 
     

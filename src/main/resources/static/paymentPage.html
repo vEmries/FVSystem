@@ -128,6 +128,18 @@
                                                 <td class="text-center">{{fv.paid | currency : 'zł'}} / {{fv.sum | currency : 'zł'}}</td>
                                                 <td>{{fv.note}}</td>
                                             </tr>
+                                            <tr ng-repeat="revision in allRevisions" ng-if="revision.fv == fv.id">
+                                                <td class="text-center">
+                                                    <i class="material-icons">change_history</i>
+                                                </td>
+                                                <td class="text-center">{{revision.fvnumber}}</td>
+                                                <td class="text-center">-</td>
+                                                <td class="text-center">{{revision.issuedate}}</td>
+                                                <td class="text-center">-</td>
+                                                <td class="text-center">{{revision.quota | currency : 'zł'}}</td>
+                                                <td class="text-center">-</td>
+                                                <td>{{revision.note}}</td>
+                                            </tr>
                                             <tr ng-repeat="payment in allPayments" ng-if="fv.status >= 0 && payment.fv == fv.id">
                                                 <td></td>
                                                 <td colspan="6">Płatność w wysokości: {{payment.quota | currency : 'zł'}}, dokonana: {{payment.issuedate}}</td>
