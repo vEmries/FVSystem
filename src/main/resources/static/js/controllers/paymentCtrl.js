@@ -5,6 +5,10 @@ app.controller('paymentCtrl', function($scope, $http) {
                 .success(function(data) {
                     $scope.allFVs = data;
         });
+        $http.get('./fvr')
+                .success(function(data) {
+                    $scope.allRevisions = data;
+        });
     };
     
     $scope.loadPayments = function() {

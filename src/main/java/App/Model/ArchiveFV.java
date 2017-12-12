@@ -18,6 +18,7 @@ public class ArchiveFV {
     private Integer contractor;
     private Date issuedate;
     private Date duedate;
+    private Double value;
     private Double sum;
     private Double paid;
     private Integer status;
@@ -29,6 +30,7 @@ public class ArchiveFV {
         this.contractor = toArchive.getContractor();
         this.issuedate = toArchive.getIssuedate();
         this.duedate = toArchive.getDuedate();
+        this.value = toArchive.getValue();
         this.sum = toArchive.getSum();
         this.paid = toArchive.getPaid();
         this.status = toArchive.getStatus();

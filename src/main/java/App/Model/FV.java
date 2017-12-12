@@ -20,17 +20,19 @@ public class FV {
     private Integer contractor;
     private Date issuedate;
     private Date duedate;
+    private Double value;
     private Double sum;
     private Double paid;
     private Integer status;
     private String note;
 
-    public FV(String fvnumber, Integer contractor, Date issuedate, Date duedate, Double sum, String note) {
+    public FV(String fvnumber, Integer contractor, Date issuedate, Date duedate, Double value, String note) {
         this.fvnumber = fvnumber.trim();
         this.contractor = contractor;
         this.issuedate = issuedate;
         this.duedate = duedate;
-        this.sum = sum;
+        this.value = value;
+        this.sum = value;
         this.paid = 0.0;
         this.status = -1;
 

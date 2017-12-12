@@ -1,2 +1,5 @@
 1) Poprawić @RequestParam w kontrolerach w metodach POST/PUT
 2) Dodać skrót nazwy kontrahenta, żeby go wyświetlać
+
+0) Dodać edycję Korekt (back-end + front)
+0) Dodać edycję FV (front, tylko implementacja z fvCtrl)

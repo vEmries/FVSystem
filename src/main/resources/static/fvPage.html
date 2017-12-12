@@ -103,40 +103,42 @@
                                     <p class="category">Wszystkie aktywne faktury</p>
                                 </div>
                                 <div class="card-content table-responsive">
-                                    <table class="table" ng-init="loadPayments()">
+                                    <table class="table" ng-init="loadPayment()">
                                         <thead class="text-primary">
                                             <th class="text-center">Status</th>
                                             <th class="text-center">Numer faktury</th>
                                             <th class="text-center">Kontrahent</th>
                                             <th class="text-center">Data wystawienia</th>
                                             <th class="text-center">Termin płatności</th>
+                                            <th class="text-center">Kwota</th>
                                             <th class="text-center">Stan płatności</th>
                                             <th>Dodatkowy opis</th>
                                             <th>
-                                                <i class="material-icons click-icon" ng-click="showAddPanel = !showAddPanel">note_add</i>
+                                                <i class="material-icons click-icon" ng-click="showAddFV = !showAddFV">note_add</i>
                                             </th>
                                         </thead>
-                                            <tr ng-show="showAddPanel">
+                                            <tr ng-show="showAddFV">
                                                 <td></td>
-                                                <td class="text-center">
+                                                <td>
                                                     <input type="text" class="form-control" ng-model="addFVNumber" placeholder="Numer faktury"/>
                                                 </td>
-                                                <td class="text-center">
+                                                <td>
                                                     <input type="text" class="form-control" ng-model="addContractor" placeholder="Kontrahent"/>
                                                 </td>
-                                                <td class="text-center">
+                                                <td>
                                                     <input type="text" class="form-control" ng-model="addIssueDate" placeholder="Data wystawienia"/>
                                                 </td>
-                                                <td class="text-center">
+                                                <td>
                                                     <input type="text" class="form-control" ng-model="addDueDate" placeholder="Termin płatności"/>
                                                 </td>
-                                                <td class="text-center">
-                                                    <input type="text" class="form-control" ng-model="addSum" placeholder="Suma"/>
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="addValue" placeholder="Kwota"/>
                                                 </td>
-                                                <td class="text-center">
+                                                <td class="text-center">-</td>
+                                                <td>
                                                     <input type="text" class="form-control" ng-model="addNote" placeholder="Dodatkowy opis"/>
                                                 </td>
-                                                <td class="text-center">
+                                                <td>
                                                     <i class="material-icons click-icon" ng-click="addFV()">done</i>
                                                 </td>
                                             </tr>
@@ -151,11 +153,76 @@
                                                 <td class="text-center">{{fv.contractor}}</td>
                                                 <td class="text-center">{{fv.issuedate}}</td>
                                                 <td class="text-center">{{fv.duedate}}</td>
+                                                <td class="text-center">{{fv.value | currency : 'zł'}}</td>
                                                 <td class="text-center">{{fv.paid | currency : 'zł'}} / {{fv.sum | currency : 'zł'}}</td>
                                                 <td>{{fv.note}}</td>
                                                 <td> 
-                                                    <i class="material-icons click-icon">edit</i>
+                                                    <i class="material-icons click-icon" ng-click="showEditFV = !showEditFV">edit</i>
                                                     <i class="material-icons click-icon" ng-click="deleteFV(fv.id)">delete</i>
+                                                    <i class="material-icons click-icon" ng-click="showAddRevision = !showAddRevision">change_history</i>
+                                                </td>
+                                            </tr>
+                                            <tr ng-show="showEditFV">
+                                                <td></td>
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="fv.fvnumber"/>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="fv.fvcontractor"/>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="fv.issuedate"/>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="fv.duedate"/>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="fv.value"/>
+                                                </td>
+                                                <td class="text-center">-</td>
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="fv.note"/>
+                                                </td>
+                                                <td>
+                                                    <i class="material-icons click-icon" ng-click="updateFV(fv.id, fv.fvnumber, fv.contractor, fv.issuedate, fv.duedate, fv.value, fv.note)">done</i>
+                                                </td>
+                                            </tr>
+                                            <tr ng-show="showAddRevision">
+                                                <td class="text-center">
+                                                    <i class="material-icons">change_history</i>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="addRFVNumber" placeholder="Numer faktury"/>
+                                                </td>
+                                                <td class="text-center">-</td>
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="addRIssueDate" placeholder="Data wystawienia"/>
+                                                </td>
+                                                <td class="text-center">-</td>
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="addRQuota" placeholder="Kwota"/>
+                                                </td>
+                                                <td class="text-center">-</td>
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="addRNote" placeholder="Powód korekty"/>
+                                                </td>
+                                                <td>
+                                                    <i class="material-icons click-icon" ng-click="addRevision(fv.id, addRFVNumber, addRIssueDate, addRQuota, addRNote)">done</i>
+                                                </td>
+                                            </tr>
+                                            <tr ng-repeat="revision in allRevisions" ng-if="revision.fv == fv.id">
+                                                <td class="text-center">
+                                                    <i class="material-icons">change_history</i>
+                                                </td>
+                                                <td class="text-center">{{revision.fvnumber}}</td>
+                                                <td class="text-center">-</td>
+                                                <td class="text-center">{{revision.issuedate}}</td>
+                                                <td class="text-center">-</td>
+                                                <td class="text-center">{{revision.quota | currency : 'zł'}}</td>
+                                                <td class="text-center">-</td>
+                                                <td>{{revision.note}}</td>
+                                                <td>
+                                                    <i class="material-icons click-icon" ng-click="deleteRevision(revision.id)">delete</i>
                                                 </td>
                                             </tr>
                                             <tr ng-repeat="payment in allPayments" ng-if="fv.status >= 0 && payment.fv == fv.id">

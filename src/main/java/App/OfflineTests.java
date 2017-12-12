@@ -16,6 +16,7 @@ public class OfflineTests {
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(BasicConfig.class);
 
         FVRepo fvRepo = ctx.getBean(FVRepo.class);
+        FVRevisionRepo fvRevisionRepo = ctx.getBean(FVRevisionRepo.class);
         FVService fvService = ctx.getBean(FVService.class);
         PaymentRepo paymentRepo = ctx.getBean(PaymentRepo.class);
         PaymentService paymentService = ctx.getBean(PaymentService.class);
@@ -49,7 +50,9 @@ public class OfflineTests {
 //        paymentService.updatePayment(4, 21, 3, "Wpłata nr zz");
 //        paymentService.deletePayment(4);
 
-//        archiveService.archiveFV(8);
+//        archiveService.archiveFV(87);
+
+//        fvService.createNewRevision("TT-300RR", 82, new Date(2015,01,01), -37.00, "Note");
 
         ctx.close();
 

@@ -15,6 +15,9 @@ public class ArchiveService {
     ArchiveFVRepo archiveFVRepo;
 
     @Autowired
+    ArchiveFVRevisionRepo archiveFVRevisionRepo;
+
+    @Autowired
     ArchivePaymentRepo archivePaymentRepo;
 
     @Autowired
@@ -22,6 +25,8 @@ public class ArchiveService {
 
     @Autowired
     PaymentService paymentService;
+
+    // Metody dla całego setu (FV + Revision + Payment)
 
     @Transactional
     @Modifying
@@ -34,8 +39,21 @@ public class ArchiveService {
             archivePaymentRepo.save(paymentToArchive);
         }
 
+        for (FVRevision fvR : fvService.getRevisionByFV(ID)) {
+            ArchiveFVRevision revisionToArchive = new ArchiveFVRevision(fvR);
+            archiveFVRevisionRepo.save(revisionToArchive);
+        }
+
         fvService.deleteFV(ID);
     }
+
+    @Transactional
+    @Modifying
+    public void deleteArchiveFV(Integer ID) {
+        archiveFVRepo.delete(ID);
+    }
+
+    // Metody dla ArchiveFV.class
 
     @Transactional
     public List<ArchiveFV> getAllArchiveFVs() {
@@ -47,6 +65,16 @@ public class ArchiveService {
         return archiveFVRepo.findById(ID);
     }
 
+    // Metody dla ArchiveFVRevision.class
+
+    @Transactional
+    public List<ArchiveFVRevision> getAllArchiveRevisions() { return archiveFVRevisionRepo.findAll(); }
+
+    @Transactional
+    public List<ArchiveFVRevision> getArchiveRevisionByFV(Integer fvID) { return archiveFVRevisionRepo.findAllByFv(fvID); }
+
+    // Metody dla ArchivePayment.class
+
     @Transactional
     public List<ArchivePayment> getAllArchivePayments() {
         return archivePaymentRepo.findAll();
@@ -57,9 +85,4 @@ public class ArchiveService {
         return archivePaymentRepo.findAllByFv(fvID);
     }
 
-    @Transactional
-    @Modifying
-    public void deleteFV(Integer ID) {
-        archiveFVRepo.delete(ID);
-    }
 }

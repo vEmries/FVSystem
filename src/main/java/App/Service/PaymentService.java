@@ -19,6 +19,8 @@ public class PaymentService {
     @Autowired
     FVService fvService;
 
+    // Metody dla Payment.class
+
     @Transactional
     @Modifying
     public void createNewPayment(Integer fvID, Date issuedate, Double quota, String note) {

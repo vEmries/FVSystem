@@ -110,6 +110,7 @@
                                             <th class="text-center">Kontrahent</th>
                                             <th class="text-center">Data wystawienia</th>
                                             <th class="text-center">Termin płatności</th>
+                                            <th class="text-center">Kwota</th>
                                             <th class="text-center">Stan płatności</th>
                                             <th>Dodatkowy opis</th>
                                         </thead>
@@ -123,8 +124,21 @@
                                                 <td class="text-center">{{fv.contractor}}</td>
                                                 <td class="text-center">{{fv.issuedate}}</td>
                                                 <td class="text-center">{{fv.duedate}}</td>
+                                                <td class="text-center">{{fv.value | currency: 'zł'}}</td>
                                                 <td class="text-center">{{fv.paid | currency : 'zł'}} / {{fv.sum | currency : 'zł'}}</td>
                                                 <td>{{fv.note}}</td>
+                                            </tr>
+                                            <tr ng-repeat="revision in allRevisions" ng-if="revision.fv == fv.id">
+                                                <td class="text-center">
+                                                    <i class="material-icons">change_history</i>
+                                                </td>
+                                                <td class="text-center">{{revision.fvnumber}}</td>
+                                                <td class="text-center">-</td>
+                                                <td class="text-center">{{revision.issuedate}}</td>
+                                                <td class="text-center">-</td>
+                                                <td class="text-center">{{revision.quota | currency : 'zł'}}</td>
+                                                <td class="text-center">-</td>
+                                                <td>{{revision.note}}</td>
                                             </tr>
                                             <tr ng-repeat="payment in allPayments" ng-if="fv.status >= 0 && payment.fv == fv.id">
                                                 <td></td>
