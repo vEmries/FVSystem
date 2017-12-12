@@ -15,6 +15,8 @@ public class ArchiveController {
     @Autowired
     ArchiveService archiveService;
 
+    // Mapowania dla ArchiveFV
+
     @RequestMapping(value = "/archive/fv", method = RequestMethod.GET)
     public List<ArchiveFV> getArchiveFVs() {
         return archiveService.getAllArchiveFVs();
@@ -25,6 +27,8 @@ public class ArchiveController {
         return archiveService.getArchiveFV(ID);
     }
 
+    // Mapowanie dla ArchiveFVRevision
+
     @RequestMapping(value = "/archive/fvr", method = RequestMethod.GET)
     public List<ArchiveFVRevision> getArchiveRevisions() { return archiveService.getAllArchiveRevisions(); }
 
@@ -32,6 +36,8 @@ public class ArchiveController {
     public List<ArchiveFVRevision> getArchiveRevisionByFV(@PathVariable(name = "fvID") Integer fvID) {
         return archiveService.getArchiveRevisionByFV(fvID);
     }
+
+    // Mapowania dla ArchivePayment
 
     @RequestMapping(value = "/archive/payment", method = RequestMethod.GET)
     public List<ArchivePayment> getArchivePayments() {
@@ -43,11 +49,12 @@ public class ArchiveController {
         return archiveService.getArchivePaymentByFV(fvID);
     }
 
+    // Mapowania dla całego setu (FV + Revision + Payment)
+
     @RequestMapping(value = "/archive", method = RequestMethod.POST)
     public void archiveFV(@RequestParam Integer ID) {
         archiveService.archiveFV(ID);
     }
-
     //Param nie zadziała, dać RBody / FV / getID
 
     @RequestMapping(value = "/archive/{ID}", method = RequestMethod.DELETE)

@@ -20,6 +20,8 @@ public class ContractorService {
     @Autowired
     ContractorRepo contractorRepo;
 
+    // Metody dla Contractor.class i Address.class
+
     @Transactional
     @Modifying
     public void createNewContractor(String company, String NIP, String bank, String account, String contactnr, String mail, String note,

@@ -14,6 +14,8 @@ public class ContractorController {
     @Autowired
     ContractorService contractorService;
 
+    // Mapowania dla Contractor i Address
+
     @RequestMapping(value = "/contractor", method = RequestMethod.GET)
     public List<Contractor> getAllContractors() {
         return contractorService.getAllContractors();
@@ -44,7 +46,6 @@ public class ContractorController {
                                  @RequestParam String street) {
         contractorService.createNewContractor(company, NIP, bank, account, contactnr, mail, note, country, province, city, zip, street);
     }
-
     // @RequestBody -> potrzeba 2 obiektów, address i contractor, sprawdzić czy zrobi 2 lub jakąś nową klasę
 
     @RequestMapping(value = "/contractor", method = RequestMethod.PUT)

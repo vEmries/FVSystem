@@ -14,6 +14,8 @@ public class PaymentController {
     @Autowired
     PaymentService paymentService;
 
+    // Mapowania dla Payment
+
     @RequestMapping(value = "/payment", method = RequestMethod.GET)
     public List<Payment> getAllPayments() {
         return paymentService.getAllPayments();

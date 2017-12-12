@@ -1,7 +1,5 @@
 app.controller('fvCtrl', function($scope, $http) {
     
-    $scope.showAddPanel = false;
-    
     $scope.loadFV = function() {
         $http.get('./fv')
                 .success(function(data) {
@@ -32,25 +30,25 @@ app.controller('fvCtrl', function($scope, $http) {
         });
     };
     
-//    $scope.updateFV = function() {
-//      
-//        var data = ({
-//            id: $scope.upID,
-//            fvnumber: $scope.upFVNumber,
-//            contractor: $scope.upContractor,
-//            duedate: $scope.upDueDate,
-//            sum: $scope.upSum,
-//            note: $scope.upNote
-//        });
-//        
-//        $http.post('./fv', data).then(function(response) {
-//            $scope.updateResult = "Updated";
-//            $scope.loadFV();
-//        }, function(response) {
-//            $scope.updateResult = "Update error";
-//        });
-//        
-//    };
+    $scope.updateFV = function(upID, upFVNumber, upContractor, upIssueDate, upDueDate, upValue, upNote) {
+      
+        var data = ({
+            id: upID,
+            fvnumber: upFVNumber,
+            contractor: upContractor,
+            issuedate: upIssueDate,
+            duedate: upDueDate,
+            value: upValue,
+            note: upNote
+        });
+        
+        $http.put('./fv', data).then(function(response) {
+            $scope.updateResult = "Updated";
+            $scope.loadFV();
+        }, function(response) {
+            $scope.updateResult = "Update error";
+        }); 
+    };
     
     $scope.deleteFV = function(ID) {
         if(confirm('Czy na pewno chcesz usunąć fakturę?')){
@@ -64,6 +62,7 @@ app.controller('fvCtrl', function($scope, $http) {
     };
     
     $scope.addRevision = function(fvID, addFVNumber, addIssueDate, addQuota, addNote) {
+        
         var data = ({
             fvnumber : addFVNumber,
             fv : fvID,
@@ -79,6 +78,25 @@ app.controller('fvCtrl', function($scope, $http) {
             $scope.postResult = "Post Error";
         });
     };
+    
+//    $scope.updateRevision = function(upRID, upRFVNumber, upRFV, upRIssueDate, upRQuota, upRNote) {
+//     
+//        var data =({
+//            id : upRID,
+//            fvnumber : upRFVNumber,
+//            fv : upRFV,
+//            issuedate : upRIssueDate,
+//            quota : upRQuota,
+//            note : upRNote
+//        });
+//        
+//        $http.put('./fvr', data).then(function(response) {
+//            $scope.updateResult = "Updated";
+//            $scope.loadFV();
+//        }, function(response) {
+//            $scope.updateResult = "Update Error";
+//        });
+//    };
     
     $scope.deleteRevision = function(ID) {
         if(confirm('Czy na pewno chcesz usunąć korektę?')) {

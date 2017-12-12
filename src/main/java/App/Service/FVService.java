@@ -21,6 +21,8 @@ public class FVService {
     @Autowired
     PaymentService paymentService;
 
+    // Metody aktualizujące sumę do zapłaty i stan płatności
+
     @Transactional
     @Modifying
     public void updatePaidStatus(Integer fvID) {
@@ -57,6 +59,8 @@ public class FVService {
         checkedFV.setSum(sum);
     }
 
+    // Metody dla FV.class
+
     @Transactional
     @Modifying
     public void createNewFV(String fvNumber, Integer contractorID, Date issueDate, Date dueDate, Double value, String note) {
@@ -66,10 +70,11 @@ public class FVService {
 
     @Transactional
     @Modifying
-    public void updateFV(Integer fvID, String fvNumber, Integer contractorID, Date dueDate, Double value, String note) {
+    public void updateFV(Integer fvID, String fvNumber, Integer contractorID, Date issueDate, Date dueDate, Double value, String note) {
         FV updatedFV = fvRepo.findById(fvID);
         updatedFV.setFvnumber(fvNumber);
         updatedFV.setContractor(contractorID);
+        updatedFV.setIssuedate(issueDate);
         updatedFV.setDuedate(dueDate);
         updatedFV.setValue(value);
         updatedFV.setNote(note);
@@ -94,11 +99,27 @@ public class FVService {
         fvRepo.delete(ID);
     }
 
+    // Metody dla FVRevision.class
+
     @Transactional
     @Modifying
     public void createNewRevision(String fvNumber, Integer fvID, Date issueDate, Double quota, String note) {
         FVRevision newRevision = new FVRevision(fvNumber, fvID, issueDate, quota, note);
         fvRevisionRepo.save(newRevision);
+
+        updateFVSum(fvID);
+        updatePaidStatus(fvID);
+    }
+
+    @Transactional
+    @Modifying
+    public void updateRevision(Integer ID, String fvNumber, Integer fvID, Date issueDate, Double quota, String note) {
+        FVRevision updatedRevision = fvRevisionRepo.findById(ID);
+        updatedRevision.setFvnumber(fvNumber);
+        updatedRevision.setFv(fvID);
+        updatedRevision.setIssuedate(issueDate);
+        updatedRevision.setQuota(quota);
+        updatedRevision.setNote(note);
 
         updateFVSum(fvID);
         updatePaidStatus(fvID);

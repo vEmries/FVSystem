@@ -17,6 +17,8 @@ public class FVController {
     @Autowired
     FVService fvService;
 
+    // Mapowania dla FV
+
     @RequestMapping(value = "/fv", method = RequestMethod.GET)
     public List<FV> getFVs() { return fvService.getAllFVs(); }
 
@@ -30,13 +32,15 @@ public class FVController {
 
     @RequestMapping(value = "/fv", method = RequestMethod.PUT)
     public void updateFV(@RequestBody FV tmpFV) {
-        fvService.updateFV(tmpFV.getId(), tmpFV.getFvnumber(), tmpFV.getContractor(), tmpFV.getDuedate(), tmpFV.getValue(), tmpFV.getNote());
+        fvService.updateFV(tmpFV.getId(), tmpFV.getFvnumber(), tmpFV.getContractor(), tmpFV.getIssuedate(), tmpFV.getDuedate(), tmpFV.getValue(), tmpFV.getNote());
     }
 
     @RequestMapping(value = "/fv/{ID}", method = RequestMethod.DELETE)
     public void deleteFV(@PathVariable(name = "ID") Integer fvID) {
         fvService.deleteFV(fvID);
     }
+
+    // Mapowania dla FVRevision
 
     @RequestMapping(value = "/fvr", method = RequestMethod.GET)
     public List<FVRevision> getRevisions() { return fvService.getAllRevisions(); }
@@ -47,6 +51,11 @@ public class FVController {
     @RequestMapping(value = "/fvr", method = RequestMethod.POST)
     public void createRevision(@RequestBody FVRevision tmpRevision) {
         fvService.createNewRevision(tmpRevision.getFvnumber(), tmpRevision.getFv(), tmpRevision.getIssuedate(), tmpRevision.getQuota(), tmpRevision.getNote());
+    }
+
+    @RequestMapping(value = "/fvr", method = RequestMethod.PUT)
+    public void updateRevision(@RequestBody FVRevision tmpRevision) {
+        fvService.updateRevision(tmpRevision.getId(), tmpRevision.getFvnumber(), tmpRevision.getFv(), tmpRevision.getIssuedate(), tmpRevision.getQuota(), tmpRevision.getNote());
     }
 
     @RequestMapping(value = "/fvr/{ID}", method = RequestMethod.DELETE)
