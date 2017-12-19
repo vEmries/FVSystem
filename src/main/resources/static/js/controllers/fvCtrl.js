@@ -5,9 +5,15 @@ app.controller('fvCtrl', function($scope, $http) {
                 .success(function(data) {
                     $scope.allFVs = data;
         });
+        
         $http.get('./fvr')
                 .success(function(data) {
                     $scope.allRevisions = data;
+        });
+        
+        $http.get('./payment')
+                .success(function(data) {
+                    $scope.allPayments = data;
         });
     };
 
@@ -109,11 +115,11 @@ app.controller('fvCtrl', function($scope, $http) {
         }
     };
     
-    $scope.loadPayment = function() {
-        $http.get('./payment')
-                .success(function(data) {
-                    $scope.allPayments = data;
-        });
-    };
+//    $scope.loadPayment = function() {
+//        $http.get('./payment')
+//                .success(function(data) {
+//                    $scope.allPayments = data;
+//        });
+//    };
     
 });

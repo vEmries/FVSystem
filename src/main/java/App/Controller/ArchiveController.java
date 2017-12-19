@@ -51,11 +51,10 @@ public class ArchiveController {
 
     // Mapowania dla całego setu (FV + Revision + Payment)
 
-    @RequestMapping(value = "/archive", method = RequestMethod.POST)
-    public void archiveFV(@RequestParam Integer ID) {
+    @RequestMapping(value = "/archive/{ID}", method = RequestMethod.POST)
+    public void archiveFV(@PathVariable(name = "ID") Integer ID) {
         archiveService.archiveFV(ID);
     }
-    //Param nie zadziała, dać RBody / FV / getID
 
     @RequestMapping(value = "/archive/{ID}", method = RequestMethod.DELETE)
     public void deleteArchiveFV(@PathVariable(name = "ID") Integer ID) {
