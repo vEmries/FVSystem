@@ -66,7 +66,7 @@
             </div>
         </div>
         
-        <div class="main-panel" ng-controller="contractorCtrl">
+        <div class="main-panel" ng-controller="contractorCtrl" data-ng-init="loadContractor()">
             <nav class="navbar navbar-transparent navbar-absolute">
                 <div class="container-fluid">
                     <div class="navbar-header">
@@ -100,9 +100,140 @@
             </nav>
             <div class="content">
                 <div class="container-fluid">
-                    
-                    <a>Contractors page content -----------</a>
-                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header" data-background-color="purple">
+                                    <h4 class="title">Kontrahenci</h4>
+                                </div>
+                                <div class="card-content table-responsive">
+                                    <table class="table">
+                                        <thead class="text-primary">
+                                            <th class="text-center">Nr identyfikacyjny</th>
+                                            <th class="text-center">Nazwa firmy</th>
+                                            <th class="text-center">NIP</th>
+                                            <th class="text-center">Bank</th>
+                                            <th class="text-center">Nr konta</th>
+                                            <th class="text-center">Nr kontaktowy</th>
+                                            <th class="text-center">Adres e-mail</th>
+                                            <th>Dodatkowe notatki</th>
+                                            <th>
+                                                <i class="material-icons click-icon" ng-click="showAddContractor = !showAddContractor">note_add</i>
+                                            </th>
+                                        </thead>
+                                        <tr ng-show="showAddContractor">
+                                            <td>
+                                                <input type="text" class="form-control" ng-model="addCompany" placeholder="Nazwa firmy"/>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" ng-model="addNip" placeholder="NIP"/>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" ng-model="addBank" placeholder="Nazwa banku"/>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" ng-model="addAccount" placeholder="Nr konta"/>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" ng-model="addContactnr" placeholder="Nr kontaktowy"/>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" ng-model="addMail" placeholder="Adres e-mail"/>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" ng-model="addNote" placeholder="Dodatkowy opis"/>
+                                            </td>
+                                        </tr>
+                                        <tr ng-show="showAddContractor">
+                                            <td></td>
+                                            <td>
+                                                <input type="text" class="form-control" ng-model="addCountry" placeholder="Kraj"/>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" ng-model="addProvince" placeholder="Województwo/Region"/>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" ng-model="addZip" placeholder="Kod pocztowy"/>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" ng-model="addCity" placeholder="Miasto"/>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" ng-model="addStreet" placeholder="Ulica i nr"/>
+                                            </td>
+                                            <td>
+                                                <i class="material-icons click-icon" ng-click="addContractor()">done</i>
+                                            </td>
+                                        </tr>
+                                        <tbody ng-repeat="contractor in allContractors">
+                                            <tr>
+                                                <td class="text-center">{{contractor.id}}</td>
+                                                <td class="text-center">{{contractor.company}}</td>
+                                                <td class="text-center">{{contractor.nip}}</td>
+                                                <td class="text-center">{{contractor.bank}}</td>
+                                                <td class="text-center">{{contractor.account}}</td>
+                                                <td class="text-center">{{contractor.contactnr}}</td>
+                                                <td class="text-center">{{contractor.mail}}</td>
+                                                <td>{{contractor.note}}</td>
+                                                <td>
+                                                    <i class="material-icons click-icon" ng-click="showEdit = !showEdit">edit</i>
+                                                    <i class="material-icons click-icon" ng-click="deleteContractor(contractor.id)">delete</i>
+                                                </td>
+                                            </tr>
+                                            <tr ng-repeat="address in allAddresses" ng-if="contractor.address == address.id">
+                                                <td></td>
+                                                <td colspan="6">{{address.country}}, {{address.province}}, {{address.zip}} {{address.city}}, {{address.street}}</td>
+                                            </tr>
+                                            <tr ng-show="showEdit">
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="contractor.company"/>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="contractor.nip"/>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="contractor.bank"/>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="contractor.account"/>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="contractor.contactnr"/>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="contractor.mail"/>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="contractor.note"/>
+                                                </td>
+                                            </tr>
+                                            <tr ng-show="showEdit" ng-repeat="address in allAddresses" ng-if="contractor.address == address.id">
+                                                <td></td>
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="address.country"/>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="address.province"/>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="address.zip"/>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="address.city"/>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="address.street"/>
+                                                </td>
+                                                <td>
+                                                    <i class="material-icons click-icon" ng-click="updateContractor(contractor.id, contractor.company, contractor.nip, contractor.bank, contractor.account, contractor.contactnr, contractor.mail, contractor.note, contractor.address, address.country, address.province, address.city, address.zip, address.street)">done</i>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

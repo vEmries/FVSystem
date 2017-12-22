@@ -58,6 +58,14 @@ public class ContractorService {
     }
 
     @Transactional
+    @Modifying
+    public void deleteContractor(Integer ID) {
+        Integer addressID = getContractor(ID).getAddress();
+        contractorRepo.delete(ID);
+        addressRepo.delete(addressID);
+    }
+
+    @Transactional
     public List<Contractor> getAllContractors() {
         return contractorRepo.findAll();
     }
@@ -66,6 +74,9 @@ public class ContractorService {
     public Contractor getContractor(Integer ID) {
         return contractorRepo.findById(ID);
     }
+
+    @Transactional
+    public List<Address> getAllAdresses() { return addressRepo.findAll(); }
 
     @Transactional
     public Address getAddressForContractor(Integer addressID) {

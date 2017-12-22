@@ -5,6 +5,7 @@ import App.Model.Contractor;
 import App.Service.ContractorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import sun.misc.Request;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class ContractorController {
     @Autowired
     ContractorService contractorService;
 
-    // Mapowania dla Contractor i Address
+    // Mapowania dla Contractor
 
     @RequestMapping(value = "/contractor", method = RequestMethod.GET)
     public List<Contractor> getAllContractors() {
@@ -26,47 +27,47 @@ public class ContractorController {
         return contractorService.getContractor(ID);
     }
 
+    // Mapowanie dla Address
+
+    @RequestMapping(value = "/contractor/address", method = RequestMethod.GET)
+    public List<Address> getAllAdresses() { return contractorService.getAllAdresses(); }
+
     @RequestMapping(value = "/contractor/address/{ID}", method = RequestMethod.GET)
     public Address getAddressForContractor(@PathVariable(name = "ID") Integer addressID) {
         return contractorService.getAddressForContractor(addressID);
     }
 
-    @RequestMapping(value = "/contractor", method = RequestMethod.POST)
-    public void createContractor(@RequestParam String company,
-                                 @RequestParam String NIP,
-                                 @RequestParam String bank,
-                                 @RequestParam String account,
-                                 @RequestParam String contactnr,
-                                 @RequestParam String mail,
-                                 @RequestParam String note,
-                                 @RequestParam String country,
-                                 @RequestParam String province,
-                                 @RequestParam String city,
-                                 @RequestParam String zip,
-                                 @RequestParam String street) {
-        contractorService.createNewContractor(company, NIP, bank, account, contactnr, mail, note, country, province, city, zip, street);
+    private Address toAddAddress;
+
+    @RequestMapping(value = "/contractor/address", method = RequestMethod.POST)
+    public void prepareAddress(@RequestBody Address tmpAddress) {
+        toAddAddress = tmpAddress;
     }
-    // @RequestBody -> potrzeba 2 obiektów, address i contractor, sprawdzić czy zrobi 2 lub jakąś nową klasę
+
+    @RequestMapping(value = "/contractor", method = RequestMethod.POST)
+    public void createContractor(@RequestBody Contractor tmpContractor) {
+        contractorService.createNewContractor(tmpContractor.getCompany(), tmpContractor.getNip(), tmpContractor.getBank(), tmpContractor.getAccount(), tmpContractor.getContactnr(), tmpContractor.getMail(), tmpContractor.getNote(),
+                                                toAddAddress.getCountry(), toAddAddress.getProvince(), toAddAddress.getCity(), toAddAddress.getZip(), toAddAddress.getStreet());
+
+        toAddAddress.setCountry(null);
+        toAddAddress.setProvince(null);
+        toAddAddress.setZip(null);
+        toAddAddress.setCity(null);
+        toAddAddress.setStreet(null);
+    }
 
     @RequestMapping(value = "/contractor", method = RequestMethod.PUT)
-    public void updateContractor(@RequestParam Integer ID,
-                                 @RequestParam String company,
-                                 @RequestParam String NIP,
-                                 @RequestParam String bank,
-                                 @RequestParam String account,
-                                 @RequestParam String contactnr,
-                                 @RequestParam String mail,
-                                 @RequestParam String note) {
-        contractorService.updateContractor(ID, company, NIP, bank, account, contactnr, mail, note);
+    public void updateContractor(@RequestBody Contractor tmpContractor) {
+        contractorService.updateContractor(tmpContractor.getId(), tmpContractor.getCompany(), tmpContractor.getNip(), tmpContractor.getBank(), tmpContractor.getAccount(), tmpContractor.getContactnr(), tmpContractor.getMail(), tmpContractor.getNote());
     }
 
     @RequestMapping(value = "/contractor/address", method = RequestMethod.PUT)
-    public void updateAddress(@RequestParam Integer ID,
-                              @RequestParam String country,
-                              @RequestParam String province,
-                              @RequestParam String city,
-                              @RequestParam String zip,
-                              @RequestParam String street) {
-        contractorService.updateAddress(ID, country, province, city, zip, street);
+    public void updateAddress(@RequestBody Address tmpAddress) {
+        contractorService.updateAddress(tmpAddress.getId(), tmpAddress.getCountry(), tmpAddress.getProvince(), tmpAddress.getCity(), tmpAddress.getZip(), tmpAddress.getStreet());
+    }
+
+    @RequestMapping(value = "/contractor/{ID}", method = RequestMethod.DELETE)
+    public void deleteContractor(@PathVariable(name = "ID") Integer ID) {
+        contractorService.deleteContractor(ID);
     }
 }

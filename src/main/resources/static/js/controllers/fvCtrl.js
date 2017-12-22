@@ -115,11 +115,4 @@ app.controller('fvCtrl', function($scope, $http) {
         }
     };
     
-//    $scope.loadPayment = function() {
-//        $http.get('./payment')
-//                .success(function(data) {
-//                    $scope.allPayments = data;
-//        });
-//    };
-    
 });
