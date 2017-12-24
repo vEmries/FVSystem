@@ -26,12 +26,16 @@ public class ArchiveService {
     @Autowired
     PaymentService paymentService;
 
+    @Autowired
+    ContractorService contractorService;
+
     // Metody dla całego setu (FV + Revision + Payment)
 
     @Transactional
     @Modifying
     public void archiveFV(Integer ID) {
         ArchiveFV fvToArchive = new ArchiveFV(fvService.getFV(ID));
+        fvToArchive.setContractor(contractorService.getContractor(Integer.valueOf(fvToArchive.getContractor())).getCompany());
         archiveFVRepo.save(fvToArchive);
 
         for (Payment p : paymentService.getPaymentByFV(ID)) {

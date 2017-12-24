@@ -50,7 +50,7 @@ public class OfflineTests {
 //        paymentService.updatePayment(4, 21, 3, "Wpłata nr zz");
 //        paymentService.deletePayment(4);
 
-//        archiveService.archiveFV(87);
+        archiveService.archiveFV(69);
 
 //        fvService.createNewRevision("TT-300RR", 82, new Date(2015,01,01), -37.00, "Note");
 
