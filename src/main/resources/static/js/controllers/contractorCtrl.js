@@ -1,4 +1,4 @@
-app.controller('contractorCtrl', function($scope, $http){
+app.controller('contractorCtrl', function($scope, $http, Notification){
     
     $scope.loadContractor = function() {
         $http.get('./contractor')
@@ -39,10 +39,10 @@ app.controller('contractorCtrl', function($scope, $http){
         });
         
         $http.post('./contractor', dataContractor).then(function(response) {
-            $scope.postResult = "Posted";
+            Notification.primary('Dodano kontrahenta ' + dataContractor.company);
             $scope.loadContractor();
         }, function(response) {
-            $scope.postResult = "Post Error";
+            Notification.error('Dodanie kontrahenta ' + dataContractor.company + ' nie powiodło się');
         });
     };
     
@@ -63,7 +63,7 @@ app.controller('contractorCtrl', function($scope, $http){
             $http.put("./contractor", dataContractor).then(function(response) {
                 $scope.updateResult = "Updated";
             }, function(response) {
-                $scope.updateResult = "UpdateError";
+                $scope.updateResult = "Update Error";
             });
 
             var dataAddress = ({
@@ -76,20 +76,20 @@ app.controller('contractorCtrl', function($scope, $http){
             });
 
             $http.put("./contractor/address", dataAddress).then(function(response) {
-                $scope.updateResult = "Updated";
+                Notification.primary('Zaktualizowane kontrahenta ' + dataContractor.company);
                 $scope.loadContractor();
             }, function(response) {
-                $scope.updateResult = "Update Error";
+                Notification.error('Aktualizacja kontrahenta ' + dataContractor.company + ' nie powiodła się');
             });
         };
         
         $scope.deleteContractor = function(ID) {
             if(confirm('Czy na pewno chcesz usunąć kontrahenta?')) {
                 $http.delete('./contractor/' + ID).then(function(response) {
-                    $scope.deleteResult = "Deleted";
+                    Notification.warning('Usunięto kontrahenta');
                     $scope.loadContractor();
                 }, function(response) {
-                    $scope.deleteResult = "Delete Error";
+                    Notification.error('Usuwanie kontrahenta nie powiodło się');
                 });
             }
         };

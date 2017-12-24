@@ -1,4 +1,4 @@
-app.controller('archiveCtrl', function($scope, $http){
+app.controller('archiveCtrl', function($scope, $http, Notification){
     
     $scope.loadArchive = function() {
         $http.get('./archive/fv')
@@ -20,10 +20,10 @@ app.controller('archiveCtrl', function($scope, $http){
     $scope.deleteArchive = function(ID) {
         if(confirm('Czy na pewno chceszd usunąć wpis z archiwum?')) {
             $http.delete('./archive/' + ID).then(function(response) {
-                $scope.postResult = "Deleted";
+                Notification.warning('Usunięto rekord z archiwum');
                 $scope.loadArchive();
             }, function(response) {
-                $scope.postResult = "Delete Error";
+                Notification.error('Usunięcie rekordu z archiwum nie powiodło się');
             });
         }
     };

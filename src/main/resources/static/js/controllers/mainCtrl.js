@@ -1,4 +1,4 @@
-app.controller('mainCtrl', function($scope, $http){
+app.controller('mainCtrl', function($scope, $http, Notification){
     
 });
 
