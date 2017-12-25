@@ -1,13 +1,19 @@
-app.controller('fvCtrl', function($scope, $http) {
+app.controller('fvCtrl', function($scope, $http, Notification) {
     
     $scope.loadFV = function() {
         $http.get('./fv')
                 .success(function(data) {
                     $scope.allFVs = data;
         });
+        
         $http.get('./fvr')
                 .success(function(data) {
                     $scope.allRevisions = data;
+        });
+        
+        $http.get('./payment')
+                .success(function(data) {
+                    $scope.allPayments = data;
         });
     };
 
@@ -23,10 +29,10 @@ app.controller('fvCtrl', function($scope, $http) {
         });
         
         $http.post('./fv', data).then(function(response) {
-            $scope.postResult = "Posted";
+            Notification.primary('Dodano fakturę ' + data.fvnumber);
             $scope.loadFV();
         }, function(response) {
-            $scope.postResult = "Post Error";
+            Notification.error('Dodanie faktury ' + data.fvnumber + ' nie powiodło się');
         });
     };
     
@@ -43,20 +49,20 @@ app.controller('fvCtrl', function($scope, $http) {
         });
         
         $http.put('./fv', data).then(function(response) {
-            $scope.updateResult = "Updated";
+            Notification.primary('Zaktualizowano fakturę ' + data.fvnumber);
             $scope.loadFV();
         }, function(response) {
-            $scope.updateResult = "Update error";
+            Notification.error('Aktualizacja faktury' + data.fvnumber + ' nie powiodła się');
         }); 
     };
     
     $scope.deleteFV = function(ID) {
         if(confirm('Czy na pewno chcesz usunąć fakturę?')){
             $http.delete('./fv/' + ID).then(function(response) {
-                $scope.postResult = "Deleted";
+                Notification.warning('Usunięto fakturę');
                 $scope.loadFV();
             }, function(response) {
-                $scope.postResult = "Delete Error";
+                Notification.error('Nie udało się usunąć faktury');
             });
         }
     };
@@ -72,10 +78,10 @@ app.controller('fvCtrl', function($scope, $http) {
         });
         
         $http.post('./fvr', data).then(function(response) {
-            $scope.postResult = "Posted";
+            Notification.primary('Dodano korektę ' + data.fvnumber);
             $scope.loadFV();
         }, function(response) {
-            $scope.postResult = "Post Error";
+            Notification.error('Dodanie korekty' + data.fvnumber + 'nie powiodło się');
         });
     };
     
@@ -101,19 +107,12 @@ app.controller('fvCtrl', function($scope, $http) {
     $scope.deleteRevision = function(ID) {
         if(confirm('Czy na pewno chcesz usunąć korektę?')) {
             $http.delete('./fvr/' + ID).then(function(response) {
-                $scope.postResult = "Deleted";
+                Notification.warning('Usunięto korektę faktury');
                 $scope.loadFV();
             }, function(response) {
-                $scope.postResult = "Delete Error";
+                Notification.error('Usunięcie korekty faktury nie powiodło się');
             });
         }
-    };
-    
-    $scope.loadPayment = function() {
-        $http.get('./payment')
-                .success(function(data) {
-                    $scope.allPayments = data;
-        });
     };
     
 });

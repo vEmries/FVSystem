@@ -8,6 +8,7 @@
     
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="js/assets/notifications/angular-ui-notification.css" rel="stylesheet" />
 
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
@@ -19,6 +20,7 @@
     <script src="js/controllers/fvCtrl.js"></script>
     <script src="js/assets/bootstrap.min.js"></script>
     <script src="js/assets/material.min.js"></script>
+    <script src="js/assets/notifications/angular-ui-notification.js"></script>
 </head>
 
 <body ng-app="mainApp">
@@ -103,7 +105,7 @@
                                     <p class="category">Wszystkie aktywne faktury</p>
                                 </div>
                                 <div class="card-content table-responsive">
-                                    <table class="table" ng-init="loadPayment()">
+                                    <table class="table">
                                         <thead class="text-primary">
                                             <th class="text-center">Status</th>
                                             <th class="text-center">Numer faktury</th>
@@ -142,7 +144,7 @@
                                                     <i class="material-icons click-icon" ng-click="addFV()">done</i>
                                                 </td>
                                             </tr>
-                                        <tbody ng-repeat="fv in allFVs | orderBy:issuedate">
+                                        <tbody ng-repeat="fv in allFVs">
                                             <tr>
                                                 <td class="text-center">
                                                     <i class="material-icons" ng-if="fv.status < 0">assignment_late</i>
@@ -168,7 +170,7 @@
                                                     <input type="text" class="form-control" ng-model="fv.fvnumber"/>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" ng-model="fv.fvcontractor"/>
+                                                    <input type="text" class="form-control" ng-model="fv.contractor"/>
                                                 </td>
                                                 <td>
                                                     <input type="text" class="form-control" ng-model="fv.issuedate"/>

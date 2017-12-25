@@ -1,3 +1,3 @@
-app.controller('profileCtrl', function($scope) {
+app.controller('profileCtrl', function($scope, Notification) {
     
 });

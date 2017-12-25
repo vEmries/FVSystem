@@ -1,17 +1,16 @@
-app.controller('paymentCtrl', function($scope, $http) {
+app.controller('paymentCtrl', function($scope, $http, Notification) {
     
-    $scope.loadFV = function() {
+    $scope.loadPayments = function() {
         $http.get('./fv')
                 .success(function(data) {
                     $scope.allFVs = data;
         });
+        
         $http.get('./fvr')
                 .success(function(data) {
                     $scope.allRevisions = data;
         });
-    };
-    
-    $scope.loadPayments = function() {
+        
         $http.get('./payment')
                 .success(function(data) {
                     $scope.allPayments = data;
@@ -29,22 +28,20 @@ app.controller('paymentCtrl', function($scope, $http) {
         });
         
         $http.post('./payment', data).then(function(response) {
-           $scope.postResult = "Posted";
-           $scope.loadFV();
+           Notification.primary('Dodano płatność');
            $scope.loadPayments();
         }, function(response) {
-            $scope.postResult = "Post Error";
+            Notification.error('Dodanie płatności nie powiodło się');
         });
     };
     
     $scope.deletePayment = function(ID) {
         if(confirm('Czy na pewno chcesz usunąć płatność?')) {
             $http.delete('./payment/' + ID).then(function(response) {
-                $scope.postResult = "Deleted";
-                $scope.loadFV();
+                Notification.warning('Usunięto płatność');
                 $scope.loadPayments();
             }, function(response) {
-                $scope.postResult = "Delete Error";
+                Notification.error('Usunięcie płatności nie powiodło się');
             });
         }
     };
