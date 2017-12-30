@@ -13,6 +13,9 @@ import org.springframework.context.annotation.ImportResource;
 public class BasicConfig {
 
     @Bean
+    AuthenticationConfig loginConfig() { return new AuthenticationConfig(); }
+
+    @Bean
     FVService fvService() {
         return new FVService();
     }
@@ -31,7 +34,5 @@ public class BasicConfig {
     ArchiveService archiveService() {
         return new ArchiveService();
     }
-
-
 
 }

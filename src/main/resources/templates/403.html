@@ -1,0 +1,115 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>FV System</title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+    
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/bootstrap.css" rel="stylesheet" />
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet" />
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css' />
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" />
+    
+    <script src="js/mainApp.js" />
+    <script src="js/controllers/profileCtrl.js" />
+    <script src="js/assets/bootstrap.min.js" />
+    <script src="js/assets/material.min.js" />
+</head>
+
+<body ng-app="mainApp">
+    <div class="wrapper">
+
+        <div class="sidebar" data-color="purple">
+            <div class="logo">
+                <a href="./mainPage.html" class="simple-text">
+                    FV System
+                </a>
+            </div>
+            <div class="sidebar-wrapper">
+                <ul class="nav">
+                    <li>
+                        <a href="./mainPage.html">
+                            <i class="material-icons">dashboard</i>
+                            <p>Main</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./fvPage.html">
+                            <i class="material-icons">content_paste</i>
+                            <p>Faktury</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./paymentPage.html">
+                            <i class="material-icons">credit_card</i>
+                            <p>Płatności</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./contractorPage.html">
+                            <i class="material-icons">account_box</i>
+                            <p>Kontrahenci</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./archivePage.html">
+                            <i class="material-icons">archive</i>
+                            <p>Archiwum</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="main-panel" ng-controller="profileCtrl">
+            <nav class="navbar navbar-transparent navbar-absolute">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand"> 403 page </a>
+                    </div>
+                    <div class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="material-icons">person</i>
+                                    <p class="hidden-lg hidden-md">Profile</p>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="./">Profil</a>
+                                    </li>
+                                    <li>
+                                        <a href="./logout">Wyloguj</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="content">
+                <div class="container-fluid">
+
+                    <div>
+                        <h1 th:inline="text">[[${#httpServletRequest.remoteUser}]], nie masz dostępu do tej części serwisu</h1>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</body>
+
+</html>

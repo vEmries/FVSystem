@@ -5,9 +5,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.access.AccessDeniedHandler;
 
 @Configuration
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private AccessDeniedHandler accessDeniedHandler;
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
@@ -15,14 +19,17 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/**").permitAll()
-//                .antMatchers("/**").hasAnyRole("user")
-//                .antMatchers("/**").hasAnyRole("usert2") // jak jest podobny matcher to działa ostatni wywołany (t2, t1 nie ma dostępu)
+//                .antMatchers("/fv/**", "/fvPage.html").hasAnyRole("user")
+//                .antMatchers("/payment/**", "/paymentPage.html").hasAnyRole("usert2") // jak jest podobny matcher to działa ostatni wywołany (t2, t1 nie ma dostępu)
+//                .antMatchers("/403").hasAnyRole("user", "usert2")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login").permitAll()
                 .and()
-                .logout().permitAll();
+                .logout().permitAll()
+                .and()
+                .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
     }
 
     @Autowired

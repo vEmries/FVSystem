@@ -14,4 +14,7 @@ public class WebController {
     @GetMapping(value = "/login")
     public String showLogin() { return "login"; }
 
+    @GetMapping(value = "/403")
+    public String show403() { return "403"; }
+
 }
