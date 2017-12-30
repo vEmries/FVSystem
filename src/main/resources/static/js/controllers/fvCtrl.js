@@ -115,4 +115,16 @@ app.controller('fvCtrl', function($scope, $http, Notification) {
         }
     };
     
+    $scope.autoArchive = function() {
+        $http.post('./archive').then(function(response) {
+            Notification.primary('Zarchiwizowano faktury: ' + response);
+            $scope.loadFV();
+        }, function(response) {
+            Notification.error('Archiwizacja faktur nie powiodła się');
+        });
+        
+        //Trzeba poprawić notyfikację, bo źle wyświetla response
+        //Response to List<FV>, które zarchiwizował
+    };
+    
 });

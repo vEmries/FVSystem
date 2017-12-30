@@ -3,6 +3,7 @@ package App.Controller;
 import App.Model.ArchiveFV;
 import App.Model.ArchiveFVRevision;
 import App.Model.ArchivePayment;
+import App.Model.FV;
 import App.Service.ArchiveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -51,10 +52,14 @@ public class ArchiveController {
 
     // Mapowania dla całego setu (FV + Revision + Payment)
 
+    @RequestMapping(value = "/archive", method = RequestMethod.POST)
+    public List<FV> autoArchive() { return archiveService.autoArchive(); }
+
     @RequestMapping(value = "/archive/{ID}", method = RequestMethod.POST)
     public void archiveFV(@PathVariable(name = "ID") Integer ID) {
         archiveService.archiveFV(ID);
     }
+
 
     @RequestMapping(value = "/archive/{ID}", method = RequestMethod.DELETE)
     public void deleteArchiveFV(@PathVariable(name = "ID") Integer ID) {

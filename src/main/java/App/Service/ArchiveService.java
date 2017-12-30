@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @Component
@@ -49,6 +51,24 @@ public class ArchiveService {
         }
 
         fvService.deleteFV(ID);
+    }
+
+    @Transactional
+    @Modifying
+    public List<FV> autoArchive() {
+        Calendar calendar = Calendar.getInstance();
+        java.sql.Date currentDate = new java.sql.Date(calendar.getTime().getTime());
+
+        List<FV> archivizedFV = new ArrayList<>();
+        for (FV fv : fvService.getAllFVs()) {
+            if (currentDate.after(fv.getDuedate()) && fv.getStatus() > 0) {
+                archiveFV(fv.getId());
+                archivizedFV.add(fv);
+            }
+        }
+
+        System.out.println("Obecna data -------> " + currentDate);
+        return archivizedFV;
     }
 
     @Transactional

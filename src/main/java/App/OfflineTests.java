@@ -51,6 +51,7 @@ public class OfflineTests {
 //        paymentService.deletePayment(4);
 
 //        archiveService.archiveFV(69);
+//        archiveService.autoArchive();
 
 //        fvService.createNewRevision("TT-300RR", 82, new Date(2015,01,01), -37.00, "Note");
 
