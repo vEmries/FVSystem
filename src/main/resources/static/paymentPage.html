@@ -116,17 +116,18 @@
                                             <th class="text-center">Stan płatności</th>
                                             <th>Dodatkowy opis</th>
                                         </thead>
-                                        <tbody ng-repeat="fv in allFVs" ng-if="fv.status <= 0">
+                                        <tbody ng-repeat="fv in allFVs">
                                             <tr>
                                                 <td class="text-center">
                                                     <i class="material-icons" ng-if="fv.status < 0">assignment_late</i>
                                                     <i class="material-icons" ng-if="fv.status == 0">assignment</i>
+                                                    <i class="material-icons" ng-if="fv.status > 0">assignment_turned_in</i>
                                                 </td>
                                                 <td class="text-center">{{fv.fvnumber}}</td>
                                                 <td class="text-center">{{fv.contractor}}</td>
                                                 <td class="text-center">{{fv.issuedate}}</td>
                                                 <td class="text-center">{{fv.duedate}}</td>
-                                                <td class="text-center">{{fv.value | currency: 'zł'}}</td>
+                                                <td class="text-center">{{fv.value | currency : 'zł'}}</td>
                                                 <td class="text-center">{{fv.paid | currency : 'zł'}} / {{fv.sum | currency : 'zł'}}</td>
                                                 <td>{{fv.note}}</td>
                                             </tr>
@@ -153,11 +154,11 @@
                                                 <td></td>
                                                 <td colspan="6">Brak płatności dla faktury</td>
                                             </tr>
-                                            <tr>
+                                            <tr ng-if="fv.status <= 0">
                                                 <td colspan="3"></td>
                                                 <td colspan="5">Pozostało do zapłaty: {{fv.sum - fv.paid | currency : 'zł'}}.</td>
                                             </tr>
-                                            <tr>
+                                            <tr ng-if="fv.status <= 0">
                                                 <td colspan="3"></td>
                                                 <td colspan="2">Wprowadź wysokość i datę wykonanej płatnośći</td>
                                                 <td>
