@@ -187,6 +187,7 @@
                                                 <td colspan="6">{{address.country}}, {{address.province}}, {{address.zip}} {{address.city}}, {{address.street}}</td>
                                             </tr>
                                             <tr ng-show="showEdit">
+                                                <td></td>
                                                 <td>
                                                     <input type="text" class="form-control" ng-model="contractor.company"/>
                                                 </td>
@@ -210,7 +211,7 @@
                                                 </td>
                                             </tr>
                                             <tr ng-show="showEdit" ng-repeat="address in allAddresses" ng-if="contractor.address == address.id">
-                                                <td></td>
+                                                <td colspan="2"></td>
                                                 <td>
                                                     <input type="text" class="form-control" ng-model="address.country"/>
                                                 </td>
