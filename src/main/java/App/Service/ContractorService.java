@@ -38,6 +38,7 @@ public class ContractorService {
     public void updateContractor(Integer ID, String company, String NIP, String bank, String account, String contactnr, String mail, String note) {
         Contractor updatedContractor = contractorRepo.findById(ID);
         updatedContractor.setCompany(company);
+        updatedContractor.updateShortName();
         updatedContractor.setNip(NIP);
         updatedContractor.setBank(bank);
         updatedContractor.setAccount(account);
