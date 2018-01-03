@@ -15,6 +15,11 @@ app.controller('fvCtrl', function($scope, $http, Notification) {
                 .success(function(data) {
                     $scope.allPayments = data;
         });
+        
+        $http.get('./contractor')
+                .success(function(data) {
+                    $scope.allContractors = data;
+        });
     };
 
     $scope.addFV = function() {
