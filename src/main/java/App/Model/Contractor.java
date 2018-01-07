@@ -37,16 +37,13 @@ public class Contractor {
         toShorten.add("spółka komandytowa");
 
         String newCompanyShort = this.company;
-        System.out.println(newCompanyShort);
 
         for (String s : toShorten) {
             if (newCompanyShort.contains(s)) {
-                System.out.println("Zawiera: " + s);
                 newCompanyShort = newCompanyShort.replace(s, "");
             }
         }
 
-        System.out.println(newCompanyShort);
         this.companyshort = newCompanyShort.trim();
     };
 

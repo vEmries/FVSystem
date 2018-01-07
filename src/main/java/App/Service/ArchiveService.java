@@ -67,7 +67,6 @@ public class ArchiveService {
             }
         }
 
-        System.out.println("Obecna data -------> " + currentDate);
         return archivizedFV;
     }
 

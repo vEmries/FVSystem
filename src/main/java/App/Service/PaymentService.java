@@ -1,5 +1,6 @@
 package App.Service;
 
+import App.Exception.InvalidDataException;
 import App.Model.Payment;
 import App.Model.PaymentRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,19 +24,30 @@ public class PaymentService {
 
     @Transactional
     @Modifying
-    public void createNewPayment(Integer fvID, Date issuedate, Double quota, String note) {
+    public void createNewPayment(Integer fvID, Date issuedate, Double quota, String note) throws InvalidDataException {
+        if (quota <= 0 || quota > fvService.getFV(fvID).getSum() - fvService.getFV(fvID).getPaid()) {
+            throw new InvalidDataException("Błąd dodania płatnośći dla faktury '" + fvService.getFV(fvID).getFvnumber() + "'. Niepoprawna wartość kwoty");
+        }
+
         Payment newPayment = new Payment(fvID, issuedate, quota, note);
         paymentRepo.save(newPayment);
+
         fvService.updatePaidStatus(fvID);
     }
 
     @Transactional
     @Modifying
-    public void updatePayment(Integer ID, Integer fvID, Double quota, String note) {
+    public void updatePayment(Integer ID, Integer fvID, Double quota, String note) throws InvalidDataException {
+        if (quota <= 0) {
+            throw new InvalidDataException("Błąd edycji płatności o ID '" + ID + "'. Niepoprawna wartość kwoty");
+        }
+
         Payment updatedPayment = paymentRepo.findById(ID);
         updatedPayment.setFv(fvID);
         updatedPayment.setQuota(quota);
-        updatedPayment.setNote(note);
+        if (!note.trim().equals("")) {
+            updatedPayment.setNote(note);
+        }
 
         fvService.updatePaidStatus(fvID);
     }

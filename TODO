@@ -1,0 +1,6 @@
+1) Weryfikacja danych przy tworzeniu i edycji obiektów
+2) Dodawanie nowych userów i rola admina (mapowanie ./admin/*)
+3) Opcja zmiany hasła dla każdego usera
+
+Zmiany w froncie:
+1) Notyfikacje przy edycji kontrahentów (contractorCtrl.js, linie 64 i 66) - zmiana na podwójną notyfikację o edycji adresu i kontrahenta

@@ -1,6 +1,11 @@
 package App.Service;
 
+import App.Exception.InvalidDataException;
 import App.Model.*;
+import org.omg.CORBA.DynAnyPackage.Invalid;
+import org.postgresql.util.PSQLException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Component;
@@ -63,21 +68,31 @@ public class FVService {
 
     @Transactional
     @Modifying
-    public void createNewFV(String fvNumber, Integer contractorID, Date issueDate, Date dueDate, Double value, String note) {
+    public void createNewFV(String fvNumber, Integer contractorID, Date issueDate, Date dueDate, Double value, String note) throws InvalidDataException {
+        if (fvNumber.trim().equals("") || value <= 0) {
+            throw new InvalidDataException("Błąd dodania faktury '" + fvNumber + "'. Niepoprawna wartość nr faktury lub kwoty");
+        }
+
         FV newFV = new FV(fvNumber, contractorID, issueDate, dueDate, value, note);
         fvRepo.save(newFV);
     }
 
     @Transactional
     @Modifying
-    public void updateFV(Integer fvID, String fvNumber, Integer contractorID, Date issueDate, Date dueDate, Double value, String note) {
+    public void updateFV(Integer fvID, String fvNumber, Integer contractorID, Date issueDate, Date dueDate, Double value, String note) throws InvalidDataException {
+        if (fvNumber.trim().equals("") || value <= 0) {
+            throw new InvalidDataException("Błąd edycji faktury '" + fvRepo.findById(fvID).getFvnumber() + "'. Niepoprawna wartość nr faktury lub kwoty");
+        }
+
         FV updatedFV = fvRepo.findById(fvID);
         updatedFV.setFvnumber(fvNumber);
         updatedFV.setContractor(contractorID);
         updatedFV.setIssuedate(issueDate);
         updatedFV.setDuedate(dueDate);
         updatedFV.setValue(value);
-        updatedFV.setNote(note);
+        if (!note.trim().equals("")) {
+            updatedFV.setNote(note);
+        }
 
         updateFVSum(fvID);
         updatePaidStatus(fvID);
@@ -103,7 +118,11 @@ public class FVService {
 
     @Transactional
     @Modifying
-    public void createNewRevision(String fvNumber, Integer fvID, Date issueDate, Double quota, String note) {
+    public void createNewRevision(String fvNumber, Integer fvID, Date issueDate, Double quota, String note) throws InvalidDataException {
+        if (fvNumber.trim().equals("") || quota == 0) {
+            throw new InvalidDataException("Błąd dodania korekty '" + fvNumber + "'. Niepoprawna wartość nr faktury lub kwoty");
+        }
+
         FVRevision newRevision = new FVRevision(fvNumber, fvID, issueDate, quota, note);
         fvRevisionRepo.save(newRevision);
 
@@ -113,13 +132,19 @@ public class FVService {
 
     @Transactional
     @Modifying
-    public void updateRevision(Integer ID, String fvNumber, Integer fvID, Date issueDate, Double quota, String note) {
+    public void updateRevision(Integer ID, String fvNumber, Integer fvID, Date issueDate, Double quota, String note) throws InvalidDataException {
+        if (fvNumber.trim().equals("") || quota == 0) {
+            throw new InvalidDataException("Błąd edycji korekty '" + fvRevisionRepo.findById(ID).getFvnumber() + "'. Niepoprawna wartość nr faktury lub kwoty");
+        }
+
         FVRevision updatedRevision = fvRevisionRepo.findById(ID);
         updatedRevision.setFvnumber(fvNumber);
         updatedRevision.setFv(fvID);
         updatedRevision.setIssuedate(issueDate);
         updatedRevision.setQuota(quota);
-        updatedRevision.setNote(note);
+        if (!note.trim().equals("")) {
+            updatedRevision.setNote(note);
+        }
 
         updateFVSum(fvID);
         updatePaidStatus(fvID);
