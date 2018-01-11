@@ -1,13 +1,21 @@
 package App.Config;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.HttpEncodingProperties;
+import org.springframework.boot.web.filter.OrderedCharacterEncodingFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 
 @Configuration
 public class ThymeleafConfig {
+
+    @Autowired
+    private HttpEncodingProperties httpEncodingProperties;
+
     @Bean
     public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
@@ -18,17 +26,11 @@ public class ThymeleafConfig {
     }
 
     @Bean
-    public SpringTemplateEngine templateEngine() {
-        SpringTemplateEngine springTemplateEngine = new SpringTemplateEngine();
-        springTemplateEngine.addTemplateResolver(templateResolver());
-        return springTemplateEngine;
-    }
-
-    @Bean
-    public ThymeleafViewResolver viewResolver() {
-        ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
-        viewResolver.setTemplateEngine(templateEngine());
-        viewResolver.setOrder(1);
-        return viewResolver;
+    public OrderedCharacterEncodingFilter characterEncodingFilter() {
+        OrderedCharacterEncodingFilter filter = new OrderedCharacterEncodingFilter();
+        filter.setEncoding(this.httpEncodingProperties.getCharset().name());
+        filter.setForceEncoding(this.httpEncodingProperties.isForce());
+        filter.setOrder(Ordered.HIGHEST_PRECEDENCE);
+        return filter;
     }
 }
