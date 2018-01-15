@@ -110,12 +110,22 @@ public class FVService {
 
     @Transactional
     @Modifying
+    public void createNewFV(FV toAdd) throws InvalidDataException {
+        if (toAdd.getFvnumber().trim().equals("") || toAdd.getValue() <= 0) {
+            throw new InvalidDataException("Błąd dodania faktury '" + toAdd.getFvnumber() + "'. Niepoprawna wartość nr faktury lub kwoty");
+        }
+        if (!isFVNumberUnique(toAdd.getFvnumber(), toAdd.getContractor())) {
+            throw new InvalidDataException("Błąd dodania faktury '" + toAdd.getFvnumber() + "'. Istnieje już faktura o tym numerze dla kontrahenta o ID '" + toAdd.getContractor() +"'");
+        }
+
+        fvRepo.save(toAdd);
+    }
+
+    @Transactional
+    @Modifying
     public void updateFV(Integer fvID, String fvNumber, Integer contractorID, Date issueDate, Date dueDate, Double value, String note) throws InvalidDataException {
         if (fvNumber.trim().equals("") || value <= 0) {
             throw new InvalidDataException("Błąd edycji faktury '" + fvRepo.findById(fvID).getFvnumber() + "'. Niepoprawna wartość nr faktury lub kwoty");
-        }
-        if (!isFVNumberUnique(fvNumber, contractorID)) {
-            throw new InvalidDataException("Błąd edycji faktury '" + fvNumber + "'. Istnieje już faktura o tym numerze dla kontrahenta o ID '" + contractorID +"'");
         }
 
         FV updatedFV = fvRepo.findById(fvID);
@@ -172,9 +182,6 @@ public class FVService {
     public void updateRevision(Integer ID, String fvNumber, Integer fvID, Date issueDate, Double quota, String note) throws InvalidDataException {
         if (fvNumber.trim().equals("") || quota == 0) {
             throw new InvalidDataException("Błąd edycji korekty '" + fvRevisionRepo.findById(ID).getFvnumber() + "'. Niepoprawna wartość nr faktury lub kwoty");
-        }
-        if (!isRevisionFVNumberUnique(fvNumber, fvID)) {
-            throw new InvalidDataException("Błąd edycji korekty '" + fvNumber + "'. Istnieje już korekta o tym numerze dla faktury o ID '" + fvID +"'");
         }
 
         FVRevision updatedRevision = fvRevisionRepo.findById(ID);

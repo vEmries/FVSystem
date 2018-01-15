@@ -142,6 +142,7 @@
                                                 <td>{{fv.note}}</td>
                                                 <td>
                                                     <i class="material-icons click-icon" ng-click="deleteArchive(fv.id)">delete</i>
+                                                    <i class="material-icons click-icon" ng-click="returnFromArchive(fv.id)">settings_backup_restore</i>
                                                 </td>
                                             </tr>
                                             <tr ng-repeat="revision in archiveRevision" ng-if="revision.fv == fv.id">

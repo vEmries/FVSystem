@@ -74,6 +74,13 @@ public class ArchiveController {
         logger.info("Zarchiwizowano fakturę o ID '" + ID + "'");
     }
 
+    @RequestMapping(value = "archive/return/{ID}", method = RequestMethod.POST)
+    public void returnFromArchive(@PathVariable(name = "ID") Integer ID) {
+        archiveService.returnFromArchive(ID);
+
+        logger.info("Przywrócono z archiwum fakturę o ID '" + ID + "'");
+    }
+
     @RequestMapping(value = "/archive/{ID}", method = RequestMethod.DELETE)
     public void deleteArchiveFV(@PathVariable(name = "ID") Integer ID) {
         String deletedFV = archiveService.getArchiveFV(ID).getFvnumber();

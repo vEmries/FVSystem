@@ -43,4 +43,16 @@ public class FV {
         }
     }
 
+    public FV(ArchiveFV archiveFV) {
+        this.fvnumber = archiveFV.getFvnumber();
+        this.contractor = archiveFV.getContractor();
+        this.issuedate = archiveFV.getIssuedate();
+        this.duedate = archiveFV.getDuedate();
+        this.value = archiveFV.getValue();
+        this.sum = this.value;
+        this.paid = 0.0;
+        this.status = -1;
+        this.note = archiveFV.getNote();
+    }
+
 }
