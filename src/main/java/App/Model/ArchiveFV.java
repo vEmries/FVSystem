@@ -15,7 +15,7 @@ public class ArchiveFV {
     @Id
     private Integer id;
     private String fvnumber;
-    private String contractor;
+    private Integer contractor;
     private Date issuedate;
     private Date duedate;
     private Double value;
@@ -27,7 +27,7 @@ public class ArchiveFV {
     public ArchiveFV(FV toArchive) {
         this.id = toArchive.getId();
         this.fvnumber = toArchive.getFvnumber();
-        this.contractor = toArchive.getContractor().toString();
+        this.contractor = toArchive.getContractor();
         this.issuedate = toArchive.getIssuedate();
         this.duedate = toArchive.getDuedate();
         this.value = toArchive.getValue();

@@ -24,7 +24,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
         httpSecurity.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/**").hasAnyRole("user")
+                .antMatchers(("/**")).permitAll()
+//                .antMatchers("/**").hasAnyRole("user")
 //                .antMatchers("/fv/**", "/fvPage.html").hasAnyRole("user")
 //                .antMatchers("/payment/**", "/paymentPage.html").hasAnyRole("usert2") // jak jest podobny matcher to działa ostatni wywołany (t2, t1 nie ma dostępu)
 //                .antMatchers("/403").hasAnyRole("user", "usert2")
