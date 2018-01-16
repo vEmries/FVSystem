@@ -151,7 +151,7 @@
                                             </tr>
                                             <tr ng-repeat="payment in allPayments" ng-if="fv.status >= 0 && payment.fv == fv.id">
                                                 <td></td>
-                                                <td colspan="6">Płatność w wysokości: {{payment.quota | currency : 'zł'}}, dokonana: {{payment.issuedate}}</td>
+                                                <td colspan="6">Płatność w wysokości: {{payment.quota | currency : 'zł'}}, dokonana: {{payment.issuedate}}. {{payment.note}}</td>
                                                 <td>
                                                     <i class="material-icons click-icon" ng-click="deletePayment(payment.id)">delete</i>
                                                 </td>
@@ -174,7 +174,10 @@
                                                     <input type="text" class="form-control" ng-model="addIssueDate" placeholder="Data płatności"/>
                                                 </td>
                                                 <td>
-                                                    <i class="material-icons click-icon" ng-click="addPayment(fv.id, addQuota, addIssueDate)">done</i>
+                                                    <input type="text" class="form-control" ng-model="addNote" placeholder="Opis płatności" />
+                                                </td>
+                                                <td>
+                                                    <i class="material-icons click-icon" ng-click="addPayment(fv.id, addQuota, addIssueDate, addNote)">done</i>
                                                 </td>
                                             </tr>
                                         </tbody>

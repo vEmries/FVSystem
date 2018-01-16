@@ -18,13 +18,13 @@ app.controller('paymentCtrl', function($scope, $http, Notification) {
     };
     
     
-    $scope.addPayment = function(fvID, addQuota, addIssueDate) {
+    $scope.addPayment = function(fvID, addQuota, addIssueDate, addNote) {
         
         var data = ({
            fv: fvID,
            issuedate: addIssueDate,
            quota: addQuota,
-           note: " "
+           note: addNote
         });
         
         $http.post('./payment', data).then(function(response) {
