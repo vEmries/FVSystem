@@ -1,9 +1,7 @@
 package App.Controller;
 
-import App.Config.SpringSecurityConfig;
 import App.Exception.InvalidDataException;
 import App.Model.FV;
-import App.Model.FVRepo;
 import App.Model.FVRevision;
 import App.Service.FVService;
 import App.Service.UserService;
@@ -12,12 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.annotation.RequestScope;
 
-import java.sql.Date;
 import java.util.List;
 
 @RestController
@@ -42,7 +36,7 @@ public class FVController {
     @RequestMapping(value = "/fv", method = RequestMethod.POST)
     public ResponseEntity createFV(@RequestBody FV tmpFV) {
         try {
-            fvService.createNewFV(tmpFV.getFvnumber(), tmpFV.getContractor(), tmpFV.getIssuedate(), tmpFV.getDuedate(), tmpFV.getValue(), tmpFV.getNote());
+            fvService.createFV(tmpFV.getFvnumber(), tmpFV.getContractor(), tmpFV.getIssuedate(), tmpFV.getDuedate(), tmpFV.getValue(), tmpFV.getNote());
         } catch (InvalidDataException e) {
             logger.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -87,7 +81,7 @@ public class FVController {
     @RequestMapping(value = "/fvr", method = RequestMethod.POST)
     public ResponseEntity createRevision(@RequestBody FVRevision tmpRevision) {
         try {
-            fvService.createNewRevision(tmpRevision.getFvnumber(), tmpRevision.getFv(), tmpRevision.getIssuedate(), tmpRevision.getQuota(), tmpRevision.getNote());
+            fvService.createRevision(tmpRevision.getFvnumber(), tmpRevision.getFv(), tmpRevision.getIssuedate(), tmpRevision.getQuota(), tmpRevision.getNote());
         } catch (InvalidDataException e) {
             logger.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

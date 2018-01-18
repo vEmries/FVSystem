@@ -78,14 +78,14 @@ public class ArchiveService {
         archiveFV.setFvnumber(archiveFV.getFvnumber() + " - reAdding in progress");
 
         try {
-            fvService.createNewFV(toReAdd);
+            fvService.createFV(toReAdd);
         } catch (InvalidDataException e) {
             e.getMessage();
         }
 
         for (ArchiveFVRevision fvR : archiveFVRevisionRepo.findAllByFv(ID)) {
             try {
-                fvService.createNewRevision(fvR.getFvnumber(), toReAdd.getId(), fvR.getIssuedate(), fvR.getQuota(), fvR.getNote());
+                fvService.createRevision(fvR.getFvnumber(), toReAdd.getId(), fvR.getIssuedate(), fvR.getQuota(), fvR.getNote());
             } catch (InvalidDataException e) {
                 e.getMessage();
             }
@@ -93,7 +93,7 @@ public class ArchiveService {
 
         for (ArchivePayment p : archivePaymentRepo.findAllByFv(ID)) {
             try {
-                paymentService.createNewPayment(toReAdd.getId(), p.getIssuedate(), p.getQuota(), p.getNote());
+                paymentService.createPayment(toReAdd.getId(), p.getIssuedate(), p.getQuota(), p.getNote());
             } catch (InvalidDataException e) {
                 e.printStackTrace();
             }
@@ -104,7 +104,7 @@ public class ArchiveService {
 
     @Transactional
     @Modifying
-    public void deleteArchiveFV(Integer ID) {
+    public void deleteArchive(Integer ID) {
         archiveFVRepo.delete(ID);
     }
 

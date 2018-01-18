@@ -24,7 +24,7 @@ public class PaymentService {
 
     @Transactional
     @Modifying
-    public void createNewPayment(Integer fvID, Date issuedate, Double quota, String note) throws InvalidDataException {
+    public void createPayment(Integer fvID, Date issuedate, Double quota, String note) throws InvalidDataException {
         if (quota <= 0 || quota > fvService.getFV(fvID).getSum() - fvService.getFV(fvID).getPaid()) {
             throw new InvalidDataException("Błąd dodania płatnośći dla faktury '" + fvService.getFV(fvID).getFvnumber() + "'. Niepoprawna wartość kwoty");
         }

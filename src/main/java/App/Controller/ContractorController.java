@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sun.misc.Request;
 
 import java.util.List;
 
@@ -56,7 +55,7 @@ public class ContractorController {
     @RequestMapping(value = "/contractor", method = RequestMethod.POST)
     public ResponseEntity createContractor(@RequestBody Contractor tmpContractor) {
         try {
-            contractorService.createNewContractor(tmpContractor.getCompany(), tmpContractor.getNip(), tmpContractor.getBank(), tmpContractor.getAccount(), tmpContractor.getContactnr(), tmpContractor.getMail(), tmpContractor.getNote(),
+            contractorService.createContractor(tmpContractor.getCompany(), tmpContractor.getNip(), tmpContractor.getBank(), tmpContractor.getAccount(), tmpContractor.getContactnr(), tmpContractor.getMail(), tmpContractor.getNote(),
                     toAddAddress.getCountry(), toAddAddress.getProvince(), toAddAddress.getCity(), toAddAddress.getZip(), toAddAddress.getStreet());
         } catch (InvalidDataException e) {
             logger.error(e.getMessage());

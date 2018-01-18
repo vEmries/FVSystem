@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
 import java.util.List;
 
 @RestController
@@ -36,7 +35,7 @@ public class PaymentController {
     @RequestMapping(value = "/payment", method = RequestMethod.POST)
     public ResponseEntity createPayment(@RequestBody Payment tmpPayment) {
         try {
-            paymentService.createNewPayment(tmpPayment.getFv(), tmpPayment.getIssuedate(), tmpPayment.getQuota(), tmpPayment.getNote());
+            paymentService.createPayment(tmpPayment.getFv(), tmpPayment.getIssuedate(), tmpPayment.getQuota(), tmpPayment.getNote());
         } catch (InvalidDataException e) {
             logger.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

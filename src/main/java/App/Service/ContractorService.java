@@ -25,8 +25,8 @@ public class ContractorService {
 
     @Transactional
     @Modifying
-    public void createNewContractor(String company, String NIP, String bank, String account, String contactnr, String mail, String note,
-                                    String country, String province, String city, String zip, String street) throws InvalidDataException {
+    public void createContractor(String company, String NIP, String bank, String account, String contactnr, String mail, String note,
+                                 String country, String province, String city, String zip, String street) throws InvalidDataException {
 
         if (company.trim().equals("") || NIP.trim().equals("")) {
             throw new InvalidDataException("Błąd dodania nowego kontrahenta. Brak nazwy lub NIP-u");
@@ -49,17 +49,6 @@ public class ContractorService {
         toUpdate.setAddress(contractorRepo.findById(toUpdate.getId()).getAddress());
         contractorRepo.save(toUpdate);
     }
-
-//    @Transactional
-//    @Modifying
-//    public void updateAddress(Integer ID, String counry, String province, String city, String zip, String street) {
-//        Address updatedAddress = addressRepo.findById(ID);
-//        updatedAddress.setCountry(counry);
-//        updatedAddress.setProvince(province);
-//        updatedAddress.setCity(city);
-//        updatedAddress.setZip(zip);
-//        updatedAddress.setStreet(street);
-//    }
 
     @Transactional
     @Modifying

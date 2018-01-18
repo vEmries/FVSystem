@@ -15,6 +15,7 @@
         <class>App.Model.ArchiveFV</class>
         <class>App.Model.ArchivePayment</class>
         <class>App.Model.Address</class>
+        <class>App.Model.User</class>
 
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://192.168.1.12:5432/fvservice" />

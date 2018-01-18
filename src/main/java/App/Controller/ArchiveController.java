@@ -82,9 +82,9 @@ public class ArchiveController {
     }
 
     @RequestMapping(value = "/archive/{ID}", method = RequestMethod.DELETE)
-    public void deleteArchiveFV(@PathVariable(name = "ID") Integer ID) {
+    public void deleteArchive(@PathVariable(name = "ID") Integer ID) {
         String deletedFV = archiveService.getArchiveFV(ID).getFvnumber();
-        archiveService.deleteArchiveFV(ID);
+        archiveService.deleteArchive(ID);
 
         logger.info("Usunięto z archiwum fakturę '" + deletedFV + "'");
     }

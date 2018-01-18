@@ -120,7 +120,7 @@ public class FVService {
 
     @Transactional
     @Modifying
-    public void createNewFV(String fvNumber, Integer contractorID, Date issueDate, Date dueDate, Double value, String note) throws InvalidDataException {
+    public void createFV(String fvNumber, Integer contractorID, Date issueDate, Date dueDate, Double value, String note) throws InvalidDataException {
         if (fvNumber.trim().equals("") || value <= 0) {
             throw new InvalidDataException("Błąd dodania faktury '" + fvNumber + "'. Niepoprawna wartość nr faktury lub kwoty");
         }
@@ -134,7 +134,7 @@ public class FVService {
 
     @Transactional
     @Modifying
-    public void createNewFV(FV toAdd) throws InvalidDataException {
+    public void createFV(FV toAdd) throws InvalidDataException {
         if (toAdd.getFvnumber().trim().equals("") || toAdd.getValue() <= 0) {
             throw new InvalidDataException("Błąd dodania faktury '" + toAdd.getFvnumber() + "'. Niepoprawna wartość nr faktury lub kwoty");
         }
@@ -184,7 +184,7 @@ public class FVService {
 
     @Transactional
     @Modifying
-    public void createNewRevision(String fvNumber, Integer fvID, Date issueDate, Double quota, String note) throws InvalidDataException {
+    public void createRevision(String fvNumber, Integer fvID, Date issueDate, Double quota, String note) throws InvalidDataException {
         if (fvNumber.trim().equals("") || quota == 0) {
             throw new InvalidDataException("Błąd dodania korekty '" + fvNumber + "'. Niepoprawna wartość nr faktury lub kwoty");
         }
@@ -198,6 +198,8 @@ public class FVService {
         updateFVSum(fvID);
         updatePaidStatus(fvID);
     }
+
+
 
     @Transactional
     @Modifying
@@ -229,6 +231,7 @@ public class FVService {
     public void deleteRevision(Integer ID) {
         Integer fvID = fvRevisionRepo.findById(ID).getFv();
         fvRevisionRepo.delete(ID);
+
         updateFVSum(fvID);
         updatePaidStatus(fvID);
     }

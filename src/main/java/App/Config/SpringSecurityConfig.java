@@ -1,5 +1,7 @@
 package App.Config;
 
+import App.Model.User;
+import App.Model.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration;
@@ -17,6 +19,9 @@ import java.util.Properties;
 
 @Configuration
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    UserRepo userRepo;
 
     @Autowired
     private AccessDeniedHandler accessDeniedHandler;
@@ -46,12 +51,24 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         authManagerBuilder.userDetailsService(inMemoryUserDetailsManager());
     }
 
+//    @Bean
+//    public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
+//        final Properties users = new Properties();
+//
+//        users.put("user1", "pw, ROLE_user, enabled");
+//        users.put("user2", "pw2, ROLE_user, enabled");
+//        return new InMemoryUserDetailsManager(users);
+//    }
+
     @Bean
     public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
-        final Properties users = new Properties();
+        Properties users = new Properties();
 
-        users.put("user1", "pw, ROLE_user, enabled");
-        users.put("user2", "pw2, ROLE_user, enabled");
+        for (User u : userRepo.findAll()) {
+            String role = u.getPassword() + ", " + u.getRole() + ", enabled";
+            users.put(u.getUsername(), role);
+        }
+
         return new InMemoryUserDetailsManager(users);
     }
 
