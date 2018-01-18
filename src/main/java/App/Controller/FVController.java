@@ -1,10 +1,12 @@
 package App.Controller;
 
+import App.Config.SpringSecurityConfig;
 import App.Exception.InvalidDataException;
 import App.Model.FV;
 import App.Model.FVRepo;
 import App.Model.FVRevision;
 import App.Service.FVService;
+import App.Service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +25,11 @@ public class FVController {
 
     private static Logger logger = LoggerFactory.getLogger(FVController.class);
 
-//    private Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
     @Autowired
     FVService fvService;
+
+    @Autowired
+    UserService userService;
 
     // Mapowania dla FV
 

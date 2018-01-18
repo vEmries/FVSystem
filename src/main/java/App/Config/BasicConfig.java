@@ -1,9 +1,6 @@
 package App.Config;
 
-import App.Service.ArchiveService;
-import App.Service.ContractorService;
-import App.Service.FVService;
-import App.Service.PaymentService;
+import App.Service.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
@@ -34,5 +31,8 @@ public class BasicConfig {
     ArchiveService archiveService() {
         return new ArchiveService();
     }
+
+    @Bean
+    UserService userService() { return new UserService(); }
 
 }
