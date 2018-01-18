@@ -147,26 +147,21 @@ public class FVService {
 
     @Transactional
     @Modifying
-    public void updateFV(Integer fvID, String fvNumber, Integer contractorID, Date issueDate, Date dueDate, Double value, String note) throws InvalidDataException {
-        if (fvNumber.trim().equals("") || value <= 0) {
-            throw new InvalidDataException("Błąd edycji faktury '" + fvRepo.findById(fvID).getFvnumber() + "'. Niepoprawna wartość nr faktury lub kwoty");
+    public void updateFV(FV toUpdate) throws InvalidDataException {
+        if (toUpdate.getFvnumber().trim().equals("") || toUpdate.getValue() <= 0) {
+            throw new InvalidDataException("Błąd edycji faktury '" + toUpdate.getFvnumber() + "'. Niepoprawna wartość nr faktury lub kwoty");
         }
-        if (!isFVUniqueExcept(fvID, fvNumber, contractorID)) {
-            throw new InvalidDataException("Błąd edycji faktury '" + fvNumber + "'. Istnieje już faktura o tym numerze dla kontrahenta o ID '" + contractorID +"'");
-        }
-
-        FV updatedFV = fvRepo.findById(fvID);
-        updatedFV.setFvnumber(fvNumber);
-        updatedFV.setContractor(contractorID);
-        updatedFV.setIssuedate(issueDate);
-        updatedFV.setDuedate(dueDate);
-        updatedFV.setValue(value);
-        if (!note.trim().equals("")) {
-            updatedFV.setNote(note);
+        if (!isFVUniqueExcept(toUpdate.getId(), toUpdate.getFvnumber(), toUpdate.getContractor())) {
+            throw new InvalidDataException("Błąd edycji faktury '" + toUpdate.getFvnumber() + "'. Istnieje już faktura o tym numerze dla kontrahenta o ID '" + toUpdate.getContractor() +"'");
         }
 
-        updateFVSum(fvID);
-        updatePaidStatus(fvID);
+        toUpdate.setStatus(-1);
+        toUpdate.setSum(0.0);
+        toUpdate.setPaid(0.0);
+        fvRepo.save(toUpdate);
+
+        updateFVSum(toUpdate.getId());
+        updatePaidStatus(toUpdate.getId());
     }
 
     @Transactional
@@ -206,25 +201,18 @@ public class FVService {
 
     @Transactional
     @Modifying
-    public void updateRevision(Integer ID, String fvNumber, Integer fvID, Date issueDate, Double quota, String note) throws InvalidDataException {
-        if (fvNumber.trim().equals("") || quota == 0) {
-            throw new InvalidDataException("Błąd edycji korekty '" + fvRevisionRepo.findById(ID).getFvnumber() + "'. Niepoprawna wartość nr faktury lub kwoty");
+    public void updateRevision(FVRevision toUpdate) throws InvalidDataException {
+        if (toUpdate.getFvnumber().trim().equals("") || toUpdate.getQuota() == 0) {
+            throw new InvalidDataException("Błąd edycji korekty '" + toUpdate.getFvnumber() + "'. Niepoprawna wartość nr faktury lub kwoty");
         }
-        if (!isRevisionUniqueExcept(ID, fvNumber, fvID)) {
-            throw new InvalidDataException("Błąd edycji korekty '" + fvNumber + "'. Istnieje już korekta o tym numerze dla faktury o ID '" + fvID +"'");
-        }
-
-        FVRevision updatedRevision = fvRevisionRepo.findById(ID);
-        updatedRevision.setFvnumber(fvNumber);
-        updatedRevision.setFv(fvID);
-        updatedRevision.setIssuedate(issueDate);
-        updatedRevision.setQuota(quota);
-        if (!note.trim().equals("")) {
-            updatedRevision.setNote(note);
+        if (!isRevisionUniqueExcept(toUpdate.getId(), toUpdate.getFvnumber(), toUpdate.getFv())) {
+            throw new InvalidDataException("Błąd edycji korekty '" + toUpdate.getFvnumber() + "'. Istnieje już korekta o tym numerze dla faktury o ID '" + toUpdate.getFv() +"'");
         }
 
-        updateFVSum(fvID);
-        updatePaidStatus(fvID);
+        fvRevisionRepo.save(toUpdate);
+
+        updateFVSum(toUpdate.getFv());
+        updatePaidStatus(toUpdate.getFv());
     }
 
     @Transactional

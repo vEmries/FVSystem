@@ -52,7 +52,7 @@ public class PaymentController {
     @RequestMapping(value = "/payment", method = RequestMethod.PUT)
     public ResponseEntity updatePayment(@RequestBody Payment tmpPayment) {
         try {
-            paymentService.updatePayment(tmpPayment.getId(), tmpPayment.getFv(), tmpPayment.getQuota(), tmpPayment.getNote());
+            paymentService.updatePayment(tmpPayment);
         } catch (InvalidDataException e) {
             logger.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

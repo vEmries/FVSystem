@@ -79,7 +79,7 @@ public class ContractorController {
     @RequestMapping(value = "/contractor", method = RequestMethod.PUT)
     public ResponseEntity updateContractor(@RequestBody Contractor tmpContractor) {
         try {
-            contractorService.updateContractor(tmpContractor.getId(), tmpContractor.getCompany(), tmpContractor.getNip(), tmpContractor.getBank(), tmpContractor.getAccount(), tmpContractor.getContactnr(), tmpContractor.getMail(), tmpContractor.getNote());
+            contractorService.updateContractor(tmpContractor);
         } catch (InvalidDataException e) {
             logger.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -91,7 +91,7 @@ public class ContractorController {
 
     @RequestMapping(value = "/contractor/address", method = RequestMethod.PUT)
     public void updateAddress(@RequestBody Address tmpAddress) {
-        contractorService.updateAddress(tmpAddress.getId(), tmpAddress.getCountry(), tmpAddress.getProvince(), tmpAddress.getCity(), tmpAddress.getZip(), tmpAddress.getStreet());
+        contractorService.updateAddress(tmpAddress);
 
         logger.info("Edytowano adres kontrahenta '" + contractorService.getContractorByAddress(tmpAddress.getId()).getCompany() + "'");
     }

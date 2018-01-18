@@ -40,34 +40,31 @@ public class ContractorService {
 
     @Transactional
     @Modifying
-    public void updateContractor(Integer ID, String company, String NIP, String bank, String account, String contactnr, String mail, String note) throws InvalidDataException {
-        Contractor updatedContractor = contractorRepo.findById(ID);
-
-        if (company.trim().equals("") || NIP.trim().equals("")) {
-            throw new InvalidDataException("Błąd edycji kontrahenta '" + updatedContractor.getCompany() + "'. Nowa nazwa lub NIP są puste");
+    public void updateContractor(Contractor toUpdate) throws InvalidDataException {
+        if (toUpdate.getCompany().trim().equals("") || toUpdate.getNip().trim().equals("")) {
+            throw new InvalidDataException("Błąd edycji kontrahenta '" + toUpdate.getCompany() + "'. Nowa nazwa lub NIP są puste");
         }
 
-        updatedContractor.setCompany(company);
-        updatedContractor.updateShortName();
-        updatedContractor.setNip(NIP);
-        updatedContractor.setBank(bank);
-        updatedContractor.setAccount(account);
-        updatedContractor.setContactnr(contactnr);
-        updatedContractor.setMail(mail);
-        if (!note.trim().equals("")) {
-            updatedContractor.setNote(note);
-        }
+        toUpdate.updateShortName();
+        toUpdate.setAddress(contractorRepo.findById(toUpdate.getId()).getAddress());
+        contractorRepo.save(toUpdate);
     }
+
+//    @Transactional
+//    @Modifying
+//    public void updateAddress(Integer ID, String counry, String province, String city, String zip, String street) {
+//        Address updatedAddress = addressRepo.findById(ID);
+//        updatedAddress.setCountry(counry);
+//        updatedAddress.setProvince(province);
+//        updatedAddress.setCity(city);
+//        updatedAddress.setZip(zip);
+//        updatedAddress.setStreet(street);
+//    }
 
     @Transactional
     @Modifying
-    public void updateAddress(Integer ID, String counry, String province, String city, String zip, String street) {
-        Address updatedAddress = addressRepo.findById(ID);
-        updatedAddress.setCountry(counry);
-        updatedAddress.setProvince(province);
-        updatedAddress.setCity(city);
-        updatedAddress.setZip(zip);
-        updatedAddress.setStreet(street);
+    public void updateAddress(Address toUpdate) {
+        addressRepo.save(toUpdate);
     }
 
     @Transactional

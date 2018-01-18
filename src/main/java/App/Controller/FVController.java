@@ -58,7 +58,7 @@ public class FVController {
     @RequestMapping(value = "/fv", method = RequestMethod.PUT)
     public ResponseEntity updateFV(@RequestBody FV tmpFV) {
         try {
-            fvService.updateFV(tmpFV.getId(), tmpFV.getFvnumber(), tmpFV.getContractor(), tmpFV.getIssuedate(), tmpFV.getDuedate(), tmpFV.getValue(), tmpFV.getNote());
+            fvService.updateFV(tmpFV);
         } catch (InvalidDataException e) {
             logger.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -103,7 +103,7 @@ public class FVController {
     @RequestMapping(value = "/fvr", method = RequestMethod.PUT)
     public ResponseEntity updateRevision(@RequestBody FVRevision tmpRevision) {
         try {
-            fvService.updateRevision(tmpRevision.getId(), tmpRevision.getFvnumber(), tmpRevision.getFv(), tmpRevision.getIssuedate(), tmpRevision.getQuota(), tmpRevision.getNote());
+            fvService.updateRevision(tmpRevision);
         } catch (InvalidDataException e) {
             logger.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

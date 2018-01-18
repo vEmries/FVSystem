@@ -37,19 +37,14 @@ public class PaymentService {
 
     @Transactional
     @Modifying
-    public void updatePayment(Integer ID, Integer fvID, Double quota, String note) throws InvalidDataException {
-        if (quota <= 0) {
-            throw new InvalidDataException("Błąd edycji płatności o ID '" + ID + "'. Niepoprawna wartość kwoty");
+    public void updatePayment(Payment toUpdate) throws InvalidDataException {
+        if (toUpdate.getQuota() <= 0) {
+            throw new InvalidDataException("Błąd edycji płatności o ID '" + toUpdate.getId() + "'. Niepoprawna wartość kwoty");
         }
 
-        Payment updatedPayment = paymentRepo.findById(ID);
-        updatedPayment.setFv(fvID);
-        updatedPayment.setQuota(quota);
-        if (!note.trim().equals("")) {
-            updatedPayment.setNote(note);
-        }
+        paymentRepo.save(toUpdate);
 
-        fvService.updatePaidStatus(fvID);
+        fvService.updatePaidStatus(toUpdate.getFv());
     }
 
     @Transactional
