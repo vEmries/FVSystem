@@ -86,9 +86,28 @@ app.controller('fvCtrl', function($scope, $http, Notification) {
             Notification.primary('Dodano korektę ' + data.fvnumber);
             $scope.loadFV();
         }, function(response) {
-            Notification.error('Dodanie korekty' + data.fvnumber + ' nie powiodło się');
+            Notification.error('Dodanie korekty' + data.fvnumber + 'nie powiodło się');
         });
     };
+    
+//    $scope.updateRevision = function(upRID, upRFVNumber, upRFV, upRIssueDate, upRQuota, upRNote) {
+//     
+//        var data =({
+//            id : upRID,
+//            fvnumber : upRFVNumber,
+//            fv : upRFV,
+//            issuedate : upRIssueDate,
+//            quota : upRQuota,
+//            note : upRNote
+//        });
+//        
+//        $http.put('./fvr', data).then(function(response) {
+//            $scope.updateResult = "Updated";
+//            $scope.loadFV();
+//        }, function(response) {
+//            $scope.updateResult = "Update Error";
+//        });
+//    };
     
     $scope.deleteRevision = function(ID) {
         if(confirm('Czy na pewno chcesz usunąć korektę?')) {

@@ -16,20 +16,20 @@ app.controller('paymentCtrl', function($scope, $http, Notification) {
                     $scope.allPayments = data;
         });
     };
-    
-    
+
+
     $scope.addPayment = function(fvID, addQuota, addIssueDate, addNote) {
-        
+
         var data = ({
-           fv: fvID,
-           issuedate: addIssueDate,
-           quota: addQuota,
-           note: addNote
+            fv: fvID,
+            issuedate: addIssueDate,
+            quota: addQuota,
+            note: addNote
         });
-        
+
         $http.post('./payment', data).then(function(response) {
-           Notification.primary('Dodano płatność');
-           $scope.loadPayments();
+            Notification.primary('Dodano płatność');
+            $scope.loadPayments();
         }, function(response) {
             Notification.error('Dodanie płatności nie powiodło się');
         });

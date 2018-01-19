@@ -16,7 +16,7 @@ app.controller('archiveCtrl', function($scope, $http, Notification){
                     $scope.archivePayment = data;
         });
     };
-    
+
     $scope.returnFromArchive = function(ID) {
         $http.post('./archive/return/' + ID).then(function(response) {
             Notification.primary('Przywrócono fakturę');

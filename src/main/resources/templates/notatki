@@ -1,0 +1,6 @@
+fvSys
+border-left-style: solid;
+border-width: 10px;
+border-color: #1EFF75;
+
+background: linear-gradient(60deg,#00914A,#003C20);

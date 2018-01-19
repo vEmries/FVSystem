@@ -76,10 +76,10 @@ app.controller('contractorCtrl', function($scope, $http, Notification){
             });
 
             $http.put("./contractor/address", dataAddress).then(function(response) {
-                Notification.primary('Zaktualizowano adres kontrahenta ' + dataContractor.company);
+                Notification.primary('Zaktualizowane kontrahenta ' + dataContractor.company);
                 $scope.loadContractor();
             }, function(response) {
-                Notification.error('Aktualizacja adresu kontrahenta ' + dataContractor.company + ' nie powiodła się');
+                Notification.error('Aktualizacja kontrahenta ' + dataContractor.company + ' nie powiodła się');
             });
         };
         
