@@ -17,7 +17,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     
     <script src="js/mainApp.js"></script>
-    <script src="js/controllers/archiveCtrl.js"></script>
+    <script src="js/controllers/revisionCtrl.js"></script>
     <script src="js/assets/bootstrap.min.js"></script>
     <script src="js/assets/material.min.js"></script>
     <script src="js/assets/notifications/angular-ui-notification.js"></script>
@@ -46,7 +46,7 @@
                             <p>Faktury</p>
                         </a>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="./revisionPage.html">
                             <i class="material-icons">change_history</i>
                             <p>Korekty</p>
@@ -64,7 +64,7 @@
                             <p>Kontrahenci</p>
                         </a>
                     </li>
-                    <li class="active">
+                    <li>
                         <a href="./archivePage.html">
                             <i class="material-icons">archive</i>
                             <p>Archiwum</p>
@@ -80,74 +80,77 @@
             </div>
         </div>
         
-        <div class="main-panel" ng-controller="archiveCtrl" data-ng-init="loadArchive()">
+        <div class="main-panel" ng-controller="revisionCtrl" data-ng-init="loadFV()">
             <nav class="navbar navbar-transparent navbar-absolute">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand"> Archiwum </a>
+                        <a class="navbar-brand"> Korekty </a>
                     </div>
                 </div>
             </nav>
+            
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header" data-background-color="purple">
-                                    <h4 class="title">Archiwum</h4>
+                                    <h4 class="title">Korekty</h4>
+                                    <p class="category">Wszystkie aktywne korekty</p>
                                 </div>
                                 <div class="card-content table-responsive">
                                     <table class="table">
                                         <thead class="text-primary">
-                                            <th class="text-center">Status</th>
-                                            <th class="text-center">Numer faktury</th>
-                                            <th class="text-center">Kontrahent</th>
-                                            <th class="text-center">Data wystawnienia</th>
-                                            <th class="text-center">Termin płatności</th>
+                                            <th></th>
+                                            <th class="text-center">Numer korekty</th>
+                                            <th class="text-center">Numer faktury korygowanej</th>
+                                            <th class="text-center">Stan faktury korygowanej</th>
+                                            <th class="text-center">Data wystawienia</th>
                                             <th class="text-center">Kwota</th>
-                                            <th class="text-center">Stan płatności</th>
-                                            <th colspan="2">Dodatkowy opis</th>
+                                            <th>Dodatkowy opis</th>
+                                            <th></th>
                                         </thead>
-                                        <tbody ng-repeat="fv in archiveFV">
+                                        <tbody ng-repeat="revision in allRevisions">
                                             <tr>
-                                                <td class="text-center">
-                                                    <i class="material-icons" ng-if="fv.status < 0">assignment_late</i>
-                                                    <i class="material-icons" ng-if="fv.status == 0">assignment</i>
-                                                    <i class="material-icons" ng-if="fv.status > 0">assignment_turned_in</i>
-                                                </td>
-                                                <td class="text-center">{{fv.fvnumber}}</td>
-                                                <td class="text-center" ng-repeat="contractor in allContractors" ng-if="contractor.id == fv.contractor">{{contractor.companyshort}}</td>
-                                                <td class="text-center">{{fv.issuedate}}</td>
-                                                <td class="text-center">{{fv.duedate}}</td>
-                                                <td class="text-center">{{fv.value | currency : 'zł'}}</td>
-                                                <td class="text-center">{{fv.paid | currency : 'zł'}} / {{fv.sum | currency : 'zł'}}</td>
-                                                <td>{{fv.note}}</td>
-                                                <td>
-                                                    <i class="material-icons click-icon" ng-click="deleteArchive(fv.id)">delete</i>
-                                                    <i class="material-icons click-icon" ng-click="returnFromArchive(fv.id)">settings_backup_restore</i>
-                                                </td>
-                                            </tr>
-                                            <tr ng-repeat="revision in archiveRevision" ng-if="revision.fv == fv.id">
                                                 <td class="text-center">
                                                     <i class="material-icons">change_history</i>
                                                 </td>
                                                 <td class="text-center">{{revision.fvnumber}}</td>
-                                                <td class="text-center">-</td>
+                                                <td class="text-center" ng-repeat="fv in allFVs" ng-if="fv.id == revision.fv">{{fv.fvnumber}}</td>
+                                                <td class="text-center" ng-repeat="fv in allFVs" ng-if="fv.id == revision.fv">
+                                                    <i class="material-icons" ng-if="fv.status < 0">assignment_late</i>
+                                                    <i class="material-icons" ng-if="fv.status == 0">assignment</i>
+                                                    <i class="material-icons" ng-if="fv.status > 0">assignment_turned_in</i>
+                                                </td>
                                                 <td class="text-center">{{revision.issuedate}}</td>
-                                                <td class="text-center">-</td>
                                                 <td class="text-center">{{revision.quota | currency : 'zł'}}</td>
-                                                <td class="text-center">-</td>
                                                 <td>{{revision.note}}</td>
+                                                <td>
+                                                    <i class="material-icons click-icon" ng-click="showEditRevision = !showEditRevision">edit</i>
+                                                    <i class="material-icons click-icon" ng-click="deleteRevision(revision.id)">delete</i>
+                                                </td>
                                             </tr>
-                                            <tr ng-repeat="payment in archivePayment" ng-if="payment.fv == fv.id">
+                                            <tr ng-show="showEditRevision">
                                                 <td></td>
-                                                <td colspan="6">Płatność w wysokości: {{payment.quota | currency : 'zł'}}, dokonana: {{payment.issuedate}}</td>
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="revision.fvnumber"/>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="revision.fv"/>
+                                                </td>
+                                                <td>-</td>
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="revision.issuedate"/>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="revision.quota"/>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="revision.note"/>
+                                                </td>
+                                                <td>
+                                                    <i class="material-icons click-icon" ng-click="updateRevision(revision.id, revision.fvnumber, revision.fv, revision.issuedate, revision.quota, revision.note)">done</i>
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -157,8 +160,8 @@
                     </div>
                 </div>
             </div>
+
         </div>
-        
     </div>
 </body>
 

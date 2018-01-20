@@ -21,9 +21,14 @@
     <script src="js/assets/bootstrap.min.js"></script>
     <script src="js/assets/material.min.js"></script>
     <script src="js/assets/notifications/angular-ui-notification.js"></script>
+
 </head>
 
 <body ng-app="mainApp">
+
+
+
+
     <div class="wrapper">
         
         <div class="sidebar" data-color="purple">
@@ -47,6 +52,12 @@
                         </a>
                     </li>
                     <li>
+                        <a href="./revisionPage.html">
+                            <i class="material-icons">change_history</i>
+                            <p>Korekty</p>
+                        </a>
+                    </li>
+                    <li>
                         <a href="./paymentPage.html">
                             <i class="material-icons">credit_card</i>
                             <p>Płatności</p>
@@ -64,6 +75,12 @@
                             <p>Archiwum</p>
                         </a>
                     </li>
+                    <li>
+                        <a href="./logout">
+                            <i class="material-icons">person</i>
+                            <p>Wyloguj</p>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -72,25 +89,7 @@
             <nav class="navbar navbar-transparent navbar-absolute">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand"> Faktury </a>
-                    </div>
-                    <div class="collapse navbar-collapse">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li>
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="material-icons">person</i>
-                                    <p class="hidden-lg hidden-md">Profile</p>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="./">Profil</a>
-                                    </li>
-                                    <li>
-                                        <a href="./logout">Wyloguj</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
+                        <p id="czasczas"></p>
                     </div>
                 </div>
             </nav>
@@ -156,8 +155,8 @@
                                                 <td class="text-center" ng-repeat="contractor in allContractors" ng-if="contractor.id == fv.contractor">{{contractor.companyshort}}</td>
                                                 <td class="text-center">{{fv.issuedate}}</td>
                                                 <td class="text-center">{{fv.duedate}}</td>
-                                                <td class="text-center">{{fv.value | currency : 'zł'}}</td>
-                                                <td class="text-center">{{fv.paid | currency : 'zł'}} / {{fv.sum | currency : 'zł'}}</td>
+                                                <td class="text-center-plat text-center" style="font-weight: bold;">{{fv.value}} zł</td>
+                                                <td class="text-center">{{fv.paid}} zł / {{fv.sum}} zł</td>
                                                 <td>{{fv.note}}</td>
                                                 <td> 
                                                     <i class="material-icons click-icon" ng-click="showEditFV = !showEditFV">edit</i>
@@ -221,22 +220,30 @@
                                                 <td class="text-center">-</td>
                                                 <td class="text-center">{{revision.issuedate}}</td>
                                                 <td class="text-center">-</td>
-                                                <td class="text-center">{{revision.quota | currency : 'zł'}}</td>
+                                                <td class="text-center">{{revision.quota}}  zł</td>
                                                 <td class="text-center">-</td>
                                                 <td>{{revision.note}}</td>
                                                 <td>
                                                     <i class="material-icons click-icon" ng-click="deleteRevision(revision.id)">delete</i>
                                                 </td>
                                             </tr>
+<!--                                            <tr>
+                                                <td colspan="8">
+                                                    <table>
+                                                        <tr>
+                                                            <td>sdasdsadasdasd</td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>-->
                                             <tr ng-repeat="payment in allPayments" ng-if="fv.status >= 0 && payment.fv == fv.id">
                                                 <td></td>
-                                                <td colspan="6">Płatność w wysokości: {{payment.quota | currency : 'zł'}}, dokonana: {{payment.issuedate}}</td>
+                                                <td colspan="6">Płatność w wysokości: {{payment.quota | currency : 'zł'}}, dokonana: {{payment.issuedate}}. {{payment.note}}</td>
                                             </tr>
                                             <tr ng-if="fv.status <0">
                                                 <td></td>
                                                 <td colspan="6">Brak płatności dla faktury</td>
                                             </tr>
-                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -247,6 +254,21 @@
 
         </div>
     </div>
+
+    <script>
+    var d = new Date;
+    document.getElementById("czasczas").innerHTML = d;
+//
+//    function jesliwieksze(){
+//        var kwota = document.getElementsByClassName('text-center-plat');
+//        if (kwota.value() > 0)
+//        kwota.style.color.fontcolor="red"
+////            document.getElemetsByClassName('text-center-plat').style.color = 'red';
+//        else if (kwota.value() < 0)
+//            kwota.style.color.fontcolor="red"
+////            document.getElementsByClassName('text-center-plat').style.color = 'green';
+//    }
+</script>
 </body>
 
 </html>

@@ -1,5 +1,6 @@
 package App.Service;
 
+import App.Exception.InvalidDataException;
 import App.Model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
@@ -35,9 +36,25 @@ public class ArchiveService {
 
     @Transactional
     @Modifying
+    public List<FV> autoArchive() {
+        Calendar calendar = Calendar.getInstance();
+        java.sql.Date currentDate = new java.sql.Date(calendar.getTime().getTime());
+
+        List<FV> archivizedFV = new ArrayList<>();
+        for (FV fv : fvService.getAllFVs()) {
+            if (currentDate.after(fv.getDuedate()) && fv.getStatus() > 0) {
+                archiveFV(fv.getId());
+                archivizedFV.add(fv);
+            }
+        }
+
+        return archivizedFV;
+    }
+
+    @Transactional
+    @Modifying
     public void archiveFV(Integer ID) {
         ArchiveFV fvToArchive = new ArchiveFV(fvService.getFV(ID));
-        fvToArchive.setContractor(contractorService.getContractor(Integer.valueOf(fvToArchive.getContractor())).getCompany());
         archiveFVRepo.save(fvToArchive);
 
         for (Payment p : paymentService.getPaymentByFV(ID)) {
@@ -55,25 +72,39 @@ public class ArchiveService {
 
     @Transactional
     @Modifying
-    public List<FV> autoArchive() {
-        Calendar calendar = Calendar.getInstance();
-        java.sql.Date currentDate = new java.sql.Date(calendar.getTime().getTime());
+    public void returnFromArchive(Integer ID) {
+        ArchiveFV archiveFV = archiveFVRepo.findById(ID);
+        FV toReAdd = new FV(archiveFV);
+        archiveFV.setFvnumber(archiveFV.getFvnumber() + " - reAdding in progress");
 
-        List<FV> archivizedFV = new ArrayList<>();
-        for (FV fv : fvService.getAllFVs()) {
-            if (currentDate.after(fv.getDuedate()) && fv.getStatus() > 0) {
-                archiveFV(fv.getId());
-                archivizedFV.add(fv);
+        try {
+            fvService.createFV(toReAdd);
+        } catch (InvalidDataException e) {
+            e.getMessage();
+        }
+
+        for (ArchiveFVRevision fvR : archiveFVRevisionRepo.findAllByFv(ID)) {
+            try {
+                fvService.createRevision(fvR.getFvnumber(), toReAdd.getId(), fvR.getIssuedate(), fvR.getQuota(), fvR.getNote());
+            } catch (InvalidDataException e) {
+                e.getMessage();
             }
         }
 
-        System.out.println("Obecna data -------> " + currentDate);
-        return archivizedFV;
+        for (ArchivePayment p : archivePaymentRepo.findAllByFv(ID)) {
+            try {
+                paymentService.createPayment(toReAdd.getId(), p.getIssuedate(), p.getQuota(), p.getNote());
+            } catch (InvalidDataException e) {
+                e.printStackTrace();
+            }
+        }
+
+        archiveFVRepo.delete(ID);
     }
 
     @Transactional
     @Modifying
-    public void deleteArchiveFV(Integer ID) {
+    public void deleteArchive(Integer ID) {
         archiveFVRepo.delete(ID);
     }
 

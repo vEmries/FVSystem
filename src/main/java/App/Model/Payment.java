@@ -27,7 +27,7 @@ public class Payment {
         this.quota = quota;
 
         if (!StringUtils.hasLength(note.trim())) {
-            this.note = "Brak dodatkowego opisu";
+            this.note = "Standardowy przelew";
         } else {
             this.note = note.trim();
         }

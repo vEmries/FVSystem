@@ -15,6 +15,7 @@
         <class>App.Model.ArchiveFV</class>
         <class>App.Model.ArchivePayment</class>
         <class>App.Model.Address</class>
+        <class>App.Model.User</class>
 
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://ec2-54-247-64-64.eu-west-1.compute.amazonaws.com:5432/dei4g4h97tp5uj?sslmode=require" />

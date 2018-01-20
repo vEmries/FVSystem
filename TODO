@@ -1,0 +1,12 @@
+1) Dodawanie nowych userów w userService i szyfrowanie haseł w db ?
+
+
+Zmienione w froncie (ważne do merga):
+-
+
+Do zmiany w bazie heroku:
+-
+
+Jeżeli przestanie wyświetlać strony (404) to odtworzyć ThymeleafConfig.class
+
+Dodanie usera wywołującego metodę do logów działa, ale implementować dopiero po skończeniu frontu, bo rzuca nullPointerami jeżeli jest permitAll.

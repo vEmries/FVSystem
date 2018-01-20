@@ -5,13 +5,18 @@ import App.Model.ArchiveFVRevision;
 import App.Model.ArchivePayment;
 import App.Model.FV;
 import App.Service.ArchiveService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 public class ArchiveController {
+
+    private static Logger logger = LoggerFactory.getLogger(ArchiveController.class);
 
     @Autowired
     ArchiveService archiveService;
@@ -53,16 +58,34 @@ public class ArchiveController {
     // Mapowania dla całego setu (FV + Revision + Payment)
 
     @RequestMapping(value = "/archive", method = RequestMethod.POST)
-    public List<FV> autoArchive() { return archiveService.autoArchive(); }
+    public List<FV> autoArchive() {
+        List <FV> archivizedFVs = new ArrayList<>(archiveService.autoArchive());
+
+        for (FV fv : archivizedFVs) {
+            logger.info("Zarchiwizowano fakturę '" + fv.getFvnumber() + "'");
+        }
+
+        return archivizedFVs; }
 
     @RequestMapping(value = "/archive/{ID}", method = RequestMethod.POST)
     public void archiveFV(@PathVariable(name = "ID") Integer ID) {
         archiveService.archiveFV(ID);
+
+        logger.info("Zarchiwizowano fakturę o ID '" + ID + "'");
     }
 
+    @RequestMapping(value = "archive/return/{ID}", method = RequestMethod.POST)
+    public void returnFromArchive(@PathVariable(name = "ID") Integer ID) {
+        archiveService.returnFromArchive(ID);
+
+        logger.info("Przywrócono z archiwum fakturę o ID '" + ID + "'");
+    }
 
     @RequestMapping(value = "/archive/{ID}", method = RequestMethod.DELETE)
-    public void deleteArchiveFV(@PathVariable(name = "ID") Integer ID) {
-        archiveService.deleteArchiveFV(ID);
+    public void deleteArchive(@PathVariable(name = "ID") Integer ID) {
+        String deletedFV = archiveService.getArchiveFV(ID).getFvnumber();
+        archiveService.deleteArchive(ID);
+
+        logger.info("Usunięto z archiwum fakturę '" + deletedFV + "'");
     }
 }

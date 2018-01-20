@@ -1,5 +1,6 @@
 package App.Service;
 
+import App.Exception.InvalidDataException;
 import App.Model.Address;
 import App.Model.AddressRepo;
 import App.Model.Contractor;
@@ -24,8 +25,12 @@ public class ContractorService {
 
     @Transactional
     @Modifying
-    public void createNewContractor(String company, String NIP, String bank, String account, String contactnr, String mail, String note,
-                                    String country, String province, String city, String zip, String street) {
+    public void createContractor(String company, String NIP, String bank, String account, String contactnr, String mail, String note,
+                                 String country, String province, String city, String zip, String street) throws InvalidDataException {
+
+        if (company.trim().equals("") || NIP.trim().equals("")) {
+            throw new InvalidDataException("Błąd dodania nowego kontrahenta. Brak nazwy lub NIP-u");
+        }
 
         Address newAddress = new Address(country, province, city, zip, street);
         addressRepo.save(newAddress);
@@ -35,27 +40,20 @@ public class ContractorService {
 
     @Transactional
     @Modifying
-    public void updateContractor(Integer ID, String company, String NIP, String bank, String account, String contactnr, String mail, String note) {
-        Contractor updatedContractor = contractorRepo.findById(ID);
-        updatedContractor.setCompany(company);
-        updatedContractor.updateShortName();
-        updatedContractor.setNip(NIP);
-        updatedContractor.setBank(bank);
-        updatedContractor.setAccount(account);
-        updatedContractor.setContactnr(contactnr);
-        updatedContractor.setMail(mail);
-        updatedContractor.setNote(note);
+    public void updateContractor(Contractor toUpdate) throws InvalidDataException {
+        if (toUpdate.getCompany().trim().equals("") || toUpdate.getNip().trim().equals("")) {
+            throw new InvalidDataException("Błąd edycji kontrahenta '" + toUpdate.getCompany() + "'. Nowa nazwa lub NIP są puste");
+        }
+
+        toUpdate.updateShortName();
+        toUpdate.setAddress(contractorRepo.findById(toUpdate.getId()).getAddress());
+        contractorRepo.save(toUpdate);
     }
 
     @Transactional
     @Modifying
-    public void updateAddress(Integer ID, String counry, String province, String city, String zip, String street) {
-        Address updatedAddress = addressRepo.findById(ID);
-        updatedAddress.setCountry(counry);
-        updatedAddress.setProvince(province);
-        updatedAddress.setCity(city);
-        updatedAddress.setZip(zip);
-        updatedAddress.setStreet(street);
+    public void updateAddress(Address toUpdate) {
+        addressRepo.save(toUpdate);
     }
 
     @Transactional
@@ -75,6 +73,9 @@ public class ContractorService {
     public Contractor getContractor(Integer ID) {
         return contractorRepo.findById(ID);
     }
+
+    @Transactional
+    public Contractor getContractorByAddress(Integer addressID) { return contractorRepo.findByAddress(addressID); }
 
     @Transactional
     public List<Address> getAllAdresses() { return addressRepo.findAll(); }

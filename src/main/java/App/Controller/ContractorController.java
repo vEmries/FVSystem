@@ -1,16 +1,22 @@
 package App.Controller;
 
+import App.Exception.InvalidDataException;
 import App.Model.Address;
 import App.Model.Contractor;
 import App.Service.ContractorService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sun.misc.Request;
 
 import java.util.List;
 
 @RestController
 public class ContractorController {
+
+    private static Logger logger = LoggerFactory.getLogger(ContractorController.class);
 
     @Autowired
     ContractorService contractorService;
@@ -27,7 +33,7 @@ public class ContractorController {
         return contractorService.getContractor(ID);
     }
 
-    // Mapowanie dla Address
+    // Mapowania dla Address
 
     @RequestMapping(value = "/contractor/address", method = RequestMethod.GET)
     public List<Address> getAllAdresses() { return contractorService.getAllAdresses(); }
@@ -37,6 +43,8 @@ public class ContractorController {
         return contractorService.getAddressForContractor(addressID);
     }
 
+    // Mapowanie dla setu (Contractor + Address)
+
     private Address toAddAddress;
 
     @RequestMapping(value = "/contractor/address", method = RequestMethod.POST)
@@ -45,29 +53,53 @@ public class ContractorController {
     }
 
     @RequestMapping(value = "/contractor", method = RequestMethod.POST)
-    public void createContractor(@RequestBody Contractor tmpContractor) {
-        contractorService.createNewContractor(tmpContractor.getCompany(), tmpContractor.getNip(), tmpContractor.getBank(), tmpContractor.getAccount(), tmpContractor.getContactnr(), tmpContractor.getMail(), tmpContractor.getNote(),
-                                                toAddAddress.getCountry(), toAddAddress.getProvince(), toAddAddress.getCity(), toAddAddress.getZip(), toAddAddress.getStreet());
+    public ResponseEntity createContractor(@RequestBody Contractor tmpContractor) {
+        try {
+            contractorService.createContractor(tmpContractor.getCompany(), tmpContractor.getNip(), tmpContractor.getBank(), tmpContractor.getAccount(), tmpContractor.getContactnr(), tmpContractor.getMail(), tmpContractor.getNote(),
+                    toAddAddress.getCountry(), toAddAddress.getProvince(), toAddAddress.getCity(), toAddAddress.getZip(), toAddAddress.getStreet());
+        } catch (InvalidDataException e) {
+            logger.error(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (NullPointerException e) {
+            logger.error("Błąd dodania kontrehenta '" + tmpContractor.getCompany() + "'. Wymagane pole wynosi null");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
         toAddAddress.setCountry(null);
         toAddAddress.setProvince(null);
         toAddAddress.setZip(null);
         toAddAddress.setCity(null);
         toAddAddress.setStreet(null);
+
+        logger.info("Dodano konrahenta '" + tmpContractor.getCompany() + "'");
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(value = "/contractor", method = RequestMethod.PUT)
-    public void updateContractor(@RequestBody Contractor tmpContractor) {
-        contractorService.updateContractor(tmpContractor.getId(), tmpContractor.getCompany(), tmpContractor.getNip(), tmpContractor.getBank(), tmpContractor.getAccount(), tmpContractor.getContactnr(), tmpContractor.getMail(), tmpContractor.getNote());
+    public ResponseEntity updateContractor(@RequestBody Contractor tmpContractor) {
+        try {
+            contractorService.updateContractor(tmpContractor);
+        } catch (InvalidDataException e) {
+            logger.error(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        logger.info("Edytowano kontrahenta '" + tmpContractor.getCompany() +"'");
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(value = "/contractor/address", method = RequestMethod.PUT)
     public void updateAddress(@RequestBody Address tmpAddress) {
-        contractorService.updateAddress(tmpAddress.getId(), tmpAddress.getCountry(), tmpAddress.getProvince(), tmpAddress.getCity(), tmpAddress.getZip(), tmpAddress.getStreet());
+        contractorService.updateAddress(tmpAddress);
+
+        logger.info("Edytowano adres kontrahenta '" + contractorService.getContractorByAddress(tmpAddress.getId()).getCompany() + "'");
     }
 
     @RequestMapping(value = "/contractor/{ID}", method = RequestMethod.DELETE)
     public void deleteContractor(@PathVariable(name = "ID") Integer ID) {
+        String deletedContractor = contractorService.getContractor(ID).getCompany();
         contractorService.deleteContractor(ID);
+
+        logger.info("Usunięto kontrahenta '" + deletedContractor + "'");
     }
 }

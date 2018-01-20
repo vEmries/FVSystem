@@ -15,6 +15,20 @@ app.controller('archiveCtrl', function($scope, $http, Notification){
                 .success(function(data) {
                     $scope.archivePayment = data;
         });
+        
+        $http.get('./contractor')
+                .success(function(data) {
+                    $scope.allContractors = data;
+        });
+    };
+
+    $scope.returnFromArchive = function(ID) {
+        $http.post('./archive/return/' + ID).then(function(response) {
+            Notification.primary('Przywrócono fakturę');
+            $scope.loadArchive();
+        }, function(response) {
+            Notification.error('Przywrócenie faktury nie powiodło się');
+        });
     };
     
     $scope.deleteArchive = function(ID) {
