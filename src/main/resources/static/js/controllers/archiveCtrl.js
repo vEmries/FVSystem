@@ -15,6 +15,11 @@ app.controller('archiveCtrl', function($scope, $http, Notification){
                 .success(function(data) {
                     $scope.archivePayment = data;
         });
+        
+        $http.get('./contractor')
+                .success(function(data) {
+                    $scope.allContractors = data;
+        });
     };
 
     $scope.returnFromArchive = function(ID) {

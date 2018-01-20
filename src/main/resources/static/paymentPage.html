@@ -65,6 +65,12 @@
                         </a>
                     </li>
                     <li>
+                        <a href="./archivePage.html">
+                            <i class="material-icons">archive</i>
+                            <p>Archiwum</p>
+                        </a>
+                    </li>
+                    <li>
                         <a href="./logout">
                             <i class="material-icons">person</i>
                             <p>Wyloguj</p>
@@ -112,7 +118,7 @@
                                                     <i class="material-icons" ng-if="fv.status > 0">assignment_turned_in</i>
                                                 </td>
                                                 <td class="text-center">{{fv.fvnumber}}</td>
-                                                <td class="text-center">{{fv.contractor}}</td>
+                                                <td class="text-center" ng-repeat="contractor in allContractors" ng-if="contractor.id == fv.contractor">{{contractor.companyshort}}</td>
                                                 <td class="text-center">{{fv.issuedate}}</td>
                                                 <td class="text-center">{{fv.duedate}}</td>
                                                 <td class="text-center">{{fv.value | currency : 'zł'}}</td>

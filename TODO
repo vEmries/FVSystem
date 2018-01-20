@@ -1,19 +1,11 @@
-1) Dodawanie nowych userów i rola admina (mapowanie ./admin/*) ?
-2) + Osobna podstrona dla Revision
-3) + Unikatowy nr faktury tylko dla konkretnego kontrahenta, nie globalnie (to samo dla korekt)
-4) + Przywracanie faktur z archiwum
-5) + Rodzaj płatności (gotówka/przelew)
+1) Dodawanie nowych userów w userService i szyfrowanie haseł w db ?
+
 
 Zmienione w froncie (ważne do merga):
-1) Notyfikacje przy edycji kontrahentów (contractorCtrl.js, linie 64 i 66) - zmiana na podwójną notyfikację o edycji adresu i kontrahenta
-2) Dodanie zakładki korekt w każdym .html
-3) Dodanie ikony przywracania z archivePage.html i dodanie metody returnFromArchive() w archiveCtrl.js
-4) Zmiana metody addPayment w paymentCtrl.js | Dodanie nowej kolumny dla note w addPayment w paymentPage.html | Dodanie wyświetlania note fvPage i paymentPage
+-
 
 Do zmiany w bazie heroku:
-Zmiana archiveFV contractor na Integer (tak jak było wcześniej)
-Usunięcie unique z fvNumber dla FV/Revision/ArchiveFV/ArchiveRevision (usunięcie fv_fvnumber_key/revision_fvnumber_key)
-Dodanie tabeli users
+-
 
 Jeżeli przestanie wyświetlać strony (404) to odtworzyć ThymeleafConfig.class
 
