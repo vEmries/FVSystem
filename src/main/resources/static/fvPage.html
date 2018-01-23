@@ -9,11 +9,14 @@
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/bootstrap.css" rel="stylesheet" />
     <link href="js/assets/notifications/angular-ui-notification.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="js/assets/datapicker/helper.css" />
+    <link rel="stylesheet" type="text/css" href="js/assets/datapicker/angular-datepicker.css" />
 
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-route.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     
     <script src="js/mainApp.js"></script>
@@ -21,6 +24,7 @@
     <script src="js/assets/bootstrap.min.js"></script>
     <script src="js/assets/material.min.js"></script>
     <script src="js/assets/notifications/angular-ui-notification.js"></script>
+    <script type="text/javascript" src="js/assets/datapicker/angular-datepicker.js"></script>
 
 </head>
 
@@ -128,10 +132,14 @@
                                                     <input type="text" class="form-control" ng-model="addContractor" placeholder="Kontrahent"/>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" ng-model="addIssueDate" placeholder="Data wystawienia"/>
+                                                    <datepicker date-format="yyyy-MM-dd">
+                                                        <input ng-model="addIssueDate" type="text" class="angular-datepicker-input" placeholder="Data wystawienia"/>
+                                                    </datepicker>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" ng-model="addDueDate" placeholder="Termin płatności"/>
+                                                    <datepicker date-format="yyyy-MM-dd">
+                                                        <input ng-model="addDueDate" type="text" class="angular-datepicker-input" placeholder="Termin płatności"/>
+                                                    </datepicker>
                                                 </td>
                                                 <td>
                                                     <input type="text" class="form-control" ng-model="addValue" placeholder="Kwota"/>
@@ -173,10 +181,14 @@
                                                     <input type="text" class="form-control" ng-model="fv.contractor"/>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" ng-model="fv.issuedate"/>
+                                                    <datepicker date-format="yyyy-MM-dd">
+                                                        <input ng-model="fv.issuedate" type="text" class="angular-datepicker-input"/>
+                                                    </datepicker>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" ng-model="fv.duedate"/>
+                                                    <datepicker date-format="yyyy-MM-dd">
+                                                        <input ng-model="fv.duedate" type="text" class="angular-datepicker-input" />
+                                                    </datepicker>
                                                 </td>
                                                 <td>
                                                     <input type="text" class="form-control" ng-model="fv.value"/>
@@ -198,7 +210,9 @@
                                                 </td>
                                                 <td class="text-center">-</td>
                                                 <td>
-                                                    <input type="text" class="form-control" ng-model="addRIssueDate" placeholder="Data wystawienia"/>
+                                                    <datepicker date-format="yyyy-MM-dd">
+                                                        <input ng-model="addRIssueDate" type="text" class="angular-datepicker-input" placeholder="Data wystawienia"/>
+                                                    </datepicker>
                                                 </td>
                                                 <td class="text-center">-</td>
                                                 <td>
