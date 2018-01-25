@@ -12,18 +12,21 @@
     <link rel="stylesheet" type="text/css" href="js/assets/datapicker/helper.css" />
     <link rel="stylesheet" type="text/css" href="js/assets/datapicker/angular-datepicker.css" />
 
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-route.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
     
     <script src="js/mainApp.js"></script>
     <script src="js/controllers/contractorCtrl.js"></script>
-    <script src="js/assets/bootstrap.min.js"></script>
-    <script src="js/assets/material.min.js"></script>
-    <script src="js/assets/notifications/angular-ui-notification.js"></script>
+<!--    <script src="js/assets/bootstrap.min.js"></script>
+    <script src="js/assets/material.min.js"></script>-->
     <script src="js/assets/notifications/angular-ui-notification.js"></script>
     <script type="text/javascript" src="js/assets/datapicker/angular-datepicker.js"></script>
 </head>
@@ -188,46 +191,46 @@
                                             <tr ng-show="showEdit">
                                                 <td></td>
                                                 <td>
-                                                    <input type="text" class="form-control" ng-model="contractor.company"/>
+                                                    <input type="text" class="form-control" ng-model="upCompany" ng-init="upCompany = contractor.company"/>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" ng-model="contractor.nip"/>
+                                                    <input type="text" class="form-control" ng-model="upNIP" ng-init="upNIP = contractor.nip"/>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" ng-model="contractor.bank"/>
+                                                    <input type="text" class="form-control" ng-model="upBank" ng-init="upBank = contractor.bank"/>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" ng-model="contractor.account"/>
+                                                    <input type="text" class="form-control" ng-model="upAccount" ng-init="upAccount = contractor.account"/>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" ng-model="contractor.contactnr"/>
+                                                    <input type="text" class="form-control" ng-model="upContactNr" ng-init="upContactNr = contractor.contactnr"/>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" ng-model="contractor.mail"/>
+                                                    <input type="text" class="form-control" ng-model="upMail" ng-init="upMail = contractor.mail"/>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" ng-model="contractor.note"/>
+                                                    <input type="text" class="form-control" ng-model="upNote" ng-init="upNote = contractor.note"/>
                                                 </td>
                                             </tr>
                                             <tr ng-show="showEdit" ng-repeat="address in allAddresses" ng-if="contractor.address == address.id">
                                                 <td colspan="2"></td>
                                                 <td>
-                                                    <input type="text" class="form-control" ng-model="address.country"/>
+                                                    <input type="text" class="form-control" ng-model="upCountry" ng-init="upCountry = address.country"/>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" ng-model="address.province"/>
+                                                    <input type="text" class="form-control" ng-model="upProvince" ng-init="upProvince = address.province"/>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" ng-model="address.zip"/>
+                                                    <input type="text" class="form-control" ng-model="upZIP" ng-init="upZIP = address.zip"/>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" ng-model="address.city"/>
+                                                    <input type="text" class="form-control" ng-model="upCity" ng-init="upCity = address.city"/>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" ng-model="address.street"/>
+                                                    <input type="text" class="form-control" ng-model="upStreet" ng-init="upStreet = address.street"/>
                                                 </td>
                                                 <td>
-                                                    <i class="material-icons click-icon" ng-click="updateContractor(contractor.id, contractor.company, contractor.nip, contractor.bank, contractor.account, contractor.contactnr, contractor.mail, contractor.note, contractor.address, address.country, address.province, address.city, address.zip, address.street)">done</i>
+                                                    <i class="material-icons click-icon" ng-click="updateContractor(contractor.id, upCompany, upNIP, upBank, upAccount, upContactNr, upMail, upNote, contractor.address, upCountry, upProvince, upCity, uoZIP, upStreet)">done</i>
                                                 </td>
                                             </tr>
                                         </tbody>

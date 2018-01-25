@@ -12,18 +12,21 @@
     <link rel="stylesheet" type="text/css" href="js/assets/datapicker/helper.css" />
     <link rel="stylesheet" type="text/css" href="js/assets/datapicker/angular-datepicker.css" />
 
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-route.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
     
     <script src="js/mainApp.js"></script>
     <script src="js/controllers/revisionCtrl.js"></script>
-    <script src="js/assets/bootstrap.min.js"></script>
-    <script src="js/assets/material.min.js"></script>
-    <script src="js/assets/notifications/angular-ui-notification.js"></script>
+<!--    <script src="js/assets/bootstrap.min.js"></script>
+    <script src="js/assets/material.min.js"></script>-->
     <script src="js/assets/notifications/angular-ui-notification.js"></script>
     <script type="text/javascript" src="js/assets/datapicker/angular-datepicker.js"></script>
 </head>
@@ -138,25 +141,25 @@
                                             <tr ng-show="showEditRevision">
                                                 <td></td>
                                                 <td>
-                                                    <input type="text" class="form-control" ng-model="revision.fvnumber"/>
+                                                    <input type="text" class="form-control" ng-model="upRNumber" ng-init="upRNumber = revision.fvnumber"/>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" ng-model="revision.fv"/>
+                                                    <select ng-model="upRFV" ng-options="fv.fvnumber for fv in allFVs"></select>
                                                 </td>
-                                                <td>-</td>
+                                                <td class="text-center">-</td>
                                                 <td>
                                                     <datepicker date-format="yyyy-MM-dd">
-                                                        <input ng-model="revision.issuedate" type="text" class="angular-datepicker-input"/>
+                                                        <input ng-model="upRIssueDate" ng-init="upRIssueDate = revision.issuedate" type="text" class="angular-datepicker-input"/>
                                                     </datepicker>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" ng-model="revision.quota"/>
+                                                    <input type="text" class="form-control" ng-model="upRQuota" ng-init="upRQuota = revision.quota"/>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" ng-model="revision.note"/>
+                                                    <input type="text" class="form-control" ng-model="upRNote" ng-init="upRNote = revision.note"/>
                                                 </td>
                                                 <td>
-                                                    <i class="material-icons click-icon" ng-click="updateRevision(revision.id, revision.fvnumber, revision.fv, revision.issuedate, revision.quota, revision.note)">done</i>
+                                                    <i class="material-icons click-icon" ng-click="updateRevision(revision.id, upRNumber, upRFV.id, upRIssueDate, upRQuota, upRNote)">done</i>
                                                 </td>
                                             </tr>
                                         </tbody>

@@ -1,1 +1,1 @@
-var app = angular.module('mainApp', ['ui-notification', 'ngRoute', '720kb.datepicker']);
+var app = angular.module('mainApp', ['ui-notification', 'ngRoute', '720kb.datepicker', 'ngMaterial']);

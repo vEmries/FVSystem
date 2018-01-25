@@ -11,18 +11,22 @@
     <link href="js/assets/notifications/angular-ui-notification.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="js/assets/datapicker/helper.css" />
     <link rel="stylesheet" type="text/css" href="js/assets/datapicker/angular-datepicker.css" />
-
+    
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-route.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
     
     <script src="js/mainApp.js"></script>
     <script src="js/controllers/fvCtrl.js"></script>
-    <script src="js/assets/bootstrap.min.js"></script>
-    <script src="js/assets/material.min.js"></script>
+<!--    <script src="js/assets/bootstrap.min.js"></script>
+    <script src="js/assets/material.min.js"></script>-->
     <script src="js/assets/notifications/angular-ui-notification.js"></script>
     <script type="text/javascript" src="js/assets/datapicker/angular-datepicker.js"></script>
 
@@ -126,10 +130,13 @@
                                             <tr ng-show="showAddFV">
                                                 <td></td>
                                                 <td>
-                                                    <input type="text" class="form-control" ng-model="addFVNumber" placeholder="Numer faktury"/>
+                                                    <md-input-container>
+                                                        <label>Numer faktury</label>
+                                                        <input type="text" ng-model="addFVNumber" required/>
+                                                    </md-input-container>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" ng-model="addContractor" placeholder="Kontrahent"/>
+                                                    <select ng-model="addContractor" ng-options="c.company for c in allContractors"></select>
                                                 </td>
                                                 <td>
                                                     <datepicker date-format="yyyy-MM-dd">
@@ -175,30 +182,33 @@
                                             <tr ng-show="showEditFV">
                                                 <td></td>
                                                 <td>
-                                                    <input type="text" class="form-control" ng-model="fv.fvnumber"/>
+                                                    <input type="text" class="form-control" ng-model="upNumber" ng-init="upNumber = fv.fvnumber"/>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" ng-model="fv.contractor"/>
+                                                    <!--<select ng-model="upContractor" ng-options="c.company for c in allContractors" ng-init="upContractor = allContractors[0]"></select>-->
+                                                    <md-select ng-model="upContractor">
+                                                        <md-option ng-repeat="contractor in allContractors" value="{{contractor.id}}">{{contractor.company}}</md-option>
+                                                    </md-select>
                                                 </td>
                                                 <td>
                                                     <datepicker date-format="yyyy-MM-dd">
-                                                        <input ng-model="fv.issuedate" type="text" class="angular-datepicker-input"/>
+                                                        <input ng-model="upIssueDate" ng-init="upIssueDate = fv.issuedate" type="text" class="angular-datepicker-input"/>
                                                     </datepicker>
                                                 </td>
                                                 <td>
                                                     <datepicker date-format="yyyy-MM-dd">
-                                                        <input ng-model="fv.duedate" type="text" class="angular-datepicker-input" />
+                                                        <input ng-model="upDueDate" ng-init="upDueDate = fv.duedate" type="text" class="angular-datepicker-input" />
                                                     </datepicker>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" ng-model="fv.value"/>
+                                                    <input type="text" class="form-control" ng-model="upValue" ng-init="upValue = fv.value"/>
                                                 </td>
                                                 <td class="text-center">-</td>
                                                 <td>
-                                                    <input type="text" class="form-control" ng-model="fv.note"/>
+                                                    <input type="text" class="form-control" ng-model="upNote" ng-init="upNote = fv.note"/>
                                                 </td>
                                                 <td>
-                                                    <i class="material-icons click-icon" ng-click="updateFV(fv.id, fv.fvnumber, fv.contractor, fv.issuedate, fv.duedate, fv.value, fv.note)">done</i>
+                                                    <i class="material-icons click-icon" ng-click="updateFV(fv.id, upNumber, upContractor, upIssueDate, upDueDate, upValue, upNote)">done</i>
                                                 </td>
                                             </tr>
                                             <tr ng-show="showAddRevision">
@@ -241,15 +251,6 @@
                                                     <i class="material-icons click-icon" ng-click="deleteRevision(revision.id)">delete</i>
                                                 </td>
                                             </tr>
-<!--                                            <tr>
-                                                <td colspan="8">
-                                                    <table>
-                                                        <tr>
-                                                            <td>sdasdsadasdasd</td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>-->
                                             <tr ng-repeat="payment in allPayments" ng-if="fv.status >= 0 && payment.fv == fv.id">
                                                 <td></td>
                                                 <td colspan="6">Płatność w wysokości: {{payment.quota | currency : 'zł'}}, dokonana: {{payment.issuedate}}. {{payment.note}}</td>

@@ -1,11 +1,6 @@
 app.controller('fvCtrl', function($scope, $http, Notification) {
     
     $scope.loadFV = function() {
-        $http.get('./fv')
-                .success(function(data) {
-                    $scope.allFVs = data;
-        });
-        
         $http.get('./fvr')
                 .success(function(data) {
                     $scope.allRevisions = data;
@@ -20,13 +15,24 @@ app.controller('fvCtrl', function($scope, $http, Notification) {
                 .success(function(data) {
                     $scope.allContractors = data;
         });
+        
+        $http.get('./fv')
+                .success(function(data) {
+                    $scope.allFVs = data;
+        });
     };
+    
+//    $scope.getContractorByID = function(ID) {
+//        for(var i = 0, iLen = allContractors.length; i < iLen; i++) {
+//            if (allContractors[i].id == ID) return allContractors[i];
+//        }
+//    };
 
     $scope.addFV = function() {
         
         var data = ({
             fvnumber: $scope.addFVNumber,
-            contractor: $scope.addContractor,
+            contractor: $scope.addContractor.id,
             issuedate: $scope.addIssueDate,
             duedate: $scope.addDueDate,
             value: $scope.addValue,
@@ -89,25 +95,6 @@ app.controller('fvCtrl', function($scope, $http, Notification) {
             Notification.error('Dodanie korekty' + data.fvnumber + 'nie powiodło się');
         });
     };
-    
-//    $scope.updateRevision = function(upRID, upRFVNumber, upRFV, upRIssueDate, upRQuota, upRNote) {
-//     
-//        var data =({
-//            id : upRID,
-//            fvnumber : upRFVNumber,
-//            fv : upRFV,
-//            issuedate : upRIssueDate,
-//            quota : upRQuota,
-//            note : upRNote
-//        });
-//        
-//        $http.put('./fvr', data).then(function(response) {
-//            $scope.updateResult = "Updated";
-//            $scope.loadFV();
-//        }, function(response) {
-//            $scope.updateResult = "Update Error";
-//        });
-//    };
     
     $scope.deleteRevision = function(ID) {
         if(confirm('Czy na pewno chcesz usunąć korektę?')) {

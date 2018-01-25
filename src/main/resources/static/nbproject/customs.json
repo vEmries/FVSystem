@@ -1,6 +1,7 @@
 {
     "elements": {
-        "datepicker": {}
+        "datepicker": {},
+        "md-input-container": {}
     },
     "attributes": {}
 }
