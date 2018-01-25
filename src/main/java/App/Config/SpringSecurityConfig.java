@@ -51,15 +51,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         authManagerBuilder.userDetailsService(inMemoryUserDetailsManager());
     }
 
-//    @Bean
-//    public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
-//        final Properties users = new Properties();
-//
-//        users.put("user1", "pw, ROLE_user, enabled");
-//        users.put("user2", "pw2, ROLE_user, enabled");
-//        return new InMemoryUserDetailsManager(users);
-//    }
-
     @Bean
     public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
         Properties users = new Properties();

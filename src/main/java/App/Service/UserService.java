@@ -43,8 +43,15 @@ public class UserService {
         inMemoryUserDetailsManager.createUser(new User(username, password, createAutohrities(role)));
     }
 
-    public void checkUser(String userName) {
-        System.out.println(inMemoryUserDetailsManager.loadUserByUsername("user1"));
-        System.out.println(inMemoryUserDetailsManager.loadUserByUsername("user1").getAuthorities());
+    public void updateUser(App.Model.User toUpdate) {
+        userRepo.save(toUpdate);
+    }
+
+    public void deleteUser(Integer ID) {
+        userRepo.delete(userRepo.findById(ID));
+    }
+
+    public String checkUser(String userName) {
+        return inMemoryUserDetailsManager.loadUserByUsername(userName).getAuthorities().toString();
     }
 }
