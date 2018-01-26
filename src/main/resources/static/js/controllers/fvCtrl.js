@@ -14,6 +14,11 @@ app.controller('fvCtrl', function($scope, $http, Notification) {
         $http.get('./contractor')
                 .success(function(data) {
                     $scope.allContractors = data;
+
+                    $scope.allContractorsID = [];
+                    for(var i = 0; i < data.length; i++){
+                        $scope.allContractorsID[ data[i].id ] = data[i]; 
+                    }
         });
         
         $http.get('./fv')
@@ -21,12 +26,6 @@ app.controller('fvCtrl', function($scope, $http, Notification) {
                     $scope.allFVs = data;
         });
     };
-    
-//    $scope.getContractorByID = function(ID) {
-//        for(var i = 0, iLen = allContractors.length; i < iLen; i++) {
-//            if (allContractors[i].id == ID) return allContractors[i];
-//        }
-//    };
 
     $scope.addFV = function() {
         

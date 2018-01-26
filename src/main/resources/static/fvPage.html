@@ -183,10 +183,10 @@
                                                     <input type="text" class="form-control" ng-model="upNumber" ng-init="upNumber = fv.fvnumber"/>
                                                 </td>
                                                 <td>
-                                                    <!--<select ng-model="upContractor" ng-options="c.company for c in allContractors" ng-init="upContractor = allContractors[0]"></select>-->
-                                                    <md-select ng-model="upContractor">
+                                                    <select ng-model="upContractor" ng-options="c.company for c in allContractors" ng-init="upContractor = allContractorsID[ fv.contractor ]"></select>
+<!--                                                    <md-select ng-model="upContractor">
                                                         <md-option ng-repeat="contractor in allContractors" value="{{contractor.id}}">{{contractor.company}}</md-option>
-                                                    </md-select>
+                                                    </md-select>-->
                                                 </td>
                                                 <td>
                                                     <datepicker date-format="yyyy-MM-dd">
