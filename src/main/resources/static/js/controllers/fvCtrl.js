@@ -1,5 +1,11 @@
 app.controller('fvCtrl', function($scope, $http, Notification) {
     
+    $scope.clear = function() {
+        fv = {id : "", fvnumber : "", contractor : "", issuedate: "", duedate : "", note : "", paid : "", status : "", sum : ""};
+    };
+    
+    $scope.index = 0;
+    
     $scope.loadFV = function() {
         $http.get('./fvr')
                 .success(function(data) {
