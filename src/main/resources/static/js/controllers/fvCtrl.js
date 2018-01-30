@@ -1,10 +1,6 @@
 app.controller('fvCtrl', function($scope, $http, Notification) {
     
-    $scope.clear = function() {
-        fv = {id : "", fvnumber : "", contractor : "", issuedate: "", duedate : "", note : "", paid : "", status : "", sum : ""};
-    };
-    
-    $scope.index = 0;
+    $scope.addNote = '';
     
     $scope.loadFV = function() {
         $http.get('./fvr')
@@ -25,6 +21,11 @@ app.controller('fvCtrl', function($scope, $http, Notification) {
                     for(var i = 0; i < data.length; i++){
                         $scope.allContractorsID[ data[i].id ] = data[i]; 
                     }
+        });
+        
+        $http.get('./contractor/address')
+                .success(function(data) {
+                    $scope.allAddresses = data;
         });
         
         $http.get('./fv')
@@ -97,7 +98,7 @@ app.controller('fvCtrl', function($scope, $http, Notification) {
             Notification.primary('Dodano korektę ' + data.fvnumber);
             $scope.loadFV();
         }, function(response) {
-            Notification.error('Dodanie korekty' + data.fvnumber + 'nie powiodło się');
+            Notification.error('Dodanie korekty ' + data.fvnumber + ' nie powiodło się');
         });
     };
     
@@ -114,14 +115,11 @@ app.controller('fvCtrl', function($scope, $http, Notification) {
     
     $scope.autoArchive = function() {
         $http.post('./archive').then(function(response) {
-            Notification.primary('Zarchiwizowano faktury: ' + response);
+            Notification.primary('Zarchiwizowano faktury');
             $scope.loadFV();
         }, function(response) {
             Notification.error('Archiwizacja faktur nie powiodła się');
         });
-        
-        //Trzeba poprawić notyfikację, bo źle wyświetla response
-        //Response to List<FV>, które zarchiwizował
     };
     
 });

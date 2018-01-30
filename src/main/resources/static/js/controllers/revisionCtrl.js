@@ -4,6 +4,11 @@ app.controller('revisionCtrl', function($scope, $http, Notification) {
         $http.get('./fv')
                 .success(function(data) {
                     $scope.allFVs = data;
+            
+                    $scope.allFVsID = [];
+                    for(var i = 0; i < data.length; i++){
+                        $scope.allFVsID[ data[i].id ] = data[i]; 
+                    }
         });
         
         $http.get('./fvr')

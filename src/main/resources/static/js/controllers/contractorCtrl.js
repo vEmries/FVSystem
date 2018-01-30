@@ -16,10 +16,10 @@ app.controller('contractorCtrl', function($scope, $http, Notification){
         
         var dataContractor = ({
            company : $scope.addCompany,
-           nip : $scope.addNip,
+           nip : $scope.addNIP,
            bank : $scope.addBank,
            account : $scope.addAccount,
-           contactnr : $scope.addContactnr,
+           contactnr : $scope.addContactNr,
            mail : $scope.addMail,
            note : $scope.addNote
         });
@@ -61,9 +61,9 @@ app.controller('contractorCtrl', function($scope, $http, Notification){
             });
 
             $http.put("./contractor", dataContractor).then(function(response) {
-                Notification.primary('Zaktualizowano dane kontrahenta ' + dataContractor.company);
+                Notification.primary('Zaktualizowano dane adresowe kontrahenta ' + dataContractor.company);
             }, function(response) {
-                Notification.error('Aktualizacja danych kontrahenta ' + dataContractor.company + ' nie powiodła się');
+                Notification.error('Aktualizacja danych adresowych kontrahenta ' + dataContractor.company + ' nie powiodła się');
             });
 
             var dataAddress = ({

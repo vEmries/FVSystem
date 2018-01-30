@@ -1,5 +1,7 @@
 app.controller('paymentCtrl', function($scope, $http, Notification) {
     
+    $scope.addNote = '';
+    
     $scope.loadPayments = function() {
         $http.get('./fv')
                 .success(function(data) {
@@ -19,6 +21,11 @@ app.controller('paymentCtrl', function($scope, $http, Notification) {
         $http.get('./contractor')
                 .success(function(data) {
                     $scope.allContractors = data;
+        });
+        
+        $http.get('./contractor/address')
+                .success(function(data) {
+                    $scope.allAddresses = data;
         });
     };
 
