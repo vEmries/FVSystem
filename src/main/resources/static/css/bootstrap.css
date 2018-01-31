@@ -4135,6 +4135,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
     box-shadow: 0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.22);
     border-radius: 6px;
     border: none;
+    color : black;
 }
 
 .modal-content .modal-header {

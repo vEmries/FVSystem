@@ -1,5 +1,13 @@
 app.controller('contractorCtrl', function($scope, $http, Notification){
     
+    $scope.sortProperty = 'company';
+    $scope.sortReverse = false;
+    
+    $scope.sortBy = function(sortProperty) {
+        $scope.sortReverse = ($scope.sortProperty === sortProperty) ? !$scope.sortReverse : false;
+        $scope.sortProperty = sortProperty;
+    };
+    
     $scope.loadContractor = function() {
         $http.get('./contractor')
                 .success(function(data) {
@@ -10,14 +18,6 @@ app.controller('contractorCtrl', function($scope, $http, Notification){
                 .success(function(data) {
                     $scope.allAddresses = data;
         });
-    };
-    
-    $scope.sortProperty = 'company';
-    $scope.sortReverse = false;
-    
-    $scope.sortBy = function(sortProperty) {
-        $scope.sortReverse = ($scope.sortProperty === sortProperty) ? !$scope.sortReverse : false;
-        $scope.sortProperty = sortProperty;
     };
     
     $scope.addContractor = function() {

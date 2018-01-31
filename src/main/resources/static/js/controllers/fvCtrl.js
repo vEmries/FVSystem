@@ -1,5 +1,36 @@
 app.controller('fvCtrl', function($scope, $http, Notification) {
     
+    $scope.currentDate = convertDate(new Date());
+    $scope.addNote = '';
+    
+    $scope.sortProperty = 'duedate';
+    $scope.sortReverse = false;
+    
+    $scope.sortBy = function(sortProperty) {
+        $scope.sortReverse = ($scope.sortProperty === sortProperty) ? !$scope.sortReverse : false;
+        $scope.sortProperty = sortProperty;
+    };
+    
+    function convertDate(date) {
+        var yyyy = date.getFullYear().toString();
+        var mm = (date.getMonth()+1).toString();
+        var dd  = date.getDate().toString();
+
+        var mmChars = mm.split('');
+        var ddChars = dd.split('');
+
+        return yyyy + '-' + (mmChars[1]?mm:"0"+mmChars[0]) + '-' + (ddChars[1]?dd:"0"+ddChars[0]);
+    }
+    
+    $scope.checkPriority = function(fv) {
+        var currentDate = new Date();
+        currentDate.setDate(currentDate.getDate() - 5);
+        
+        if (fv.duedate > convertDate(currentDate)) {
+            return {background : "red", color : "white"};
+        };
+    };
+    
     $scope.loadFV = function() {
         $http.get('./fvr')
                 .success(function(data) {
@@ -30,16 +61,6 @@ app.controller('fvCtrl', function($scope, $http, Notification) {
                 .success(function(data) {
                     $scope.allFVs = data;
         });
-    };
-    
-    $scope.addNote = '';
-    
-    $scope.sortProperty = 'duedate';
-    $scope.sortReverse = false;
-    
-    $scope.sortBy = function(sortProperty) {
-        $scope.sortReverse = ($scope.sortProperty === sortProperty) ? !$scope.sortReverse : false;
-        $scope.sortProperty = sortProperty;
     };
 
     $scope.addFV = function() {

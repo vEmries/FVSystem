@@ -129,7 +129,7 @@
                                             </th>
                                         </thead>
                                         <tbody ng-repeat="fv in allFVs | orderBy : sortProperty : sortReverse">
-                                            <tr>
+                                            <tr ng-style="checkPriority(fv)">
                                                 <td class="text-center click-icon" ng-click="fvDetail = !fvDetail">
                                                     <i class="material-icons" ng-if="fv.status < 0">assignment_late</i>
                                                     <i class="material-icons" ng-if="fv.status == 0">assignment</i>
@@ -201,11 +201,13 @@
                                                                         <select ng-model="upContractor" ng-options="c.company for c in allContractors" ng-init="upContractor = allContractorsID[ fv.contractor ]"></select>
                                                                         </p>
                                                                         <p>
+                                                                            <label>Data wystawienia</label>
                                                                             <datepicker date-format="yyyy-MM-dd">
                                                                                 <input ng-model="upIssueDate" ng-init="upIssueDate = fv.issuedate" type="text" class="angular-datepicker-input"/>
                                                                             </datepicker>
                                                                         </p>
                                                                         <p>
+                                                                            <label>Termin płatności</label>
                                                                             <datepicker date-format="yyyy-MM-dd">
                                                                                 <input ng-model="upDueDate" ng-init="upDueDate = fv.duedate" type="text" class="angular-datepicker-input" />
                                                                             </datepicker>
@@ -247,8 +249,9 @@
                                                                             </md-input-container>
                                                                         </p>
                                                                         <p>
+                                                                            <label>Data wystawienia</label>
                                                                             <datepicker date-format="yyyy-MM-dd">
-                                                                                <input ng-model="addRIssueDate" type="text" class="angular-datepicker-input" placeholder="Data wystawienia"/>
+                                                                                <input ng-model="addRIssueDate" ng-init="addRIssueDate = currentDate" type="text" class="angular-datepicker-input" placeholder="Data wystawienia"/>
                                                                             </datepicker>
                                                                         </p>
                                                                         <p>
@@ -324,11 +327,13 @@
                                     <select ng-model="addContractor" ng-options="c.company for c in allContractors"></select>
                                 </p>
                                 <p>
+                                    <label>Data wystawienia</label>
                                     <datepicker date-format="yyyy-MM-dd" button-prev='<i class="fa fa-arrow-circle-left"></i>' button-next='<i class="fa fa-arrow-circle-right"></i>'>
-                                        <input ng-model="addIssueDate" type="text" class="angular-datepicker-input" placeholder="Data wystawienia"/>
+                                        <input ng-model="addIssueDate" ng-init="addIssueDate = currentDate" type="text" class="angular-datepicker-input" placeholder="Data wystawienia"/>
                                     </datepicker>
                                 </p>
                                 <p>
+                                    <label>Termin płatności</label>
                                     <datepicker date-format="yyyy-MM-dd">
                                         <input ng-model="addDueDate" type="text" class="angular-datepicker-input" placeholder="Termin płatności"/>
                                     </datepicker>
@@ -361,7 +366,7 @@
     <script>
     var d = new Date;
     document.getElementById("czasczas").innerHTML = d;
-//
+
 //    function jesliwieksze(){
 //        var kwota = document.getElementsByClassName('text-center-plat');
 //        if (kwota.value() > 0)
@@ -371,6 +376,9 @@
 //            kwota.style.color.fontcolor="red"
 ////            document.getElementsByClassName('text-center-plat').style.color = 'green';
 //    }
+//
+//                  Co tu się odjaniepawliło to ja nawet nie xD
+
 </script>
 </body>
 

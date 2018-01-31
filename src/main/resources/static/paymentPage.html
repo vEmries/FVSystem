@@ -118,7 +118,7 @@
                                             <th colspan="2">Dodatkowy opis</th>
                                         </thead>
                                         <tbody ng-repeat="fv in allFVs | orderBy : sortProperty : sortReverse">
-                                            <tr>
+                                            <tr ng-style="checkPriority(fv)">
                                                 <td class="text-center click-icon" ng-click="fvDetail = !fvDetail">
                                                     <i class="material-icons" ng-if="fv.status < 0">assignment_late</i>
                                                     <i class="material-icons" ng-if="fv.status == 0">assignment</i>
@@ -180,8 +180,9 @@
                                                                             </md-input-container>
                                                                         </p>
                                                                         <p>
+                                                                            <label>Data płatności</label>
                                                                             <datepicker date-format="yyyy-MM-dd">
-                                                                                <input ng-model="addIssueDate" type="text" class="angular-datepicker-input" placeholder="Data płatności"/>
+                                                                                <input ng-model="addIssueDate" ng-init="addIssueDate = currentDate" type="text" class="angular-datepicker-input" placeholder="Data płatności"/>
                                                                             </datepicker>
                                                                         </p>
                                                                         <p>

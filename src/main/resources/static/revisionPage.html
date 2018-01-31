@@ -160,6 +160,7 @@
                                                                             <select ng-model="upRFV" ng-options="fv.fvnumber for fv in allFVs" ng-init="upRFV = allFVsID[ revision.fv ]"></select>
                                                                         </p>
                                                                         <p>
+                                                                            <label>Data wystawienia</label>
                                                                             <datepicker date-format="yyyy-MM-dd">
                                                                                 <input ng-model="upRIssueDate" ng-init="upRIssueDate = revision.issuedate" type="text" class="angular-datepicker-input"/>
                                                                             </datepicker>
