@@ -30,6 +30,10 @@ public class UserService {
         return authorities;
     }
 
+    public List<App.Model.User> getAllUsers() {
+        return userRepo.findAll();
+    }
+
     public String getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -37,7 +41,7 @@ public class UserService {
     }
 
     public void createUser(String username, String password, String role) {
-        App.Model.User newUser = new App.Model.User(username, password, role);
+        App.Model.User newUser = new App.Model.User(username, password, "ROLE_" + role);
         userRepo.save(newUser);
 
         inMemoryUserDetailsManager.createUser(new User(username, password, createAutohrities(role)));
