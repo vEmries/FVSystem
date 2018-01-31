@@ -108,17 +108,16 @@
                                 <div class="card-content table-responsive">
                                     <table class="table" ng-init="loadPayments()">
                                         <thead class="text-primary">
-                                            <th class="text-center">Status</th>
-                                            <th class="text-center">Numer faktury</th>
-                                            <th class="text-center">Kontrahent</th>
-                                            <th class="text-center">Data wystawienia</th>
-                                            <th class="text-center">Termin płatności</th>
-                                            <th class="text-center">Kwota</th>
+                                            <th class="text-center click-icon" ng-click="sortBy('status')">Status</th>
+                                            <th class="text-center click-icon" ng-click="sortBy('fvnumber')">Numer faktury</th>
+                                            <th class="text-center clikc-icon" ng-click="sortBy('contractor')">Kontrahent</th>
+                                            <th class="text-center click-icon" ng-click="sortBy('issuedate')">Data wystawienia</th>
+                                            <th class="text-center click-icon" ng-click="sortBy('duedate')">Termin płatności</th>
+                                            <th class="text-center click-icon" ng-click="sortBy('value')">Kwota</th>
                                             <th class="text-center">Stan płatności</th>
-                                            <th>Dodatkowy opis</th>
-                                            <th></th>
+                                            <th colspan="2">Dodatkowy opis</th>
                                         </thead>
-                                        <tbody ng-repeat="fv in allFVs">
+                                        <tbody ng-repeat="fv in allFVs | orderBy : sortProperty : sortReverse">
                                             <tr>
                                                 <td class="text-center click-icon" ng-click="fvDetail = !fvDetail">
                                                     <i class="material-icons" ng-if="fv.status < 0">assignment_late</i>

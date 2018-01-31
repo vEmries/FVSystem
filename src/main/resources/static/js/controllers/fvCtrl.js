@@ -1,7 +1,5 @@
 app.controller('fvCtrl', function($scope, $http, Notification) {
     
-    $scope.addNote = '';
-    
     $scope.loadFV = function() {
         $http.get('./fvr')
                 .success(function(data) {
@@ -32,6 +30,16 @@ app.controller('fvCtrl', function($scope, $http, Notification) {
                 .success(function(data) {
                     $scope.allFVs = data;
         });
+    };
+    
+    $scope.addNote = '';
+    
+    $scope.sortProperty = 'duedate';
+    $scope.sortReverse = false;
+    
+    $scope.sortBy = function(sortProperty) {
+        $scope.sortReverse = ($scope.sortProperty === sortProperty) ? !$scope.sortReverse : false;
+        $scope.sortProperty = sortProperty;
     };
 
     $scope.addFV = function() {

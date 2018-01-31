@@ -112,12 +112,12 @@
                                 <div class="card-content table-responsive">
                                     <table class="table">
                                         <thead class="text-primary">
-                                            <th class="text-center">Nazwa firmy</th>
-                                            <th class="text-center">NIP</th>
-                                            <th class="text-center">Bank</th>
+                                            <th class="text-center click-icon" ng-click="sortBy('company')">Nazwa firmy</th>
+                                            <th class="text-center click-icon" ng-click="sortBy('nip')">NIP</th>
+                                            <th class="text-center click-icon" ng-click="sortBy('bank')">Bank</th>
                                             <th class="text-center">Nr konta</th>
-                                            <th class="text-center">Nr kontaktowy</th>
-                                            <th class="text-center">Adres e-mail</th>
+                                            <th class="text-center click-icon" ng-click="sortBy('contactnr')">Nr kontaktowy</th>
+                                            <th class="text-center click-icon" ng-click="sortBy('mail')">Adres e-mail</th>
                                             <th>Dodatkowe notatki</th>
                                             <th>
                                                 <div class="tooltip">
@@ -126,7 +126,7 @@
                                                 </div>
                                             </th>
                                         </thead>
-                                        <tbody ng-repeat="contractor in allContractors">
+                                        <tbody ng-repeat="contractor in allContractors | orderBy : sortProperty : sortReverse">
                                             <tr>
                                                 <td class="text-center">{{contractor.company}}</td>
                                                 <td class="text-center">{{contractor.nip}}</td>

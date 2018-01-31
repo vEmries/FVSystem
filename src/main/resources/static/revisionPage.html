@@ -109,15 +109,15 @@
                                     <table class="table">
                                         <thead class="text-primary">
                                             <th></th>
-                                            <th class="text-center">Numer korekty</th>
-                                            <th class="text-center">Numer faktury korygowanej</th>
+                                            <th class="text-center click-icon" ng-click="sortBy('fvnumber')">Numer korekty</th>
+                                            <th class="text-center click-icon" ng-click="sortBy('fv')">Numer faktury korygowanej</th>
                                             <th class="text-center">Stan faktury korygowanej</th>
-                                            <th class="text-center">Data wystawienia</th>
-                                            <th class="text-center">Kwota</th>
+                                            <th class="text-center click-icon" ng-click="sortBy('issueDate')">Data wystawienia</th>
+                                            <th class="text-center click-icon" ng-click="sortBy('quota')">Kwota</th>
                                             <th>Dodatkowy opis</th>
                                             <th></th>
                                         </thead>
-                                        <tbody ng-repeat="revision in allRevisions">
+                                        <tbody ng-repeat="revision in allRevisions | orderBy : sortProperty : sortReverse">
                                             <tr>
                                                 <td class="text-center">
                                                     <i class="material-icons">change_history</i>

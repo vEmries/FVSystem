@@ -12,6 +12,14 @@ app.controller('contractorCtrl', function($scope, $http, Notification){
         });
     };
     
+    $scope.sortProperty = 'company';
+    $scope.sortReverse = false;
+    
+    $scope.sortBy = function(sortProperty) {
+        $scope.sortReverse = ($scope.sortProperty === sortProperty) ? !$scope.sortReverse : false;
+        $scope.sortProperty = sortProperty;
+    };
+    
     $scope.addContractor = function() {
         
         var dataContractor = ({

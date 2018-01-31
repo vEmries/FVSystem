@@ -1,7 +1,5 @@
 app.controller('paymentCtrl', function($scope, $http, Notification) {
     
-    $scope.addNote = '';
-    
     $scope.loadPayments = function() {
         $http.get('./fv')
                 .success(function(data) {
@@ -28,7 +26,16 @@ app.controller('paymentCtrl', function($scope, $http, Notification) {
                     $scope.allAddresses = data;
         });
     };
+    
+    $scope.addNote = '';
 
+    $scope.sortProperty = 'duedate';
+    $scope.sortReverse = false;
+    
+    $scope.sortBy = function(sortProperty) {
+        $scope.sortReverse = ($scope.sortProperty === sortProperty) ? !$scope.sortReverse : false;
+        $scope.sortProperty = sortProperty;
+    };
 
     $scope.addPayment = function(fvID, addQuota, addIssueDate, addNote) {
 

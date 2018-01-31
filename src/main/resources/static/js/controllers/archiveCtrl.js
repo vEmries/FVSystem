@@ -21,6 +21,14 @@ app.controller('archiveCtrl', function($scope, $http, Notification){
                     $scope.allContractors = data;
         });
     };
+    
+    $scope.sortProperty = 'issuedate';
+    $scope.sortReverse = false;
+    
+    $scope.sortBy = function(sortProperty) {
+        $scope.sortReverse = ($scope.sortProperty === sortProperty) ? !$scope.sortReverse : false;
+        $scope.sortProperty = sortProperty;
+    };
 
     $scope.returnFromArchive = function(ID) {
         $http.post('./archive/return/' + ID).then(function(response) {

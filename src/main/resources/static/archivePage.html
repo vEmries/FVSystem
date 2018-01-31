@@ -112,16 +112,16 @@
                                 <div class="card-content table-responsive">
                                     <table class="table">
                                         <thead class="text-primary">
-                                            <th class="text-center">Status</th>
-                                            <th class="text-center">Numer faktury</th>
-                                            <th class="text-center">Kontrahent</th>
-                                            <th class="text-center">Data wystawnienia</th>
-                                            <th class="text-center">Termin płatności</th>
-                                            <th class="text-center">Kwota</th>
+                                            <th class="text-center click-icon" ng-click="sortBy('status')">Status</th>
+                                            <th class="text-center click-icon" ng-click="sortBy('fvnumber')">Numer faktury</th>
+                                            <th class="text-center clikc-icon" ng-click="sortBy('contractor')">Kontrahent</th>
+                                            <th class="text-center click-icon" ng-click="sortBy('issuedate')">Data wystawienia</th>
+                                            <th class="text-center click-icon" ng-click="sortBy('duedate')">Termin płatności</th>
+                                            <th class="text-center click-icon" ng-click="sortBy('value')">Kwota</th>
                                             <th class="text-center">Stan płatności</th>
                                             <th colspan="2">Dodatkowy opis</th>
                                         </thead>
-                                        <tbody ng-repeat="fv in archiveFV">
+                                        <tbody ng-repeat="fv in archiveFV | orderBy : sortProperty : sortReverse">
                                             <tr>
                                                 <td class="text-center click-icon" ng-click="fvDetail = !fvDetail">
                                                     <i class="material-icons" ng-if="fv.status < 0">assignment_late</i>
@@ -146,7 +146,7 @@
                                                     </div>
                                                 </td>
                                             </tr>
-                                            <tr ng-repeat="revision in archiveRevision" ng-if="revision.fv == fv.id" ng-show="fvDetail">
+                                            <tr ng-repeat="revision in archiveRevision | orderBy : 'issuedate'" ng-if="revision.fv == fv.id" ng-show="fvDetail">
                                                 <td class="text-center">
                                                     <i class="material-icons">change_history</i>
                                                 </td>
@@ -158,7 +158,7 @@
                                                 <td class="text-center">-</td>
                                                 <td>{{revision.note}}</td>
                                             </tr>
-                                            <tr ng-repeat="payment in archivePayment" ng-if="payment.fv == fv.id" ng-show="fvDetail">
+                                            <tr ng-repeat="payment in archivePayment | orderBy : 'issuedate'" ng-if="payment.fv == fv.id" ng-show="fvDetail">
                                                 <td></td>
                                                 <td colspan="6">Płatność w wysokości: {{payment.quota | currency : 'zł'}}, dokonana: {{payment.issuedate}}</td>
                                             </tr>

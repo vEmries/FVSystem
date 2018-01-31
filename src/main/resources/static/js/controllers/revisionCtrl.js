@@ -27,6 +27,14 @@ app.controller('revisionCtrl', function($scope, $http, Notification) {
         });
     };
     
+    $scope.sortProperty = 'issuedate';
+    $scope.sortReverse = false;
+    
+    $scope.sortBy = function(sortProperty) {
+        $scope.sortReverse = ($scope.sortProperty === sortProperty) ? !$scope.sortReverse : false;
+        $scope.sortProperty = sortProperty;
+    };
+    
     $scope.updateRevision = function(upRID, upRFVNumber, upRFV, upRIssueDate, upRQuota, upRNote) {
      
         var data =({
