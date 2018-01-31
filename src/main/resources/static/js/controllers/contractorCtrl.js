@@ -1,5 +1,7 @@
 app.controller('contractorCtrl', function($scope, $http, Notification){
     
+    $scope.addNote = '';
+    
     $scope.sortProperty = 'company';
     $scope.sortReverse = false;
     
@@ -84,7 +86,7 @@ app.controller('contractorCtrl', function($scope, $http, Notification){
             });
 
             $http.put("./contractor/address", dataAddress).then(function(response) {
-                Notification.primary('Zaktualizowane kontrahenta ' + dataContractor.company);
+                Notification.primary('Zaktualizowano kontrahenta ' + dataContractor.company);
                 $scope.loadContractor();
             }, function(response) {
                 Notification.error('Aktualizacja kontrahenta ' + dataContractor.company + ' nie powiodła się');
