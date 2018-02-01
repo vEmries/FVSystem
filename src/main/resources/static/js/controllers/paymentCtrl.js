@@ -26,7 +26,7 @@ app.controller('paymentCtrl', function($scope, $http, Notification) {
         var currentDate = new Date();
         currentDate.setDate(currentDate.getDate() - 5);
         
-        if (fv.duedate < convertDate(currentDate)) {
+        if (fv.duedate < convertDate(currentDate) && fv.status < 1) {
             return {background : "red", color : "white"};
         };
     };
