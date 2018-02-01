@@ -44,7 +44,7 @@ public class UserService {
         App.Model.User newUser = new App.Model.User(username, password, "ROLE_" + role);
         userRepo.save(newUser);
 
-        inMemoryUserDetailsManager.createUser(new User(username, password, createAutohrities(role)));
+        inMemoryUserDetailsManager.createUser(new User(username, password, createAutohrities("ROLE_" + role)));
     }
 
     public void updateUser(App.Model.User toUpdate) {
