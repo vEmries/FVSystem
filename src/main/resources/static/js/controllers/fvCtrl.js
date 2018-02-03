@@ -23,10 +23,10 @@ app.controller('fvCtrl', function($scope, $http, Notification) {
     }
     
     $scope.checkPriority = function(fv) {
-        var currentDate = new Date();
-        currentDate.setDate(currentDate.getDate() - 5);
+        var threeLeftDate = new Date();
+        threeLeftDate.setDate(threeLeftDate.getDate() - 3);
         
-        if (fv.duedate < convertDate(currentDate) && fv.status < 1) {
+        if (fv.duedate < convertDate(threeLeftDate) && fv.status < 1) {
             return {background : "red", color : "white"};
         };
     };

@@ -25,7 +25,7 @@ public class ContractorService {
 
     @Transactional
     @Modifying
-    public void createContractor(String company, String NIP, String bank, String account, String contactnr, String mail, String note,
+    public void createContractor(String company, String companyShort, String NIP, String bank, String account, String contactnr, String mail, String note,
                                  String country, String province, String city, String zip, String street) throws InvalidDataException {
 
         if (company.trim().equals("") || NIP.trim().equals("")) {
@@ -34,7 +34,7 @@ public class ContractorService {
 
         Address newAddress = new Address(country, province, city, zip, street);
         addressRepo.save(newAddress);
-        Contractor newContractor = new Contractor(company, NIP, bank, account, newAddress.getId(), contactnr, mail, note);
+        Contractor newContractor = new Contractor(company, companyShort, NIP, bank, account, newAddress.getId(), contactnr, mail, note);
         contractorRepo.save(newContractor);
     }
 
@@ -45,7 +45,6 @@ public class ContractorService {
             throw new InvalidDataException("Błąd edycji kontrahenta '" + toUpdate.getCompany() + "'. Nowa nazwa lub NIP są puste");
         }
 
-        toUpdate.updateShortName();
         toUpdate.setAddress(contractorRepo.findById(toUpdate.getId()).getAddress());
         contractorRepo.save(toUpdate);
     }

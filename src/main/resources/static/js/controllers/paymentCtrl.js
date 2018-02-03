@@ -24,7 +24,7 @@ app.controller('paymentCtrl', function($scope, $http, Notification) {
     
     $scope.checkPriority = function(fv) {
         var currentDate = new Date();
-        currentDate.setDate(currentDate.getDate() - 5);
+        currentDate.setDate(currentDate.getDate() - 3);
         
         if (fv.duedate < convertDate(currentDate) && fv.status < 1) {
             return {background : "red", color : "white"};

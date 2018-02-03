@@ -26,6 +26,7 @@ app.controller('contractorCtrl', function($scope, $http, Notification){
         
         var dataContractor = ({
            company : $scope.addCompany,
+           companyshort : $scope.addCompanyShort,
            nip : $scope.addNIP,
            bank : $scope.addBank,
            account : $scope.addAccount,
@@ -56,12 +57,13 @@ app.controller('contractorCtrl', function($scope, $http, Notification){
         });
     };
     
-    $scope.updateContractor = function(upContractorID, upCompany, upNip, upBank, upAccount, upContactnr, upMail, upNote,
+    $scope.updateContractor = function(upContractorID, upCompany, upCompanyShort, upNip, upBank, upAccount, upContactnr, upMail, upNote,
                                         upAddressID, upCountry, upProvince, upCity, upZip, upStreet) {
         
             var dataContractor = ({
                 id : upContractorID,
                 company : upCompany,
+                companyshort : upCompanyShort,
                 nip : upNip,
                 bank : upBank,
                 account : upAccount,
