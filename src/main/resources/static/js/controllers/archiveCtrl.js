@@ -1,5 +1,13 @@
 app.controller('archiveCtrl', function($scope, $http, Notification){
     
+    $scope.sortProperty = 'issuedate';
+    $scope.sortReverse = false;
+    
+    $scope.sortBy = function(sortProperty) {
+        $scope.sortReverse = ($scope.sortProperty === sortProperty) ? !$scope.sortReverse : false;
+        $scope.sortProperty = sortProperty;
+    };
+    
     $scope.loadArchive = function() {
         $http.get('./archive/fv')
                 .success(function(data) {

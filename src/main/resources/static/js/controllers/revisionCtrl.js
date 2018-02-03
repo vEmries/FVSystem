@@ -1,9 +1,22 @@
 app.controller('revisionCtrl', function($scope, $http, Notification) {
     
+    $scope.sortProperty = 'issuedate';
+    $scope.sortReverse = false;
+    
+    $scope.sortBy = function(sortProperty) {
+        $scope.sortReverse = ($scope.sortProperty === sortProperty) ? !$scope.sortReverse : false;
+        $scope.sortProperty = sortProperty;
+    };
+    
     $scope.loadFV = function() {
         $http.get('./fv')
                 .success(function(data) {
                     $scope.allFVs = data;
+            
+                    $scope.allFVsID = [];
+                    for(var i = 0; i < data.length; i++){
+                        $scope.allFVsID[ data[i].id ] = data[i]; 
+                    }
         });
         
         $http.get('./fvr')

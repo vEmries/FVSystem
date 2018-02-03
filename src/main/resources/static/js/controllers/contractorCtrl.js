@@ -1,5 +1,15 @@
 app.controller('contractorCtrl', function($scope, $http, Notification){
     
+    $scope.addNote = '';
+    
+    $scope.sortProperty = 'company';
+    $scope.sortReverse = false;
+    
+    $scope.sortBy = function(sortProperty) {
+        $scope.sortReverse = ($scope.sortProperty === sortProperty) ? !$scope.sortReverse : false;
+        $scope.sortProperty = sortProperty;
+    };
+    
     $scope.loadContractor = function() {
         $http.get('./contractor')
                 .success(function(data) {
@@ -16,10 +26,11 @@ app.controller('contractorCtrl', function($scope, $http, Notification){
         
         var dataContractor = ({
            company : $scope.addCompany,
-           nip : $scope.addNip,
+           companyshort : $scope.addCompanyShort,
+           nip : $scope.addNIP,
            bank : $scope.addBank,
            account : $scope.addAccount,
-           contactnr : $scope.addContactnr,
+           contactnr : $scope.addContactNr,
            mail : $scope.addMail,
            note : $scope.addNote
         });
@@ -46,12 +57,13 @@ app.controller('contractorCtrl', function($scope, $http, Notification){
         });
     };
     
-    $scope.updateContractor = function(upContractorID, upCompany, upNip, upBank, upAccount, upContactnr, upMail, upNote,
+    $scope.updateContractor = function(upContractorID, upCompany, upCompanyShort, upNip, upBank, upAccount, upContactnr, upMail, upNote,
                                         upAddressID, upCountry, upProvince, upCity, upZip, upStreet) {
         
             var dataContractor = ({
                 id : upContractorID,
                 company : upCompany,
+                companyshort : upCompanyShort,
                 nip : upNip,
                 bank : upBank,
                 account : upAccount,
@@ -61,9 +73,9 @@ app.controller('contractorCtrl', function($scope, $http, Notification){
             });
 
             $http.put("./contractor", dataContractor).then(function(response) {
-                Notification.primary('Zaktualizowano dane kontrahenta ' + dataContractor.company);
+                Notification.primary('Zaktualizowano dane adresowe kontrahenta ' + dataContractor.company);
             }, function(response) {
-                Notification.error('Aktualizacja danych kontrahenta ' + dataContractor.company + ' nie powiodła się');
+                Notification.error('Aktualizacja danych adresowych kontrahenta ' + dataContractor.company + ' nie powiodła się');
             });
 
             var dataAddress = ({
@@ -76,7 +88,7 @@ app.controller('contractorCtrl', function($scope, $http, Notification){
             });
 
             $http.put("./contractor/address", dataAddress).then(function(response) {
-                Notification.primary('Zaktualizowane kontrahenta ' + dataContractor.company);
+                Notification.primary('Zaktualizowano kontrahenta ' + dataContractor.company);
                 $scope.loadContractor();
             }, function(response) {
                 Notification.error('Aktualizacja kontrahenta ' + dataContractor.company + ' nie powiodła się');

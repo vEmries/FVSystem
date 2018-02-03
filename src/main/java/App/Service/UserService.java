@@ -30,6 +30,10 @@ public class UserService {
         return authorities;
     }
 
+    public List<App.Model.User> getAllUsers() {
+        return userRepo.findAll();
+    }
+
     public String getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -37,14 +41,21 @@ public class UserService {
     }
 
     public void createUser(String username, String password, String role) {
-        App.Model.User newUser = new App.Model.User(username, password, role);
+        App.Model.User newUser = new App.Model.User(username, password, "ROLE_" + role);
         userRepo.save(newUser);
 
-        inMemoryUserDetailsManager.createUser(new User(username, password, createAutohrities(role)));
+        inMemoryUserDetailsManager.createUser(new User(username, password, createAutohrities("ROLE_" + role)));
     }
 
-    public void checkUser(String userName) {
-        System.out.println(inMemoryUserDetailsManager.loadUserByUsername("user1"));
-        System.out.println(inMemoryUserDetailsManager.loadUserByUsername("user1").getAuthorities());
+    public void updateUser(App.Model.User toUpdate) {
+        userRepo.save(toUpdate);
+    }
+
+    public void deleteUser(Integer ID) {
+        userRepo.delete(userRepo.findById(ID));
+    }
+
+    public String checkUser(String userName) {
+        return inMemoryUserDetailsManager.loadUserByUsername(userName).getAuthorities().toString();
     }
 }

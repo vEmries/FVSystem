@@ -9,18 +9,25 @@
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/bootstrap.css" rel="stylesheet" />
     <link href="js/assets/notifications/angular-ui-notification.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="js/assets/datapicker/helper.css" />
+    <link rel="stylesheet" type="text/css" href="js/assets/datapicker/angular-datepicker.css" />
 
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-route.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
     
     <script src="js/mainApp.js"></script>
     <script src="js/controllers/revisionCtrl.js"></script>
-    <script src="js/assets/bootstrap.min.js"></script>
-    <script src="js/assets/material.min.js"></script>
+    <script src="css/bootstrap.min.js" type="text/javascript"></script>
     <script src="js/assets/notifications/angular-ui-notification.js"></script>
+    <script type="text/javascript" src="js/assets/datapicker/angular-datepicker.js"></script>
 </head>
 
 <body ng-app="mainApp">
@@ -102,15 +109,15 @@
                                     <table class="table">
                                         <thead class="text-primary">
                                             <th></th>
-                                            <th class="text-center">Numer korekty</th>
-                                            <th class="text-center">Numer faktury korygowanej</th>
+                                            <th class="text-center click-icon" ng-click="sortBy('fvnumber')">Numer korekty</th>
+                                            <th class="text-center click-icon" ng-click="sortBy('fv')">Numer faktury korygowanej</th>
                                             <th class="text-center">Stan faktury korygowanej</th>
-                                            <th class="text-center">Data wystawienia</th>
-                                            <th class="text-center">Kwota</th>
+                                            <th class="text-center click-icon" ng-click="sortBy('issueDate')">Data wystawienia</th>
+                                            <th class="text-center click-icon" ng-click="sortBy('quota')">Kwota</th>
                                             <th>Dodatkowy opis</th>
                                             <th></th>
                                         </thead>
-                                        <tbody ng-repeat="revision in allRevisions">
+                                        <tbody ng-repeat="revision in allRevisions | orderBy : sortProperty : sortReverse">
                                             <tr>
                                                 <td class="text-center">
                                                     <i class="material-icons">change_history</i>
@@ -126,30 +133,59 @@
                                                 <td class="text-center">{{revision.quota | currency : 'zł'}}</td>
                                                 <td>{{revision.note}}</td>
                                                 <td>
-                                                    <i class="material-icons click-icon" ng-click="showEditRevision = !showEditRevision">edit</i>
-                                                    <i class="material-icons click-icon" ng-click="deleteRevision(revision.id)">delete</i>
-                                                </td>
-                                            </tr>
-                                            <tr ng-show="showEditRevision">
-                                                <td></td>
-                                                <td>
-                                                    <input type="text" class="form-control" ng-model="revision.fvnumber"/>
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control" ng-model="revision.fv"/>
-                                                </td>
-                                                <td>-</td>
-                                                <td>
-                                                    <input type="text" class="form-control" ng-model="revision.issuedate"/>
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control" ng-model="revision.quota"/>
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control" ng-model="revision.note"/>
-                                                </td>
-                                                <td>
-                                                    <i class="material-icons click-icon" ng-click="updateRevision(revision.id, revision.fvnumber, revision.fv, revision.issuedate, revision.quota, revision.note)">done</i>
+                                                    <div class="tooltip">
+                                                        <i class="material-icons click-icon" data-toggle="modal" data-target="#editRevision{{$index}}">edit</i>
+                                                        <span class="tooltiptext">Edytuj korektę</span>
+                                                    </div>
+                                                    <div class="tooltip">
+                                                        <i class="material-icons click-icon" ng-click="deleteRevision(revision.id)">delete</i>
+                                                        <span class="tooltiptext">Usuń korektę</span>
+                                                    </div>
+                                                    
+                                                    <div class="container-fluid">
+                                                        <div class="modal fade" id="editRevision{{$index}}" role="dialog">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h4 class="modal-title">Edycja korekty: {{revision.fvnumber}}</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <p>
+                                                                            <md-input-container>
+                                                                                <label>Numer faktury</label>
+                                                                                <input type="text" ng-model="upRNumber" ng-init="upRNumber = revision.fvnumber"/>
+                                                                            </md-input-container>
+                                                                        </p>
+                                                                        <p>
+                                                                            <select ng-model="upRFV" ng-options="fv.fvnumber for fv in allFVs" ng-init="upRFV = allFVsID[ revision.fv ]"></select>
+                                                                        </p>
+                                                                        <p>
+                                                                            <label>Data wystawienia</label>
+                                                                            <datepicker date-format="yyyy-MM-dd">
+                                                                                <input ng-model="upRIssueDate" ng-init="upRIssueDate = revision.issuedate" type="text" class="angular-datepicker-input"/>
+                                                                            </datepicker>
+                                                                        </p>
+                                                                        <p>
+                                                                            <md-input-container>
+                                                                                <label>Kwota korekty</label>
+                                                                                <input type="text" ng-model="upRQuota" ng-init="upRQuota = revision.quota"/>
+                                                                            </md-input-container>
+                                                                        </p>
+                                                                        <p>
+                                                                            <md-input-container>
+                                                                                <label>Powód korekty</label>
+                                                                                <input type="text" ng-model="upRNote" ng-init="upRNote = revision.note"/>
+                                                                            </md-input-container>
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button class="btn btn-default" data-dismiss="modal">Zamknij</button>
+                                                                        <i class="material-icons click-icon" ng-click="updateRevision(revision.id, upRNumber, upRFV.id, upRIssueDate, upRQuota, upRNote)" data-dismiss="modal">done</i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         </tbody>

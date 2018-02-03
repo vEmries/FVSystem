@@ -1,11 +1,37 @@
 app.controller('fvCtrl', function($scope, $http, Notification) {
     
-    $scope.loadFV = function() {
-        $http.get('./fv')
-                .success(function(data) {
-                    $scope.allFVs = data;
-        });
+    $scope.currentDate = convertDate(new Date());
+    $scope.addNote = '';
+    
+    $scope.sortProperty = 'duedate';
+    $scope.sortReverse = false;
+    
+    $scope.sortBy = function(sortProperty) {
+        $scope.sortReverse = ($scope.sortProperty === sortProperty) ? !$scope.sortReverse : false;
+        $scope.sortProperty = sortProperty;
+    };
+    
+    function convertDate(date) {
+        var yyyy = date.getFullYear().toString();
+        var mm = (date.getMonth()+1).toString();
+        var dd  = date.getDate().toString();
+
+        var mmChars = mm.split('');
+        var ddChars = dd.split('');
+
+        return yyyy + '-' + (mmChars[1]?mm:"0"+mmChars[0]) + '-' + (ddChars[1]?dd:"0"+ddChars[0]);
+    }
+    
+    $scope.checkPriority = function(fv) {
+        var threeLeftDate = new Date();
+        threeLeftDate.setDate(threeLeftDate.getDate() - 3);
         
+        if (fv.duedate < convertDate(threeLeftDate) && fv.status < 1) {
+            return {background : "red", color : "white"};
+        };
+    };
+    
+    $scope.loadFV = function() {
         $http.get('./fvr')
                 .success(function(data) {
                     $scope.allRevisions = data;
@@ -19,6 +45,21 @@ app.controller('fvCtrl', function($scope, $http, Notification) {
         $http.get('./contractor')
                 .success(function(data) {
                     $scope.allContractors = data;
+
+                    $scope.allContractorsID = [];
+                    for(var i = 0; i < data.length; i++){
+                        $scope.allContractorsID[ data[i].id ] = data[i]; 
+                    }
+        });
+        
+        $http.get('./contractor/address')
+                .success(function(data) {
+                    $scope.allAddresses = data;
+        });
+        
+        $http.get('./fv')
+                .success(function(data) {
+                    $scope.allFVs = data;
         });
     };
 
@@ -26,7 +67,7 @@ app.controller('fvCtrl', function($scope, $http, Notification) {
         
         var data = ({
             fvnumber: $scope.addFVNumber,
-            contractor: $scope.addContractor,
+            contractor: $scope.addContractor.id,
             issuedate: $scope.addIssueDate,
             duedate: $scope.addDueDate,
             value: $scope.addValue,
@@ -86,28 +127,9 @@ app.controller('fvCtrl', function($scope, $http, Notification) {
             Notification.primary('Dodano korektę ' + data.fvnumber);
             $scope.loadFV();
         }, function(response) {
-            Notification.error('Dodanie korekty' + data.fvnumber + 'nie powiodło się');
+            Notification.error('Dodanie korekty ' + data.fvnumber + ' nie powiodło się');
         });
     };
-    
-//    $scope.updateRevision = function(upRID, upRFVNumber, upRFV, upRIssueDate, upRQuota, upRNote) {
-//     
-//        var data =({
-//            id : upRID,
-//            fvnumber : upRFVNumber,
-//            fv : upRFV,
-//            issuedate : upRIssueDate,
-//            quota : upRQuota,
-//            note : upRNote
-//        });
-//        
-//        $http.put('./fvr', data).then(function(response) {
-//            $scope.updateResult = "Updated";
-//            $scope.loadFV();
-//        }, function(response) {
-//            $scope.updateResult = "Update Error";
-//        });
-//    };
     
     $scope.deleteRevision = function(ID) {
         if(confirm('Czy na pewno chcesz usunąć korektę?')) {
@@ -122,14 +144,11 @@ app.controller('fvCtrl', function($scope, $http, Notification) {
     
     $scope.autoArchive = function() {
         $http.post('./archive').then(function(response) {
-            Notification.primary('Zarchiwizowano faktury: ' + response);
+            Notification.primary('Zarchiwizowano faktury');
             $scope.loadFV();
         }, function(response) {
             Notification.error('Archiwizacja faktur nie powiodła się');
         });
-        
-        //Trzeba poprawić notyfikację, bo źle wyświetla response
-        //Response to List<FV>, które zarchiwizował
     };
     
 });

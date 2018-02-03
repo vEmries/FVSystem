@@ -1,0 +1,8 @@
+{
+    "elements": {
+        "md-datepicker": {},
+        "datepicker": {},
+        "md-input-container": {}
+    },
+    "attributes": {}
+}

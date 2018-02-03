@@ -9,25 +9,28 @@
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/bootstrap.css" rel="stylesheet" />
     <link href="js/assets/notifications/angular-ui-notification.css" rel="stylesheet" />
-
+    <link rel="stylesheet" type="text/css" href="js/assets/datapicker/helper.css" />
+    <link rel="stylesheet" type="text/css" href="js/assets/datapicker/angular-datepicker.css" />
+    
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-route.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
     
     <script src="js/mainApp.js"></script>
     <script src="js/controllers/fvCtrl.js"></script>
-    <script src="js/assets/bootstrap.min.js"></script>
-    <script src="js/assets/material.min.js"></script>
+    <script src="css/bootstrap.min.js" type="text/javascript"></script>
     <script src="js/assets/notifications/angular-ui-notification.js"></script>
-
+    <script type="text/javascript" src="js/assets/datapicker/angular-datepicker.js"></script>
 </head>
 
 <body ng-app="mainApp">
-
-
-
 
     <div class="wrapper">
         
@@ -106,113 +109,175 @@
                                 <div class="card-content table-responsive">
                                     <table class="table">
                                         <thead class="text-primary">
-                                            <th class="text-center">Status</th>
-                                            <th class="text-center">Numer faktury</th>
-                                            <th class="text-center">Kontrahent</th>
-                                            <th class="text-center">Data wystawienia</th>
-                                            <th class="text-center">Termin płatności</th>
-                                            <th class="text-center">Kwota</th>
+                                            <th class="text-center click-icon" ng-click="sortBy('status')">Status</th>
+                                            <th class="text-center click-icon" ng-click="sortBy('fvnumber')">Numer faktury</th>
+                                            <th class="text-center clikc-icon" ng-click="sortBy('contractor')">Kontrahent</th>
+                                            <th class="text-center click-icon" ng-click="sortBy('issuedate')">Data wystawienia</th>
+                                            <th class="text-center click-icon" ng-click="sortBy('duedate')">Termin płatności</th>
+                                            <th class="text-center click-icon" ng-click="sortBy('value')">Kwota</th>
                                             <th class="text-center">Stan płatności</th>
                                             <th>Dodatkowy opis</th>
                                             <th>
-                                                <i class="material-icons click-icon" ng-click="showAddFV = !showAddFV">note_add</i>
-                                                <i class="material-icons click-icon" ng-click="autoArchive()">archive</i>
+                                                <div class="tooltip">
+                                                    <i class="material-icons click-icon" data-toggle="modal" data-target="#addFV">note_add</i>
+                                                    <span class="tooltiptext">Dodaj fakturę</span>
+                                                </div>
+                                                <div class="tooltip">
+                                                    <i class="material-icons click-icon" ng-click="autoArchive()">archive</i>
+                                                    <span class="tooltiptext">Archiwizuj faktury</span>
+                                                </div>
                                             </th>
                                         </thead>
-                                            <tr ng-show="showAddFV">
-                                                <td></td>
-                                                <td>
-                                                    <input type="text" class="form-control" ng-model="addFVNumber" placeholder="Numer faktury"/>
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control" ng-model="addContractor" placeholder="Kontrahent"/>
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control" ng-model="addIssueDate" placeholder="Data wystawienia"/>
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control" ng-model="addDueDate" placeholder="Termin płatności"/>
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control" ng-model="addValue" placeholder="Kwota"/>
-                                                </td>
-                                                <td class="text-center">-</td>
-                                                <td>
-                                                    <input type="text" class="form-control" ng-model="addNote" placeholder="Dodatkowy opis"/>
-                                                </td>
-                                                <td>
-                                                    <i class="material-icons click-icon" ng-click="addFV()">done</i>
-                                                </td>
-                                            </tr>
-                                        <tbody ng-repeat="fv in allFVs">
-                                            <tr>
-                                                <td class="text-center">
+                                        <tbody ng-repeat="fv in allFVs | orderBy : sortProperty : sortReverse">
+                                            <tr ng-style="checkPriority(fv)">
+                                                <td class="text-center click-icon" ng-click="fvDetail = !fvDetail">
                                                     <i class="material-icons" ng-if="fv.status < 0">assignment_late</i>
                                                     <i class="material-icons" ng-if="fv.status == 0">assignment</i>
                                                     <i class="material-icons" ng-if="fv.status > 0">assignment_turned_in</i>
                                                 </td>
                                                 <td class="text-center">{{fv.fvnumber}}</td>
-                                                <td class="text-center" ng-repeat="contractor in allContractors" ng-if="contractor.id == fv.contractor">{{contractor.companyshort}}</td>
+                                                <td class="text-center" ng-repeat="contractor in allContractors" ng-if="contractor.id == fv.contractor">
+                                                    <div class="click-icon" data-toggle="modal" data-target="#showContractor{{$index}}">{{contractor.companyshort}}</div>
+                                                
+                                                    <div class="container-fluid">
+                                                        <div class="modal fade" id="showContractor{{$index}}" role="dialog">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h4 class="modal-title">Dane kontrahenta: {{contractor.companyshort}}</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <p>{{contractor.company}}</p>
+                                                                        <p>{{contractor.bank}}</p>
+                                                                        <p>{{contractor.account}}</p>
+                                                                        <p>{{contractor.nip}}</p>
+                                                                        <p>{{contractor.note}}</p>
+                                                                        <div ng-repeat="address in allAddresses" ng-if="address.id == contractor.address">
+                                                                            <p>{{address.country}} {{address.province}} {{address.city}} {{address.zip}} {{address.street}}</p>
+                                                                        </div>
+                                                                    <div class="modal-footer">
+                                                                        <button class="btn btn-default" data-dismiss="modal">Zamknij</button>
+                                                                    </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
                                                 <td class="text-center">{{fv.issuedate}}</td>
                                                 <td class="text-center">{{fv.duedate}}</td>
                                                 <td class="text-center-plat text-center" style="font-weight: bold;">{{fv.value}} zł</td>
                                                 <td class="text-center">{{fv.paid}} zł / {{fv.sum}} zł</td>
                                                 <td>{{fv.note}}</td>
-                                                <td> 
-                                                    <i class="material-icons click-icon" ng-click="showEditFV = !showEditFV">edit</i>
-                                                    <i class="material-icons click-icon" ng-click="deleteFV(fv.id)">delete</i>
-                                                    <i class="material-icons click-icon" ng-click="showAddRevision = !showAddRevision">change_history</i>
+                                                <td>
+                                                    <div class="tooltip">
+                                                        <i class="material-icons click-icon" data-toggle="modal" data-target="#editFV{{$index}}">edit</i>
+                                                        <span class="tooltiptext">Edytuj fakturę</span>
+                                                    </div>
+                                                    <div class="tooltip">
+                                                        <i class="material-icons click-icon" ng-click="deleteFV(fv.id)">delete</i>
+                                                        <span class="tooltiptext">Usuń fakturę</span>
+                                                    </div>
+                                                    <div class="tooltip">
+                                                        <i class="material-icons click-icon" data-toggle="modal" data-target="#addRevision{{$index}}">change_history</i>
+                                                        <span class="tooltiptext">Dodaj korektę</span>
+                                                    </div>
+                                                    
+                                                    <div class="container-fluid">
+                                                        <div class="modal fade" id="editFV{{$index}}" role="dialog">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h4 class="modal-title">Edycja faktury: {{fv.fvnumber}}</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <p>
+                                                                            <md-input-container>
+                                                                                <label>Numer faktury</label>
+                                                                                <input type="text" ng-model="upNumber" ng-init="upNumber = fv.fvnumber"/>
+                                                                            </md-input-container>
+                                                                        </p>
+                                                                        <p>
+                                                                        <select ng-model="upContractor" ng-options="c.company for c in allContractors" ng-init="upContractor = allContractorsID[ fv.contractor ]"></select>
+                                                                        </p>
+                                                                        <p>
+                                                                            <label>Data wystawienia</label>
+                                                                            <datepicker date-format="yyyy-MM-dd">
+                                                                                <input ng-model="upIssueDate" ng-init="upIssueDate = fv.issuedate" type="text" class="angular-datepicker-input"/>
+                                                                            </datepicker>
+                                                                        </p>
+                                                                        <p>
+                                                                            <label>Termin płatności</label>
+                                                                            <datepicker date-format="yyyy-MM-dd">
+                                                                                <input ng-model="upDueDate" ng-init="upDueDate = fv.duedate" type="text" class="angular-datepicker-input" />
+                                                                            </datepicker>
+                                                                        </p>
+                                                                        <p>
+                                                                            <md-input-container>
+                                                                                <label>Kwota faktury</label>
+                                                                                <input type="text" ng-model="upValue" ng-init="upValue = fv.value"/>
+                                                                            </md-input-container>
+                                                                        </p>
+                                                                        <p>
+                                                                            <md-input-container>
+                                                                                <label>Dodatkowy opis</label>
+                                                                                <input type="text" ng-model="upNote" ng-init="upNote = fv.note"/>
+                                                                            </md-input-container>
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button class="btn btn-default" data-dismiss="modal">Zamknij</button>
+                                                                        <i class="material-icons click-icon" ng-click="updateFV(fv.id, upNumber, upContractor.id, upIssueDate, upDueDate, upValue, upNote)" data-dismiss="modal">done</i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="container-fluid">
+                                                        <div class="modal fade" id="addRevision{{$index}}" role="dialog">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h4 class="modal-title">Dodanie korekty dla faktury: {{fv.fvnumber}}</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <p>
+                                                                            <md-input-container>
+                                                                                <label>Numer korekty</label>
+                                                                                <input type="text" ng-model="addRFVNumber" required/>
+                                                                            </md-input-container>
+                                                                        </p>
+                                                                        <p>
+                                                                            <label>Data wystawienia</label>
+                                                                            <datepicker date-format="yyyy-MM-dd">
+                                                                                <input ng-model="addRIssueDate" ng-init="addRIssueDate = currentDate" type="text" class="angular-datepicker-input" placeholder="Data wystawienia"/>
+                                                                            </datepicker>
+                                                                        </p>
+                                                                        <p>
+                                                                            <md-input-container>
+                                                                                <label>Kwota korekty</label>
+                                                                                <input type="text" ng-model="addRQuota" required/>
+                                                                            </md-input-container>
+                                                                        </p>
+                                                                        <p>
+                                                                            <md-input-container>
+                                                                                <label>Opis korekty</label>
+                                                                                <input type="text" ng-model="addRNote" required/>
+                                                                            </md-input-container>
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button class="btn btn-default" data-dismiss="modal">Zamknij</button>
+                                                                        <i class="material-icons click-icon" ng-click="addRevision(fv.id, addRFVNumber, addRIssueDate, addRQuota, addRNote)" data-dismiss="modal">done</i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </td>
                                             </tr>
-                                            <tr ng-show="showEditFV">
-                                                <td></td>
-                                                <td>
-                                                    <input type="text" class="form-control" ng-model="fv.fvnumber"/>
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control" ng-model="fv.contractor"/>
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control" ng-model="fv.issuedate"/>
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control" ng-model="fv.duedate"/>
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control" ng-model="fv.value"/>
-                                                </td>
-                                                <td class="text-center">-</td>
-                                                <td>
-                                                    <input type="text" class="form-control" ng-model="fv.note"/>
-                                                </td>
-                                                <td>
-                                                    <i class="material-icons click-icon" ng-click="updateFV(fv.id, fv.fvnumber, fv.contractor, fv.issuedate, fv.duedate, fv.value, fv.note)">done</i>
-                                                </td>
-                                            </tr>
-                                            <tr ng-show="showAddRevision">
-                                                <td class="text-center">
-                                                    <i class="material-icons">change_history</i>
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control" ng-model="addRFVNumber" placeholder="Numer faktury"/>
-                                                </td>
-                                                <td class="text-center">-</td>
-                                                <td>
-                                                    <input type="text" class="form-control" ng-model="addRIssueDate" placeholder="Data wystawienia"/>
-                                                </td>
-                                                <td class="text-center">-</td>
-                                                <td>
-                                                    <input type="text" class="form-control" ng-model="addRQuota" placeholder="Kwota"/>
-                                                </td>
-                                                <td class="text-center">-</td>
-                                                <td>
-                                                    <input type="text" class="form-control" ng-model="addRNote" placeholder="Powód korekty"/>
-                                                </td>
-                                                <td>
-                                                    <i class="material-icons click-icon" ng-click="addRevision(fv.id, addRFVNumber, addRIssueDate, addRQuota, addRNote)">done</i>
-                                                </td>
-                                            </tr>
-                                            <tr ng-repeat="revision in allRevisions" ng-if="revision.fv == fv.id">
+                                            <tr ng-repeat="revision in allRevisions | orderBy : 'issuedate'" ng-if="revision.fv == fv.id" ng-show="fvDetail">
                                                 <td class="text-center">
                                                     <i class="material-icons">change_history</i>
                                                 </td>
@@ -227,23 +292,15 @@
                                                     <i class="material-icons click-icon" ng-click="deleteRevision(revision.id)">delete</i>
                                                 </td>
                                             </tr>
-<!--                                            <tr>
-                                                <td colspan="8">
-                                                    <table>
-                                                        <tr>
-                                                            <td>sdasdsadasdasd</td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>-->
-                                            <tr ng-repeat="payment in allPayments" ng-if="fv.status >= 0 && payment.fv == fv.id">
+                                            <tr ng-repeat="payment in allPayments | orderBy : 'issuedate'" ng-if="fv.status >= 0 && payment.fv == fv.id" ng-show="fvDetail">
                                                 <td></td>
                                                 <td colspan="6">Płatność w wysokości: {{payment.quota | currency : 'zł'}}, dokonana: {{payment.issuedate}}. {{payment.note}}</td>
                                             </tr>
-                                            <tr ng-if="fv.status <0">
+                                            <tr ng-if="fv.status <0" ng-show="fvDetail">
                                                 <td></td>
                                                 <td colspan="6">Brak płatności dla faktury</td>
                                             </tr>
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -251,14 +308,65 @@
                     </div>
                 </div>
             </div>
-
+            
+            <div class="container-fluid">
+                <div class="modal fade" id="addFV" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Dodanie nowej faktury</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                    <md-input-container>
+                                        <label>Numer faktury</label>
+                                        <input type="text" ng-model="addFVNumber" required/>
+                                    </md-input-container>
+                                </p>
+                                <p>
+                                    <select ng-model="addContractor" ng-options="c.company for c in allContractors"></select>
+                                </p>
+                                <p>
+                                    <label>Data wystawienia</label>
+                                    <datepicker date-format="yyyy-MM-dd" button-prev='<i class="fa fa-arrow-circle-left"></i>' button-next='<i class="fa fa-arrow-circle-right"></i>'>
+                                        <input ng-model="addIssueDate" ng-init="addIssueDate = currentDate" type="text" class="angular-datepicker-input" placeholder="Data wystawienia"/>
+                                    </datepicker>
+                                </p>
+                                <p>
+                                    <label>Termin płatności</label>
+                                    <datepicker date-format="yyyy-MM-dd">
+                                        <input ng-model="addDueDate" type="text" class="angular-datepicker-input" placeholder="Termin płatności"/>
+                                    </datepicker>
+                                </p>
+                                <p>
+                                    <md-input-container>
+                                        <label>Kwota faktury</label>
+                                        <input type="text" ng-model="addValue" required/>
+                                    </md-input-container>
+                                </p>
+                                <p>
+                                    <md-input-container>
+                                        <label>Dodatkowy opis</label>
+                                        <input type="text" ng-model="addNote"/>
+                                    </md-input-container>
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-default" data-dismiss="modal">Zamknij</button>
+                                <i class="material-icons click-icon" ng-click="addFV()" data-dismiss="modal">done</i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
         </div>
     </div>
 
     <script>
     var d = new Date;
     document.getElementById("czasczas").innerHTML = d;
-//
+
 //    function jesliwieksze(){
 //        var kwota = document.getElementsByClassName('text-center-plat');
 //        if (kwota.value() > 0)
@@ -268,6 +376,8 @@
 //            kwota.style.color.fontcolor="red"
 ////            document.getElementsByClassName('text-center-plat').style.color = 'green';
 //    }
+//
+//                  Co tu się odjaniepawliło to ja nawet nie xD
 </script>
 </body>
 

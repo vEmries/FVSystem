@@ -27,29 +27,9 @@ public class Contractor {
     private String mail;
     private String note;
 
-    public void updateShortName() {
-        List<String> toShorten = new ArrayList<>();
-        toShorten.add("Spółka z.o.o.");
-        toShorten.add("spółka z.o.o.");
-        toShorten.add("Spółka jawna");
-        toShorten.add("spółka jawna");
-        toShorten.add("Spółka komandytowa");
-        toShorten.add("spółka komandytowa");
-
-        String newCompanyShort = this.company;
-
-        for (String s : toShorten) {
-            if (newCompanyShort.contains(s)) {
-                newCompanyShort = newCompanyShort.replace(s, "");
-            }
-        }
-
-        this.companyshort = newCompanyShort.trim();
-    };
-
-    public Contractor(String company, String nip, String bank, String account, Integer address, String contactnr, String mail, String note) {
+    public Contractor(String company, String companyShort, String nip, String bank, String account, Integer address, String contactnr, String mail, String note) {
         this.company = company;
-        updateShortName();
+        this.companyshort = companyShort;
         this.nip = nip;
         this.bank = bank;
         this.account = account;
