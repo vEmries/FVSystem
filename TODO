@@ -1,8 +1,14 @@
-1) Dodawanie nowych userów w userService i szyfrowanie haseł w db ?
-
+1) Mail nie required dla tworzenia kontrahentów
+2) Dodać "nr budynku" w polu ulica dla kontrahentów (poprawienie labela dla inputa lel)
+3) Wyszukiwanie na stronie dla faktur itd.
+4) Poprawić podświetlanie faktur z końcowym terminem (+3 nie -3, dodać żółty)
 
 Zmienione w froncie (ważne do merga):
--
+Ad. 1) Nie jest required w bazie, wystarczy usunąć required w inpucie
+Ad. 2) Zmienić label w inputach
+Ad. 3) fvPage.html [108, 133]. Wstawić input i dodać filter w ng-repeat
+Ad. 4) fvCtrl.js [25-39]. Funkcja checkPriority()
+* Zmienić AdminCtrl.js na adminCtrl.js w admin.html (head/scripts)
 
 Do zmiany w bazie heroku:
 -
