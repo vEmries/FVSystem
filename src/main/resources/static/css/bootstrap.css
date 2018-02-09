@@ -28,6 +28,11 @@
    cursor: pointer; 
 }
 
+.white_bg {
+    color : black;
+    background-color: white;
+}
+
 .right {
     float: right;
 }

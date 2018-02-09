@@ -42,12 +42,12 @@
             </div>
             <div class="sidebar-wrapper">
                 <ul class="nav">
-                    <li>
+<!--                    <li>
                         <a href="./mainPage.html">
                             <i class="material-icons">dashboard</i>
                             <p>Main</p>
                         </a>
-                    </li>
+                    </li>-->
                     <li class="active">
                         <a href="./fvPage.html">
                             <i class="material-icons">content_paste</i>
@@ -104,7 +104,9 @@
                             <div class="card">
                                 <div class="card-header" data-background-color="purple">
                                     <h4 class="title">Faktury</h4>
-                                    <p class="category">Wszystkie aktywne faktury</p>
+                                    <p class="category">
+                                            <input type="text" ng-model="filterBy" placeholder="Wyszukaj..." class="white_bg" />
+                                    </p>
                                 </div>
                                 <div class="card-content table-responsive">
                                     <table class="table">
@@ -128,7 +130,7 @@
                                                 </div>
                                             </th>
                                         </thead>
-                                        <tbody ng-repeat="fv in allFVs | orderBy : sortProperty : sortReverse">
+                                        <tbody ng-repeat="fv in allFVs | orderBy : sortProperty : sortReverse | filter : filterBy">
                                             <tr ng-style="checkPriority(fv)">
                                                 <td class="text-center click-icon" ng-click="fvDetail = !fvDetail">
                                                     <i class="material-icons" ng-if="fv.status < 0">assignment_late</i>
