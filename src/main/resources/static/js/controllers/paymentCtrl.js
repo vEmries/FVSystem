@@ -23,11 +23,18 @@ app.controller('paymentCtrl', function($scope, $http, Notification) {
     }
     
     $scope.checkPriority = function(fv) {
-        var currentDate = new Date();
-        currentDate.setDate(currentDate.getDate() - 3);
+        var threeLeftDate = new Date();
+        threeLeftDate.setDate(threeLeftDate.getDate() + 4);
         
-        if (fv.duedate < convertDate(currentDate) && fv.status < 1) {
+        if (fv.duedate < convertDate(threeLeftDate) && fv.status < 1) {
             return {background : "red", color : "white"};
+        };
+        
+        var fiveLeftDate = new Date();
+        fiveLeftDate.setDate(fiveLeftDate.getDate() + 6);
+        
+        if (fv.duedate < convertDate(fiveLeftDate) && fv.status < 1) {
+            return {background : "#f4c542", color : "white"};
         };
     };
     
