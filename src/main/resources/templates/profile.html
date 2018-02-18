@@ -29,7 +29,6 @@
     <script src="js/assets/notifications/angular-ui-notification.js" />
     <script type="text/javascript" src="js/assets/datapicker/angular-datepicker.js"></script>
 </head>
-
 <body ng-app="mainApp">
     <div class="wrapper">
 
@@ -41,12 +40,6 @@
             </div>
             <div class="sidebar-wrapper">
                 <ul class="nav">
-<!--                    <li>
-                        <a href="./mainPage.html">
-                            <i class="material-icons">dashboard</i>
-                            <p>Main</p>
-                        </a>
-                    </li>-->
                     <li>
                         <a href="./fvPage.html">
                             <i class="material-icons">content_paste</i>
@@ -86,7 +79,6 @@
                 </ul>
             </div>
         </div>
-        
         <div class="main-panel" ng-controller="profileCtrl">
             <nav class="navbar navbar-transparent navbar-absolute">
                 <div class="container-fluid">
@@ -103,16 +95,12 @@
             </nav>
             <div class="content">
                 <div class="container-fluid">
-
                     <div>
                         <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
                     </div>
-                    
                 </div>
             </div>
         </div>
-        
     </div>
 </body>
-
 </html>

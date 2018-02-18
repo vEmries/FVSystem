@@ -2,7 +2,6 @@ app.controller('paymentCtrl', function($scope, $http, Notification) {
     
     $scope.currentDate = convertDate(new Date());
     $scope.addNote = '';
-    
     $scope.sortProperty = 'duedate';
     $scope.sortReverse = false;
     
@@ -92,5 +91,4 @@ app.controller('paymentCtrl', function($scope, $http, Notification) {
             });
         }
     };
-    
 });

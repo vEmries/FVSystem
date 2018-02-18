@@ -29,8 +29,6 @@ public class FVService {
     @Autowired
     ArchiveService archiveService;
 
-    // Metody aktualizujące sumę do zapłaty i stan płatności
-
     @Transactional
     @Modifying
     public void updatePaidStatus(Integer fvID) {
@@ -67,8 +65,6 @@ public class FVService {
         checkedFV.setSum(sum);
     }
 
-    // Sprawdzenie unikalności nr faktury
-
     public boolean isFVUnique(String fvNumber, Integer contractorID) {
         for (FV fv : fvRepo.findAll()) {
             if (fv.getFvnumber().equals(fvNumber.trim()) && fv.getContractor().equals(contractorID)) {
@@ -80,6 +76,7 @@ public class FVService {
                 return false;
             }
         }
+
         return true;
     }
 
@@ -104,6 +101,7 @@ public class FVService {
                 return false;
             }
         }
+
         return true;
     }
 
@@ -113,10 +111,10 @@ public class FVService {
                 return false;
             }
         }
+
         return true;
     }
 
-    // Metody dla FV.class
 
     @Transactional
     @Modifying
@@ -180,8 +178,6 @@ public class FVService {
         fvRepo.delete(ID);
     }
 
-    // Metody dla FVRevision.class
-
     @Transactional
     @Modifying
     public void createRevision(String fvNumber, Integer fvID, Date issueDate, Double quota, String note) throws InvalidDataException {
@@ -235,6 +231,4 @@ public class FVService {
         updateFVSum(fvID);
         updatePaidStatus(fvID);
     }
-
-    
 }

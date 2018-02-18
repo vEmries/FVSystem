@@ -64,5 +64,4 @@ app.controller('revisionCtrl', function($scope, $http, Notification) {
             });
         }
     };
-    
 });

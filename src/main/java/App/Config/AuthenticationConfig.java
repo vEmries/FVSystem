@@ -17,7 +17,6 @@ public class AuthenticationConfig implements AccessDeniedHandler {
 
     @Override
     public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException {
-
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         if (auth != null) {

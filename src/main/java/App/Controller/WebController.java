@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class WebController {
 
-    // Mapowania dla *.html z /templates
-
     @GetMapping(value = "/")
     public String showIndex() { return "profile"; }
 

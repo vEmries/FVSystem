@@ -20,8 +20,6 @@ public class PaymentService {
     @Autowired
     FVService fvService;
 
-    // Metody dla Payment.class
-
     @Transactional
     @Modifying
     public void createPayment(Integer fvID, Date issuedate, Double quota, String note) throws InvalidDataException {
@@ -31,7 +29,6 @@ public class PaymentService {
 
         Payment newPayment = new Payment(fvID, issuedate, quota, note);
         paymentRepo.save(newPayment);
-
         fvService.updatePaidStatus(fvID);
     }
 
@@ -43,7 +40,6 @@ public class PaymentService {
         }
 
         paymentRepo.save(toUpdate);
-
         fvService.updatePaidStatus(toUpdate.getFv());
     }
 
@@ -64,5 +60,4 @@ public class PaymentService {
         paymentRepo.delete(paymentRepo.findById(ID));
         fvService.updatePaidStatus(fvID);
     }
-
 }

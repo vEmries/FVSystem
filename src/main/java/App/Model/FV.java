@@ -54,5 +54,4 @@ public class FV {
         this.status = -1;
         this.note = archiveFV.getNote();
     }
-
 }

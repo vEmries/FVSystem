@@ -21,8 +21,6 @@ public class ContractorService {
     @Autowired
     ContractorRepo contractorRepo;
 
-    // Metody dla Contractor.class i Address.class
-
     @Transactional
     @Modifying
     public void createContractor(String company, String companyShort, String NIP, String bank, String account, String contactnr, String mail, String note,
@@ -83,5 +81,4 @@ public class ContractorService {
     public Address getAddressForContractor(Integer addressID) {
         return addressRepo.findById(addressID);
     }
-
 }

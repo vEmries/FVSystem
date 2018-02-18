@@ -1,10 +1,3 @@
-/**
- * angular-ui-notification - Angular.js service providing simple notifications using Bootstrap 3 styles with css transitions for animating
- * @author Alex_Crack
- * @version v0.3.6
- * @link https://github.com/alexcrack/angular-ui-notification
- * @license MIT
- */
 angular.module('ui-notification',[]);
 
 angular.module('ui-notification').provider('Notification', function() {
@@ -77,7 +70,6 @@ angular.module('ui-notification').provider('Notification', function() {
                     throw new Error('Template ('+args.template+') could not be loaded. ' + data);
                   });                
             }    
-            
             
              function processNotificationTemplate(template) {
 

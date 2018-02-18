@@ -29,7 +29,6 @@
     <script src="js/assets/notifications/angular-ui-notification.js" />
     <script type="text/javascript" src="js/assets/datapicker/angular-datepicker.js" />
 </head>
-
 <body ng-app="mainApp">
     <div class="wrapper">
         
@@ -41,12 +40,6 @@
             </div>
             <div class="sidebar-wrapper">
                 <ul class="nav">
-<!--                    <li>
-                        <a href="./mainPage.html">
-                            <i class="material-icons">dashboard</i>
-                            <p>Main</p>
-                        </a>
-                    </li>-->
                     <li>
                         <a href="./fvPage.html">
                             <i class="material-icons">content_paste</i>
@@ -86,7 +79,6 @@
                 </ul>
             </div>
         </div>
-        
         <div class="main-panel" ng-controller="adminCtrl" data-ng-init="loadUser()">
             <nav class="navbar navbar-transparent navbar-absolute">
                 <div class="container-fluid">
@@ -134,7 +126,6 @@
                             </div>
                         </div>
                     </div>
-                    
                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-header">
@@ -147,7 +138,6 @@
                                     <i class="material-icons click-icon" data-toggle="modal" data-target="#editUser{{$index}}">edit</i>
                                     <i class="material-icons click-icon" ng-click="deleteUser(user.id)">delete</i>
                                 </p>
-                                
                                 <div class="container-fluid">
                                     <div class="modal fade" id="editUser{{$index}}" role="dialog">
                                         <div class="modal-dialog">
@@ -189,8 +179,6 @@
                 </div>
             </div>
         </div>
-        
     </div>
 </body>
-
 </html>

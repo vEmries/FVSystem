@@ -25,8 +25,6 @@ public class FVController {
     @Autowired
     UserService userService;
 
-    // Mapowania dla FV
-
     @RequestMapping(value = "/fv", method = RequestMethod.GET)
     public List<FV> getFVs() { return fvService.getAllFVs(); }
 
@@ -69,8 +67,6 @@ public class FVController {
 
         logger.info("Usunięto fakturę '" + deletedFV + "'");
     }
-
-    // Mapowania dla FVRevision
 
     @RequestMapping(value = "/fvr", method = RequestMethod.GET)
     public List<FVRevision> getRevisions() { return fvService.getAllRevisions(); }
