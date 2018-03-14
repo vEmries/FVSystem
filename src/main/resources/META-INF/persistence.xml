@@ -17,8 +17,8 @@
         <class>App.Model.User</class>
 
         <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/fvservice" />
-            <property name="javax.persistence.jdbc.user" value="DBAdmin" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5555/fvservice" />
+            <property name="javax.persistence.jdbc.user" value="Admin" />
             <property name="javax.persistence.jdbc.password" value="admin" />
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
             <property name="hibernate.default_schema" value="public"/>
