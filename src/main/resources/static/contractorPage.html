@@ -1,5 +1,4 @@
 <!doctype html>
-
 <head>
     <meta charset="utf-8" />
     <title>FV System</title>
@@ -29,7 +28,6 @@
     <script src="js/assets/notifications/angular-ui-notification.js"></script>
     <script type="text/javascript" src="js/assets/datapicker/angular-datepicker.js"></script>
 </head>
-
 <body ng-app="mainApp">
     <div class="wrapper">
         
@@ -41,12 +39,6 @@
             </div>
             <div class="sidebar-wrapper">
                 <ul class="nav">
-<!--                    <li>
-                        <a href="./mainPage.html">
-                            <i class="material-icons">dashboard</i>
-                            <p>Main</p>
-                        </a>
-                    </li>-->
                     <li>
                         <a href="./fvPage.html">
                             <i class="material-icons">content_paste</i>
@@ -86,7 +78,6 @@
                 </ul>
             </div>
         </div>
-        
         <div class="main-panel" ng-controller="contractorCtrl" data-ng-init="loadContractor()">
             <nav class="navbar navbar-transparent navbar-absolute">
                 <div class="container-fluid">
@@ -149,7 +140,6 @@
                                                         <i class="material-icons click-icon" ng-click="deleteContractor(contractor.id)">delete</i>
                                                         <span class="tooltiptext">Usuń kontrahenta</span>
                                                     </div>
-                                                    
                                                     <div class="container-fluid">
                                                         <div class="modal fade" id="editContractor{{$index}}" role="dialog">
                                                             <div class="modal-dialog">
@@ -162,68 +152,55 @@
                                                                             <label>Nazwa firmy</label>
                                                                             <input type="text" ng-model="upCompany" ng-init="upCompany = contractor.company" required/>
                                                                         </md-input-container>
-                                                                        
                                                                         <md-input-container>
                                                                             <label>Skrócona nazwa</label>
                                                                             <input type="text" ng-model="upCompanyShort" ng-init="upCompanyShort = contractor.companyshort" required/>
                                                                         </md-input-container>
-
                                                                         <md-input-container>
                                                                             <label>NIP</label>
                                                                             <input type="text" ng-model="upNIP" ng-init="upNIP = contractor.nip" required/>
                                                                         </md-input-container>
-
                                                                         <md-input-container>
                                                                             <label>Bank</label>
                                                                             <input type="text" ng-model="upBank" ng-init="upBank = contractor.bank" required/>
                                                                         </md-input-container>
-
                                                                         <md-input-container>
                                                                             <label>Numer konta</label>
                                                                             <input type="text" ng-model="upAccount" ng-init="upAccount = contractor.account" required/>
                                                                         </md-input-container>
-
                                                                         <md-input-container>
                                                                             <label>Numer kontaktowy</label>
                                                                             <input type="text" ng-model="upContactNr" ng-init="upContactNr = contractor.contactnr" required/>
                                                                         </md-input-container>
-
                                                                         <md-input-container>
                                                                             <label>E-mail</label>
                                                                             <input type="text" ng-model="upMail" ng-init="upMail = contractor.mail" required/>
                                                                         </md-input-container>
-
                                                                         <md-input-container>
                                                                             <label>Dodatkowy opis</label>
                                                                             <input type="text" ng-model="upNote" ng-init="upNote = contractor.note"/>
                                                                         </md-input-container>
-
                                                                         <div ng-repeat="address in allAddresses" ng-if="contractor.address == address.id">
                                                                             <md-input-container>
                                                                                 <label>Kraj</label>
                                                                                 <input type="text" ng-model="upCountry" ng-init="upCountry = address.country"/>
                                                                             </md-input-container>
-
                                                                             <md-input-container>
                                                                                 <label>Województwo/Region</label>
                                                                                 <input type="text" ng-model="upProvince" ng-init="upProvince = address.province"/>
                                                                             </md-input-container>
-
                                                                             <md-input-container>
                                                                                 <label>Kod pocztowy</label>
                                                                                 <input type="text" ng-model="upZIP" ng-init="upZIP = address.zip"/>
                                                                             </md-input-container>
-
                                                                             <md-input-container>
                                                                                 <label>Miasto</label>
                                                                                 <input type="text" ng-model="upCity" ng-init="upCity = address.city"/>
                                                                             </md-input-container>
-
                                                                             <md-input-container>
                                                                                 <label>Ulica</label>
                                                                                 <input type="text" ng-model="upStreet" ng-init="upStreet = address.street"/>
                                                                             </md-input-container>
-
                                                                             <i class="material-icons click-icon" ng-click="updateContractor(contractor.id, upCompany, upCompanyShort, upNIP, upBank, upAccount, upContactNr, upMail, upNote, contractor.address, upCountry, upProvince, upCity, upZIP, upStreet)" data-dismiss="modal">done</i>
                                                                         </div>
                                                                     </div>
@@ -248,7 +225,6 @@
                     </div>
                 </div>
             </div>
-            
             <div class="container-fluid">
                 <div class="modal fade" id="addContractor" role="dialog">
                     <div class="modal-dialog">
@@ -261,69 +237,55 @@
                                     <label>Nazwa firmy</label>
                                     <input type="text" ng-model="addCompany" required/>
                                 </md-input-container>
-                                
                                 <md-input-container>
                                     <label>Skrócona nazwa</label>
                                     <input type="text" ng-model="addCompanyShort" required/>
                                 </md-input-container>
-                                
                                 <md-input-container>
                                     <label>NIP</label>
                                     <input type="text" ng-model="addNIP" required/>
                                 </md-input-container>
-                                
                                 <md-input-container>
                                     <label>Bank</label>
                                     <input type="text" ng-model="addBank" required/>
                                 </md-input-container>
-                                
                                 <md-input-container>
                                     <label>Numer konta</label>
                                     <input type="text" ng-model="addAccount" required/>
                                 </md-input-container>
-                                
                                 <md-input-container>
                                     <label>Numer kontaktowy</label>
                                     <input type="text" ng-model="addContactNr" required/>
                                 </md-input-container>
-                                
                                 <md-input-container>
                                     <label>E-mail</label>
                                     <input type="text" ng-model="addMail" required/>
                                 </md-input-container>
-                                
                                 <md-input-container>
                                     <label>Dodatkowy opis</label>
                                     <input type="text" ng-model="addNote"/>
                                 </md-input-container>
-                                
                                 <p>Adres</p>
-                                
                                 <md-input-container>
                                     <label>Kraj</label>
                                     <input type="text" ng-model="addCountry"/>
                                 </md-input-container>
-                                
                                 <md-input-container>
                                     <label>Województwo/Region</label>
                                     <input type="text" ng-model="addProvince"/>
                                 </md-input-container>
-                                
                                 <md-input-container>
                                     <label>Kod pocztowy</label>
                                     <input type="text" ng-model="addZip"/>
                                 </md-input-container>
-                                
                                 <md-input-container>
                                     <label>Miasto</label>
                                     <input type="text" ng-model="addCity"/>
                                 </md-input-container>
-                                
                                 <md-input-container>
                                     <label>Ulica</label>
                                     <input type="text" ng-model="addStreet"/>
                                 </md-input-container>
-
                                 <i class="material-icons click-icon" ng-click="addContractor()" data-dismiss="modal">done</i>
                             </div>
                             <div class="modal-footer">
@@ -334,8 +296,5 @@
                 </div>
             </div>
         </div>
-        
     </div>
 </body>
-
-</html>

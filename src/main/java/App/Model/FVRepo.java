@@ -13,5 +13,4 @@ public interface FVRepo extends CrudRepository<FV, Integer> {
 
     @Query("select fv.id from FV fv")
     List<Integer> getFVIDs();
-
 }

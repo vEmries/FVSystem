@@ -18,6 +18,4 @@
         <property name="entityManagerFactory" ref="dbFactory"/>
     </bean>
     <tx:annotation-driven transaction-manager="transactionManager"/>
-
-
 </beans>

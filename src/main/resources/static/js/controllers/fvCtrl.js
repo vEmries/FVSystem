@@ -2,7 +2,6 @@ app.controller('fvCtrl', function($scope, $http, Notification) {
     
     $scope.currentDate = convertDate(new Date());
     $scope.addNote = '';
-    
     $scope.sortProperty = 'duedate';
     $scope.sortReverse = false;
     
@@ -157,5 +156,4 @@ app.controller('fvCtrl', function($scope, $http, Notification) {
             Notification.error('Archiwizacja faktur nie powiodła się');
         });
     };
-    
 });

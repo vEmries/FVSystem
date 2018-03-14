@@ -34,5 +34,4 @@ public class BasicConfig {
 
     @Bean
     UserService userService() { return new UserService(); }
-
 }

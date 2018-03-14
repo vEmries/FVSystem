@@ -1,7 +1,6 @@
 app.controller('contractorCtrl', function($scope, $http, Notification){
     
     $scope.addNote = '';
-    
     $scope.sortProperty = 'company';
     $scope.sortReverse = false;
     
@@ -105,5 +104,4 @@ app.controller('contractorCtrl', function($scope, $http, Notification){
                 });
             }
         };
-    
 });

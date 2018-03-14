@@ -28,10 +28,8 @@
     <script src="js/assets/notifications/angular-ui-notification.js" />
     <script type="text/javascript" src="js/assets/datapicker/angular-datepicker.js"></script>
 </head>
-
 <body ng-app="mainApp">
     <div class="wrapper">
-
         <div class="sidebar" data-color="purple">
             <div class="logo">
                 <a href="./mainPage.html" class="simple-text">
@@ -40,12 +38,6 @@
             </div>
             <div class="sidebar-wrapper">
                 <ul class="nav">
-                    <li>
-                        <a href="./mainPage.html">
-                            <i class="material-icons">dashboard</i>
-                            <p>Main</p>
-                        </a>
-                    </li>
                     <li>
                         <a href="./fvPage.html">
                             <i class="material-icons">content_paste</i>
@@ -79,7 +71,6 @@
                 </ul>
             </div>
         </div>
-        
         <div class="main-panel">
             <nav class="navbar navbar-transparent navbar-absolute">
                 <div class="container-fluid">
@@ -96,16 +87,12 @@
             </nav>
             <div class="content">
                 <div class="container-fluid">
-
                     <div>
                         <h1 th:inline="text">[[${#httpServletRequest.remoteUser}]], nie masz dostępu do tej części serwisu</h1>
                     </div>
-                    
                 </div>
             </div>
         </div>
-        
     </div>
 </body>
-
 </html>

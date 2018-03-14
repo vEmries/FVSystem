@@ -32,7 +32,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
         httpSecurity.csrf().disable()
                 .authorizeRequests()
-//                .antMatchers(("/**")).permitAll()
                 .antMatchers("/profile", "/403", "/mainPage.html" ,"/fvPage.html", "/revisionPage.html", "/paymentPage.html", "/archivePage.html").hasAnyRole("user", "payer", "admin")
                 .antMatchers("/admin/**").hasAnyRole("admin")
                 .antMatchers(HttpMethod.GET, "/fv/**", "/fvr/**", "/payment/**", "/archive/**", "/contractor/**").hasAnyRole("user", "payer", "admin")
@@ -68,5 +67,4 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
         return new InMemoryUserDetailsManager(users);
     }
-
 }

@@ -1,4 +1,3 @@
-/*global angular document navigator*/
 (function withAngular(angular, navigator) {
 
   'use strict';

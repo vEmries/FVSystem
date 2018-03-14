@@ -21,8 +21,6 @@ public class ContractorController {
     @Autowired
     ContractorService contractorService;
 
-    // Mapowania dla Contractor
-
     @RequestMapping(value = "/contractor", method = RequestMethod.GET)
     public List<Contractor> getAllContractors() {
         return contractorService.getAllContractors();
@@ -33,8 +31,6 @@ public class ContractorController {
         return contractorService.getContractor(ID);
     }
 
-    // Mapowania dla Address
-
     @RequestMapping(value = "/contractor/address", method = RequestMethod.GET)
     public List<Address> getAllAdresses() { return contractorService.getAllAdresses(); }
 
@@ -43,10 +39,7 @@ public class ContractorController {
         return contractorService.getAddressForContractor(addressID);
     }
 
-    // Mapowanie dla setu (Contractor + Address)
-
     private Address toAddAddress;
-
     @RequestMapping(value = "/contractor/address", method = RequestMethod.POST)
     public void prepareAddress(@RequestBody Address tmpAddress) {
         toAddAddress = tmpAddress;

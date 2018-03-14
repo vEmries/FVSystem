@@ -1,5 +1,4 @@
 <!doctype html>
-
 <head>
     <meta charset="utf-8" />
     <title>FV System</title>
@@ -29,7 +28,6 @@
     <script src="js/assets/notifications/angular-ui-notification.js"></script>
     <script type="text/javascript" src="js/assets/datapicker/angular-datepicker.js"></script>
 </head>
-
 <body ng-app="mainApp">
 
     <div class="wrapper">
@@ -42,12 +40,6 @@
             </div>
             <div class="sidebar-wrapper">
                 <ul class="nav">
-<!--                    <li>
-                        <a href="./mainPage.html">
-                            <i class="material-icons">dashboard</i>
-                            <p>Main</p>
-                        </a>
-                    </li>-->
                     <li class="active">
                         <a href="./fvPage.html">
                             <i class="material-icons">content_paste</i>
@@ -87,7 +79,6 @@
                 </ul>
             </div>
         </div>
-        
         <div class="main-panel" ng-controller="fvCtrl" data-ng-init="loadFV()">
             <nav class="navbar navbar-transparent navbar-absolute">
                 <div class="container-fluid">
@@ -96,7 +87,6 @@
                     </div>
                 </div>
             </nav>
-            
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">
@@ -140,7 +130,6 @@
                                                 <td class="text-center">{{fv.fvnumber}}</td>
                                                 <td class="text-center" ng-repeat="contractor in allContractors" ng-if="contractor.id == fv.contractor">
                                                     <div class="click-icon" data-toggle="modal" data-target="#showContractor{{$index}}">{{contractor.companyshort}}</div>
-                                                
                                                     <div class="container-fluid">
                                                         <div class="modal fade" id="showContractor{{$index}}" role="dialog">
                                                             <div class="modal-dialog">
@@ -235,7 +224,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    
                                                     <div class="container-fluid">
                                                         <div class="modal fade" id="addRevision{{$index}}" role="dialog">
                                                             <div class="modal-dialog">
@@ -310,7 +298,6 @@
                     </div>
                 </div>
             </div>
-            
             <div class="container-fluid">
                 <div class="modal fade" id="addFV" role="dialog">
                     <div class="modal-dialog">
@@ -361,26 +348,10 @@
                     </div>
                 </div>
             </div>
-            
         </div>
     </div>
-
     <script>
     var d = new Date;
     document.getElementById("czasczas").innerHTML = d;
-
-//    function jesliwieksze(){
-//        var kwota = document.getElementsByClassName('text-center-plat');
-//        if (kwota.value() > 0)
-//        kwota.style.color.fontcolor="red"
-////            document.getElemetsByClassName('text-center-plat').style.color = 'red';
-//        else if (kwota.value() < 0)
-//            kwota.style.color.fontcolor="red"
-////            document.getElementsByClassName('text-center-plat').style.color = 'green';
-//    }
-//
-//                  Co tu się odjaniepawliło to ja nawet nie xD
 </script>
 </body>
-
-</html>
