@@ -320,7 +320,7 @@
                             </div>
                             <div class="modal-body">
                                 <p>
-                                    <md-input-container>
+                                    <md-input-container class="force-border">
                                         <label>Numer faktury</label>
                                         <input type="text" ng-model="addFVNumber" required/>
                                     </md-input-container>
@@ -341,7 +341,7 @@
                                     </datepicker>
                                 </p>
                                 <p>
-                                    <md-input-container>
+                                    <md-input-container class="force-border">
                                         <label>Kwota faktury</label>
                                         <input type="text" ng-model="addValue" required/>
                                     </md-input-container>
@@ -368,18 +368,6 @@
     <script>
     var d = new Date;
     document.getElementById("czasczas").innerHTML = d;
-
-//    function jesliwieksze(){
-//        var kwota = document.getElementsByClassName('text-center-plat');
-//        if (kwota.value() > 0)
-//        kwota.style.color.fontcolor="red"
-////            document.getElemetsByClassName('text-center-plat').style.color = 'red';
-//        else if (kwota.value() < 0)
-//            kwota.style.color.fontcolor="red"
-////            document.getElementsByClassName('text-center-plat').style.color = 'green';
-//    }
-//
-//                  Co tu się odjaniepawliło to ja nawet nie xD
 </script>
 </body>
 

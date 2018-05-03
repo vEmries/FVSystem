@@ -18,7 +18,7 @@
         <class>App.Model.User</class>
 
         <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://192.168.1.12:5432/fvservice" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://192.168.1.11:5432/fvservice" />
             <property name="javax.persistence.jdbc.user" value="Admin" />
             <property name="javax.persistence.jdbc.password" value="admin" />
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />

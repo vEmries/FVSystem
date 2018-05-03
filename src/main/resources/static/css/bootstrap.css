@@ -28,6 +28,13 @@
    cursor: pointer; 
 }
 
+.force-border {
+    border-style: solid;
+    border-color: lightgrey;
+    border-width: 1px;
+    border-radius: 5px;
+}
+
 .white_bg {
     color : black;
     background-color: white;

@@ -38,14 +38,14 @@ public class FVController {
         try {
             fvService.createFV(tmpFV.getFvnumber(), tmpFV.getContractor(), tmpFV.getIssuedate(), tmpFV.getDuedate(), tmpFV.getValue(), tmpFV.getNote());
         } catch (InvalidDataException e) {
-            logger.error(e.getMessage());
+            logger.error(e.getMessage() + " User autoryzujący operację: " + userService.getCurrentUser());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (NullPointerException e) {
-            logger.error("Błąd dodania faktury '" + tmpFV.getFvnumber() + "'. Wymagane pole wynosi null");
+            logger.error("Błąd dodania faktury '" + tmpFV.getFvnumber() + "'. Wymagane pole wynosi null" + " User autoryzujący operację: " + userService.getCurrentUser());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        logger.info("Dodano fakturę '" + tmpFV.getFvnumber() + "'");
+        logger.info("Dodano fakturę '" + tmpFV.getFvnumber() + "'" + " User autoryzujący operację: " + userService.getCurrentUser());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -54,11 +54,11 @@ public class FVController {
         try {
             fvService.updateFV(tmpFV);
         } catch (InvalidDataException e) {
-            logger.error(e.getMessage());
+            logger.error(e.getMessage() + " User autoryzujący operację: " + userService.getCurrentUser());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        logger.info("Edytowano fakturę '" + tmpFV.getFvnumber() + "'");
+        logger.info("Edytowano fakturę '" + tmpFV.getFvnumber() + "'" + " User autoryzujący operację: " + userService.getCurrentUser());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -67,7 +67,7 @@ public class FVController {
         String deletedFV = fvService.getFV(fvID).getFvnumber();
         fvService.deleteFV(fvID);
 
-        logger.info("Usunięto fakturę '" + deletedFV + "'");
+        logger.info("Usunięto fakturę '" + deletedFV + "'" + " User autoryzujący operację: " + userService.getCurrentUser());
     }
 
     // Mapowania dla FVRevision
@@ -83,14 +83,14 @@ public class FVController {
         try {
             fvService.createRevision(tmpRevision.getFvnumber(), tmpRevision.getFv(), tmpRevision.getIssuedate(), tmpRevision.getQuota(), tmpRevision.getNote());
         } catch (InvalidDataException e) {
-            logger.error(e.getMessage());
+            logger.error(e.getMessage() + " User autoryzujący operację: " + userService.getCurrentUser());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (NullPointerException e) {
-            logger.error("Błąd dodania korekty '" + tmpRevision.getFvnumber() + "'. Wymagane pole wynosi null");
+            logger.error("Błąd dodania korekty '" + tmpRevision.getFvnumber() + "'. Wymagane pole wynosi null" + " User autoryzujący operację: " + userService.getCurrentUser());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        logger.info("Dodano korektę '" + tmpRevision.getFvnumber() +"'");
+        logger.info("Dodano korektę '" + tmpRevision.getFvnumber() + "'" + " User autoryzujący operację: " + userService.getCurrentUser());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -99,11 +99,11 @@ public class FVController {
         try {
             fvService.updateRevision(tmpRevision);
         } catch (InvalidDataException e) {
-            logger.error(e.getMessage());
+            logger.error(e.getMessage() + " User autoryzujący operację: " + userService.getCurrentUser());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        logger.info("Edytowano korektę '" + tmpRevision.getFvnumber() + "'");
+        logger.info("Edytowano korektę '" + tmpRevision.getFvnumber() + "'" + " User autoryzujący operację: " + userService.getCurrentUser());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -112,6 +112,6 @@ public class FVController {
         String deletedFV = fvService.getRevision(ID).getFvnumber();
         fvService.deleteRevision(ID);
 
-        logger.info("Usunięto korektę '" + deletedFV + "'");
+        logger.info("Usunięto korektę '" + deletedFV + "'" + " User autoryzujący operację: " + userService.getCurrentUser());
     }
 }
