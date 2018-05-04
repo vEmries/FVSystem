@@ -170,6 +170,9 @@ public class FVService {
     }
 
     @Transactional
+    public List<FV> getNewestFVs() { return fvRepo.getNewest(); }
+
+    @Transactional
     public FV getFV(Integer ID) {
         return fvRepo.findById(ID);
     }

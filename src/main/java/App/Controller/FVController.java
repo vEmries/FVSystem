@@ -30,6 +30,9 @@ public class FVController {
     @RequestMapping(value = "/fv", method = RequestMethod.GET)
     public List<FV> getFVs() { return fvService.getAllFVs(); }
 
+    @RequestMapping(value = "/fv/new", method = RequestMethod.GET)
+    public List<FV> getNewestFVs() { return fvService.getNewestFVs(); }
+
     @RequestMapping(value = "/fv/{ID}", method = RequestMethod.GET)
     public FV getFV(@PathVariable(value = "ID") Integer fvID) { return fvService.getFV(fvID); }
 

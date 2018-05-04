@@ -34,7 +34,7 @@
 
     <div class="wrapper">
         
-        <div class="sidebar" data-color="purple">
+        <div class="sidebar" data-color="purple" ng-controller="fvCtrl">
             <div class="logo">
                 <a href="./mainPage.html" class="simple-text">
                     FV System
@@ -85,10 +85,28 @@
                         </a>
                     </li>
                 </ul>
+
+                <div class="logo">
+                    <a href="./fvPage.html" class="simple-text">
+                        Najnowsze faktury
+                    </a>
+                </div>
+                <table class="table">
+                    <thead>
+                        <th>Numer</th>
+                        <th>Data dodania</th>
+                        <th>Wartość faktury</th>
+                    </thead>
+                    <tbody ng-repeat="fv in newFVs">
+                        <td class="col-md-3">{{fv.fvnumber}}</td>
+                        <td class="col-md-4">{{fv.issuedate}}</td>
+                        <td class="col-md-2">{{fv.value}}</td>
+                    </tbody>
+                </table>
             </div>
         </div>
         
-        <div class="main-panel" ng-controller="fvCtrl" data-ng-init="loadFV()">
+        <div class="main-panel" ng-controller="fvCtrl">
             <nav class="navbar navbar-transparent navbar-absolute">
                 <div class="container-fluid">
                     <div class="navbar-header">

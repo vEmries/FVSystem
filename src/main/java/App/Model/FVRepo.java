@@ -14,4 +14,9 @@ public interface FVRepo extends CrudRepository<FV, Integer> {
     @Query("select fv.id from FV fv")
     List<Integer> getFVIDs();
 
+//    @Query("select fv from FV fv order by fv.id desc")
+//    List<FV> getNewest();
+    @Query(value = "SELECT * FROM fv ORDER BY id DESC LIMIT 5", nativeQuery = true)
+    List<FV> getNewest();
+
 }

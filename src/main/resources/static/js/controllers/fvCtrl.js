@@ -39,6 +39,16 @@ app.controller('fvCtrl', function($scope, $http, Notification) {
     };
     
     $scope.loadFV = function() {
+        $http.get('./fv')
+            .success(function(data) {
+                $scope.allFVs = data;
+            });
+
+        $http.get('./fv/new')
+            .success(function (data) {
+                $scope.newFVs = data;
+            })
+
         $http.get('./fvr')
                 .success(function(data) {
                     $scope.allRevisions = data;
@@ -62,11 +72,6 @@ app.controller('fvCtrl', function($scope, $http, Notification) {
         $http.get('./contractor/address')
                 .success(function(data) {
                     $scope.allAddresses = data;
-        });
-        
-        $http.get('./fv')
-                .success(function(data) {
-                    $scope.allFVs = data;
         });
     };
 
@@ -157,5 +162,7 @@ app.controller('fvCtrl', function($scope, $http, Notification) {
             Notification.error('Archiwizacja faktur nie powiodła się');
         });
     };
+
+    $scope.loadFV();
     
 });
