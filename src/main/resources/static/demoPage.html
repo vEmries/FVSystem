@@ -129,7 +129,9 @@
                                 <div class="card-content table-responsive">
                                     <table class="table">
                                         <thead class="text-primary">
-                                            <th class="text-center click-icon" ng-click="sortBy('status')">Status</th>
+                                            <th class="text-center click-icon tooltip" ng-click="sortBy('status')">Status
+                                                <span class="tooltiptext"> Status faktury : brak płatności, częściowa płatność, opłacona</span>
+                                            </th>
                                             <th class="text-center click-icon" ng-click="sortBy('fvnumber')">Numer faktury</th>
                                             <th class="text-center clikc-icon" ng-click="sortBy('contractor')">Kontrahent</th>
                                             <th class="text-center click-icon" ng-click="sortBy('issuedate')">Data wystawienia</th>
@@ -140,11 +142,13 @@
                                             <th>
                                                 <div class="tooltip">
                                                     <i class="material-icons click-icon" data-toggle="modal" data-target="#addFV">note_add</i>
-                                                    <span class="tooltiptext">Dodaj fakturę</span>
+                                                    <span class="tooltiptext">Dodaj fakturę <br>
+                                                    Dodaje nową fakturę do systemu</span>
                                                 </div>
                                                 <div class="tooltip">
                                                     <i class="material-icons click-icon" ng-click="autoArchive()">archive</i>
-                                                    <span class="tooltiptext">Archiwizuj faktury</span>
+                                                    <span class="tooltiptext">Archiwizuj faktury <br>
+                                                    Archiwizuje wszystkie opłacone i nieaktualne faktury</span>
                                                 </div>
                                             </th>
                                         </thead>
@@ -192,15 +196,18 @@
                                                 <td>
                                                     <div class="tooltip">
                                                         <i class="material-icons click-icon" data-toggle="modal" data-target="#editFV{{$index}}">edit</i>
-                                                        <span class="tooltiptext">Edytuj fakturę</span>
+                                                        <span class="tooltiptext">Edytuj fakturę <br> 
+                                                        Wyświetla panel edycji wybranej faktury</span>
                                                     </div>
                                                     <div class="tooltip">
                                                         <i class="material-icons click-icon" ng-click="deleteFV(fv.id)">delete</i>
-                                                        <span class="tooltiptext">Usuń fakturę</span>
+                                                        <span class="tooltiptext">Usuń fakturę <br>
+                                                        Usuwa wybraną fakturę</span>
                                                     </div>
                                                     <div class="tooltip">
                                                         <i class="material-icons click-icon" data-toggle="modal" data-target="#addRevision{{$index}}">change_history</i>
-                                                        <span class="tooltiptext">Dodaj korektę</span>
+                                                        <span class="tooltiptext">Dodaj korektę <br>
+                                                        Wyświetla panel dodawania korekty dla wybranej faktury</span>
                                                     </div>
                                                     
                                                     <div class="container-fluid">
